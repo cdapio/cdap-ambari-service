@@ -16,12 +16,21 @@ class Master(Script):
 
   def start(self, env):
     print 'Start the CDAP Master';
+    import params
+    self.configure(env)
+    Execute('service cdap-master start')
 
   def stop(self, env):
     print 'Stop the CDAP Master';
+    import params
+    self.configure(env)
+    Execute('service cdap-master stop')
 
   def status(self, env):
     print 'Status of the CDAP Master';
+    import params
+    self.configure(env)
+    Execute('service cdap-master status')
 
   def configure(self, env):
     print 'Configure the CDAP Master';

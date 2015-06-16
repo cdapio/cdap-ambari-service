@@ -14,14 +14,23 @@ class UI(Script):
     # Install package
     helpers.package('cdap-ui')
 
-  def stop(self, env):
-    print 'Stop the CDAP UI';
-
   def start(self, env):
     print 'Start the CDAP UI';
+    import params
+    self.configure(env)
+    Execute('service cdap-ui start')
+
+  def stop(self, env):
+    print 'Stop the CDAP UI';
+    import params
+    self.configure(env)
+    Execute('service cdap-ui stop')
 
   def status(self, env):
     print 'Status of the CDAP UI';
+    import params
+    self.configure(env)
+    Execute('service cdap-ui status')
 
   def configure(self, env):
     print 'Configure the CDAP UI';

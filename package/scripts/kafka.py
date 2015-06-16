@@ -14,14 +14,23 @@ class Kafka(Script):
     # Install package
     helpers.package('cdap-kafka')
 
-  def stop(self, env):
-    print 'Stop the CDAP Kafka Server';
-
   def start(self, env):
     print 'Start the CDAP Kafka Server';
+    import params
+    self.configure(env)
+    Execute('service cdap-kafka-server start')
+
+  def stop(self, env):
+    print 'Stop the CDAP Kafka Server';
+    import params
+    self.configure(env)
+    Execute('service cdap-kafka-server stop')
 
   def status(self, env):
     print 'Status of the CDAP Kafka Server';
+    import params
+    self.configure(env)
+    Execute('service cdap-kafka-server status')
 
   def configure(self, env):
     print 'Configure the CDAP Kafka Server';

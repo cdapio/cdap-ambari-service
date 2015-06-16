@@ -14,14 +14,23 @@ class Router(Script):
     # Install package
     helpers.package('cdap-gateway')
 
-  def stop(self, env):
-    print 'Stop the CDAP Router';
-
   def start(self, env):
     print 'Start the CDAP Router';
+    import params
+    self.configure(env)
+    Execute('service cdap-router start')
+
+  def stop(self, env):
+    print 'Stop the CDAP Router';
+    import params
+    self.configure(env)
+    Execute('service cdap-router stop')
 
   def status(self, env):
     print 'Status of the CDAP Router';
+    import params
+    self.configure(env)
+    Execute('service cdap-router status')
 
   def configure(self, env):
     print 'Configure the CDAP Router';
