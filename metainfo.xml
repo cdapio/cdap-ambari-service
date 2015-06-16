@@ -18,7 +18,7 @@
           <name>CDAP_AUTH_SERVER</name>
           <displayName>CDAP Auth Server</displayName>
           <category>MASTER</category>
-          <cardinality>0-2</cardinality>
+          <cardinality>0-1</cardinality>
           <commandScript>
             <script>scripts/auth.py</script>
             <scriptType>PYTHON</scriptType>
@@ -44,7 +44,7 @@
           <name>CDAP_MASTER</name>
           <displayName>CDAP Master</displayName>
           <category>MASTER</category>
-          <cardinality>1-2</cardinality>
+          <cardinality>1</cardinality>
           <commandScript>
             <script>scripts/master.py</script>
             <scriptType>PYTHON</scriptType>
@@ -67,7 +67,7 @@
           <name>CDAP_KAFKA</name>
           <displayName>CDAP Kafka Server</displayName>
           <category>MASTER</category>
-          <cardinality>1-2</cardinality>
+          <cardinality>1</cardinality>
           <commandScript>
             <script>scripts/kafka.py</script>
             <scriptType>PYTHON</scriptType>
@@ -89,7 +89,7 @@
           <name>CDAP_ROUTER</name>
           <displayName>CDAP Router</displayName>
           <category>MASTER</category>
-          <cardinality>1+</cardinality>
+          <cardinality>1</cardinality>
           <commandScript>
             <script>scripts/router.py</script>
             <scriptType>PYTHON</scriptType>
@@ -111,7 +111,7 @@
           <name>CDAP_UI</name>
           <displayName>CDAP UI</displayName>
           <category>MASTER</category>
-          <cardinality>1+</cardinality>
+          <cardinality>1</cardinality>
           <commandScript>
             <script>scripts/ui.py</script>
             <scriptType>PYTHON</scriptType>
