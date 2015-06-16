@@ -1,0 +1,32 @@
+from resource_management import *
+from resource_management.libraries.functions.version import format_hdp_stack_version, compare_versions
+import os
+
+# config object that holds the configurations declared in the -config.xml file
+config = Script.get_config()
+
+stack_dir = os.path.realpath(__file__).split('/scripts')[0]
+caskckage_dir = os.path.realpath(__file__).split('/package')[0] + '/package/'
+files_dir = package_dir + 'files/'
+scripts_dir = package_dir + 'scripts/'
+distribution = platform.linux_distribution()[0].lower()
+
+if distribution in ['centos', 'redhat'] :
+  os_repo_dir = '/etc/yum.repos.d/'
+  repo_file = 'cdap.repo'
+  package_mgr = 'yum'
+else
+  os_repo_dir = '/etc/apt/sources.list.d/'
+  repo_file = 'cdap.list'
+  package_mgr = 'apt-get'
+
+cdap_user = "cdap"
+cdap_conf_dir = "/etc/cdap/conf"
+dfs = config['configurations']['core-site']['fs.defaultFS']
+cdap_site = config['configurations']['cdap-site'];
+
+# Example: root.namespace
+root_namespace = cdap_site['root.namespace']
+hdfs_namespace = cdap_site['hdfs.namespace']
+hdfs_user = cdap_site['hdfs.user']
+kafka_log_dir = cdap_site['kafka.log.dir']

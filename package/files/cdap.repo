@@ -1,0 +1,5 @@
+[CDAP-3.0]
+name=Cask Data Application Platform Packages
+baseurl=http://repository.cask.co/centos/6/x86_64/cdap/3.0
+enabled=1
+gpgcheck=1
