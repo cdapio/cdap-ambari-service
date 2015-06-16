@@ -18,6 +18,7 @@ class Kafka(Script):
     print 'Start the CDAP Kafka Server';
     import params
     self.configure(env)
+    Execute('mkdir -p ' + params.kafka_log_dir)
     Execute('service cdap-kafka-server start')
 
   def stop(self, env):
