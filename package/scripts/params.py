@@ -6,7 +6,7 @@ import os
 config = Script.get_config()
 
 stack_dir = os.path.realpath(__file__).split('/scripts')[0]
-caskckage_dir = os.path.realpath(__file__).split('/package')[0] + '/package/'
+package_dir = os.path.realpath(__file__).split('/package')[0] + '/package/'
 files_dir = package_dir + 'files/'
 scripts_dir = package_dir + 'scripts/'
 distribution = platform.linux_distribution()[0].lower()
