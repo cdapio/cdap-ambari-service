@@ -13,6 +13,8 @@ class UI(Script):
     self.install_packages(env)
     # Install package
     helpers.package('cdap-ui')
+    # TODO: make sure this is available
+    helpers.package('nodejs')
 
   def start(self, env):
     print 'Start the CDAP UI';
