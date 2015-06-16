@@ -23,10 +23,11 @@ else
 cdap_user = "cdap"
 cdap_conf_dir = "/etc/cdap/conf"
 dfs = config['configurations']['core-site']['fs.defaultFS']
-cdap_site = config['configurations']['cdap-site'];
+security_enabled = config['configurations']['cluster-env']['security_enabled']
+map_cdap_site = config['configurations']['cdap-site'];
 
 # Example: root.namespace
-root_namespace = cdap_site['root.namespace']
-hdfs_namespace = cdap_site['hdfs.namespace']
-hdfs_user = cdap_site['hdfs.user']
-kafka_log_dir = cdap_site['kafka.log.dir']
+root_namespace = map_cdap_site['root.namespace']
+hdfs_namespace = map_cdap_site['hdfs.namespace']
+hdfs_user = map_cdap_site['hdfs.user']
+kafka_log_dir = map_cdap_site['kafka.log.dir']
