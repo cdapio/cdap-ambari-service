@@ -4,7 +4,7 @@ from resource_management import *
 
 class Kafka(Script):
   def install(self, env):
-    print 'Install the CDAP Kafka Server';
+    print 'Install the CDAP Kafka Server'
     import params
     self.configure(env)
     # Add repository file
@@ -15,26 +15,26 @@ class Kafka(Script):
     helpers.package('cdap-kafka')
 
   def start(self, env):
-    print 'Start the CDAP Kafka Server';
+    print 'Start the CDAP Kafka Server'
     import params
     self.configure(env)
     Execute('mkdir -p ' + params.kafka_log_dir)
     Execute('service cdap-kafka-server start')
 
   def stop(self, env):
-    print 'Stop the CDAP Kafka Server';
+    print 'Stop the CDAP Kafka Server'
     import params
     self.configure(env)
     Execute('service cdap-kafka-server stop')
 
   def status(self, env):
-    print 'Status of the CDAP Kafka Server';
+    print 'Status of the CDAP Kafka Server'
     import params
     self.configure(env)
     Execute('service cdap-kafka-server status')
 
   def configure(self, env):
-    print 'Configure the CDAP Kafka Server';
+    print 'Configure the CDAP Kafka Server'
 
 if __name__ == "__main__":
   Kafka().execute()
