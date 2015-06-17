@@ -13,11 +13,11 @@ distribution = platform.linux_distribution()[0].lower()
 
 if distribution in ['centos', 'redhat'] :
   os_repo_dir = '/etc/yum.repos.d/'
-  repo_file = 'cdap.repo'
+  repo_file = 'cdap-3.0.repo'
   package_mgr = 'yum'
 else
   os_repo_dir = '/etc/apt/sources.list.d/'
-  repo_file = 'cdap.list'
+  repo_file = 'cdap-3.0.list'
   package_mgr = 'apt-get'
 
 cdap_user = "cdap"
