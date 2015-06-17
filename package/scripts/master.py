@@ -4,7 +4,7 @@ from resource_management import *
 
 class Master(Script):
   def install(self, env):
-    print 'Install the CDAP Master';
+    print 'Install the CDAP Master'
     import params
     self.configure(env)
     # Add repository file
@@ -15,26 +15,26 @@ class Master(Script):
     helpers.package('cdap-master')
 
   def start(self, env):
-    print 'Start the CDAP Master';
+    print 'Start the CDAP Master'
     import params
     self.configure(env)
     create_hdfs_dir(params.hdfs_namespace, params.hdfs_user, 755)
     Execute('service cdap-master start')
 
   def stop(self, env):
-    print 'Stop the CDAP Master';
+    print 'Stop the CDAP Master'
     import params
     self.configure(env)
     Execute('service cdap-master stop')
 
   def status(self, env):
-    print 'Status of the CDAP Master';
+    print 'Status of the CDAP Master'
     import params
     self.configure(env)
     Execute('service cdap-master status')
 
   def configure(self, env):
-    print 'Configure the CDAP Master';
+    print 'Configure the CDAP Master'
 
 if __name__ == "__main__":
   Master().execute()
