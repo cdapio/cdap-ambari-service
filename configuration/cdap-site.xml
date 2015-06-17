@@ -20,4 +20,24 @@
 
 <configuration>
 
+  <property>
+    <name>root.namespace</name>
+    <value>cdap</value>
+  </property>
+
+  <property>
+    <name>hdfs.namespace</name>
+    <value>/${root.namespace}</value>
+  </property>
+
+  <property>
+    <name>hdfs.user</name>
+    <value>cdap</value>
+  </property>
+
+  <property>
+    <name>kafka.log.dir</name>
+    <value>/data/cdap-kafka/logs</value>
+  </property>
+
 </configuration>
