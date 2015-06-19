@@ -15,7 +15,7 @@ if distribution in ['centos', 'redhat'] :
   os_repo_dir = '/etc/yum.repos.d/'
   repo_file = 'cdap-3.0.repo'
   package_mgr = 'yum'
-else
+else :
   os_repo_dir = '/etc/apt/sources.list.d/'
   repo_file = 'cdap-3.0.list'
   package_mgr = 'apt-get'
