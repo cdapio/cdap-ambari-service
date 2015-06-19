@@ -4,10 +4,11 @@
   <services>
     <service>
       <name>CDAP</name>
-      <displayName>Cask Data Application Platform</displayName>
+      <displayName>CDAP</displayName>
       <comment>
-        An abstraction layer on top of Hadoop and other open source infrastructure such as HBase, Hive, Tephra, and Tigon
-        that enables developers to rapidly build, and operations to easily manage, real-time and batch data applications
+        Cask Data Application Platform (CDAP) is an abstraction layer on top of Hadoop and other open source infrastructure
+        such as HBase, Hive, Tephra, and Tigon that enables developers to rapidly build, and operations to easily manage,
+        real-time and batch data applications
       </comment>
       <version>3.0.0</version>
 
