@@ -15,10 +15,14 @@ if distribution in ['centos', 'redhat'] :
   os_repo_dir = '/etc/yum.repos.d/'
   repo_file = 'cdap-3.0.repo'
   package_mgr = 'yum'
+  key_cmd = 'rpm --import ' + files_dir + 'pubkey.gpg'
+  cache_cmd = 'yum makecache'
 else :
   os_repo_dir = '/etc/apt/sources.list.d/'
   repo_file = 'cdap-3.0.list'
   package_mgr = 'apt-get'
+  key_cmd = 'apt-key add ' + files_dir + 'pubkey.gpg'
+  cache_cmd = 'apt-get update'
 
 cdap_user = "cdap"
 cdap_conf_dir = "/etc/cdap/conf"
