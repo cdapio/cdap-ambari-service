@@ -51,7 +51,7 @@
               <fileName>cdap-env.sh</fileName>
               <dictionaryName>cdap-env</dictionaryName>
             </configFile>
-          <configFiles>
+          </configFiles>
         </component>
 
         <component>
