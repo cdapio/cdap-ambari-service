@@ -37,6 +37,9 @@ map_cdap_site = config['configurations']['cdap-site'];
 
 # Example: root.namespace
 root_namespace = map_cdap_site['root.namespace']
-hdfs_namespace = map_cdap_site['hdfs.namespace']
+if map_cdap_site['hdfs.namespace'] == '/${root.namespace}' :
+  hdfs_namespace = '/' + root_namespace
+else:
+  hdfs_namespace = map_cdap_site['hdfs.namespace']
 hdfs_user = map_cdap_site['hdfs.user']
 kafka_log_dir = map_cdap_site['kafka.log.dir']
