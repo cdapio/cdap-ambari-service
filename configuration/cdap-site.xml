@@ -40,4 +40,24 @@
     <value>/data/cdap-kafka/logs</value>
   </property>
 
+  <property>
+    <name>kafka.seed.brokers</name>
+    <value>localhost:9092</value>
+  </property>
+
+  <property>
+    <name>kafka.default.replication.factor</name>
+    <value>1</value>
+  </property>
+
+  <property>
+    <name>log.retention.duration.days</name>
+    <value>7</value>
+  </property>
+
+  <property>
+    <name>zookeeper.quorum</name>
+    <value>localhost:2181/${root.namespace}</value>
+  </property>
+
 </configuration>
