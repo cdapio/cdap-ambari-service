@@ -17,7 +17,7 @@ def add_repo(source, dest):
     Execute(params.key_cmd)
     Execute(params.cache_cmd)
 
-def cdap_config():
+def cdap_config:
   import params
   # We're only setup for *NIX, for now
   Directory( params.etc_prefix_dir,
