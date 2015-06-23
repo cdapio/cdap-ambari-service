@@ -4,7 +4,7 @@ import os
 def create_hdfs_dir(path, owner, perms):
   Execute('hadoop fs -mkdir -p '+path, user='hdfs')
   Execute('hadoop fs -chown ' + owner + ' ' + path, user='hdfs')
-  Execute('hadoop fs -chmod ' + perms + ' ' + path, user='hdfs')
+  Execute('hadoop fs -chmod ' + str(perms) + ' ' + path, user='hdfs')
 
 def package(name):
   import params
