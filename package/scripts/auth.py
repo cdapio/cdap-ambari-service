@@ -34,6 +34,8 @@ class Auth(Script):
 
   def configure(self, env):
     print 'Configure the CDAP Auth Server'
+    import params
+    helpers.cdap_config
 
 if __name__ == "__main__":
   Auth().execute()

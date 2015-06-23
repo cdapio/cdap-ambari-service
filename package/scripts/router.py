@@ -34,6 +34,8 @@ class Router(Script):
 
   def configure(self, env):
     print 'Configure the CDAP Router'
+    import params
+    helpers.cdap_config
 
 if __name__ == "__main__":
   Router().execute()

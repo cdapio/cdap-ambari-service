@@ -16,3 +16,29 @@ def add_repo(source, dest):
     Execute('cp ' + source + ' ' + dest)
     Execute(params.key_cmd)
     Execute(params.cache_cmd)
+
+def cdap_config():
+  import params
+  # We're only setup for *NIX, for now
+  Directory( params.etc_prefix_dir,
+      mode=0755
+  )
+
+  Directory( params.cdap_conf_dir,
+      owner = params.cdap_user,
+      group = params.user_group,
+      recursive = True
+  )
+
+  XmlConfig( "cdap-site.xml",
+            conf_dir = params.cdap_conf_dir,
+            configurations = params.config['configurations']['cdap-site'],
+            configuration_attributes=params.config['configuration_attributes']['cdap-site'],
+            owner = params.cdap_user,
+            group = params.user_group
+  )
+
+  File(format("{cdap_conf_dir}/cdap-env.sh"),
+       owner = params.cdap_user,
+       content=InlineTemplate(params.cdap_env_sh_template)
+  )

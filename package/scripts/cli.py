@@ -7,6 +7,8 @@ class CLI(Script):
 
   def configure(self, env):
     print 'Configure the CDAP CLI'
+    import params
+    helpers.cdap_config
 
   def status(self, env):
     raise ClientComponentHasNoStatus()

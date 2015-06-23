@@ -25,8 +25,12 @@ else :
   cache_cmd = 'apt-get update'
 
 cdap_user = "cdap"
-cdap_conf_dir = "/etc/cdap/conf"
+etc_prefix_dir = "/etc/cdap"
+cdap_conf_dir = "/etc/cdap/conf.ambari"
 dfs = config['configurations']['core-site']['fs.defaultFS']
+
+cdap_env_sh_template = config['configurations']['cdap-env']['content']
+
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 map_cdap_site = config['configurations']['cdap-site'];
 
