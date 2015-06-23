@@ -11,6 +11,7 @@ files_dir = package_dir + 'files/'
 scripts_dir = package_dir + 'scripts/'
 distribution = platform.linux_distribution()[0].lower()
 java64_home = config['hostLevelParams']['java_home']
+user_group = config['configurations']['cluster-env']['user_group']
 
 if distribution in ['centos', 'redhat'] :
   os_repo_dir = '/etc/yum.repos.d/'
