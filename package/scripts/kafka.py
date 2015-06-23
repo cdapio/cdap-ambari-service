@@ -36,7 +36,7 @@ class Kafka(Script):
   def configure(self, env):
     print 'Configure the CDAP Kafka Server'
     import params
-    helpers.cdap_config
+    helpers.cdap_config('kafka')
 
 if __name__ == "__main__":
   Kafka().execute()
