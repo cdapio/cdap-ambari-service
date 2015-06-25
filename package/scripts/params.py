@@ -33,6 +33,8 @@ dfs = config['configurations']['core-site']['fs.defaultFS']
 
 cdap_env_sh_template = config['configurations']['cdap-env']['content']
 
+cdap_zookeeper_quorum = config['configurations']['cdap-site']['zookeeper.quorum']
+
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 map_cdap_site = config['configurations']['cdap-site'];
 
