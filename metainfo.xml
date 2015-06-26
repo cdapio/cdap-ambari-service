@@ -26,6 +26,15 @@
             <scriptType>PYTHON</scriptType>
             <timeout>600</timeout>
           </commandScript>
+          <dependencies>
+            <dependency>
+              <name>ZOOKEEPER/ZOOKEEPER_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+          </dependencies>
         </component>
 
         <component>
@@ -103,6 +112,13 @@
                 <enabled>true</enabled>
               </auto-deploy>
             </dependency>
+            <dependency>
+              <name>ZOOKEEPER/ZOOKEEPER_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
           </dependencies>
         </component>
 
@@ -127,6 +143,13 @@
                 <co-locate>CDAP/CDAP_MASTER</co-locate>
               </auto-deploy>
             </dependency>
+            <dependency>
+              <name>ZOOKEEPER/ZOOKEEPER_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
           </dependencies>
         </component>
 
@@ -148,6 +171,13 @@
               <auto-deploy>
                 <enabled>true</enabled>
                 <co-locate>CDAP/CDAP_MASTER</co-locate>
+              </auto-deploy>
+            </dependency>
+            <dependency>
+              <name>ZOOKEEPER/ZOOKEEPER_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
               </auto-deploy>
             </dependency>
           </dependencies>
