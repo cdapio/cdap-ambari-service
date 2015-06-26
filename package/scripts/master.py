@@ -36,6 +36,7 @@ class Master(Script):
   def configure(self, env):
     print 'Configure the CDAP Master'
     import params
+    env.set_params(params)
     helpers.cdap_config('master')
 
 if __name__ == "__main__":

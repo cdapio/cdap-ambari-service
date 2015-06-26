@@ -33,8 +33,6 @@ dfs = config['configurations']['core-site']['fs.defaultFS']
 
 cdap_env_sh_template = config['configurations']['cdap-env']['content']
 
-cdap_zookeeper_quorum = config['configurations']['cdap-site']['zookeeper.quorum']
-
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 map_cdap_site = config['configurations']['cdap-site'];
 
@@ -46,3 +44,14 @@ else:
   hdfs_namespace = map_cdap_site['hdfs.namespace']
 hdfs_user = map_cdap_site['hdfs.user']
 kafka_log_dir = map_cdap_site['kafka.log.dir']
+
+# Get ZooKeeper variables
+zk_client_port = str(default('/configurations/zoo.cfg/clientPort', None))
+zk_hosts = config['clusterHostInfo']['zookeeper_hosts']
+zookeeper_hosts = ''
+# Evaluate and setup ZooKeeper quorum string
+for i, val in enumerate(zookeeper_hosts):
+  zookeeper_hosts += val + ":" + zk_client_port
+  if (i + 1) < len(zk_hosts):
+    zookeeper_hosts += ","
+cdap_zookeeper_quorum = zookeeper_hosts + '/' + root_namespace

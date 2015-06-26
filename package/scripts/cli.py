@@ -8,6 +8,7 @@ class CLI(Script):
   def configure(self, env):
     print 'Configure the CDAP CLI'
     import params
+    env.set_params(params)
     helpers.cdap_config('client')
 
   def status(self, env):

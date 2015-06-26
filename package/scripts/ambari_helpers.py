@@ -43,3 +43,5 @@ def cdap_config(name=None):
        owner = params.cdap_user,
        content=InlineTemplate(params.cdap_env_sh_template)
   )
+
+  Execute('update-alternatives --install /etc/cdap/conf cdap-conf /etc/cdap/' + params.cdap_conf_dir + ' 50')
