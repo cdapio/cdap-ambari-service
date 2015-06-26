@@ -34,7 +34,6 @@ def cdap_config(name=None):
   XmlConfig( "cdap-site.xml",
             conf_dir = params.cdap_conf_dir,
             configurations = params.config['configurations']['cdap-site'],
-            configuration_attributes=params.config['configuration_attributes']['cdap-site'],
             owner = params.cdap_user,
             group = params.user_group
   )
