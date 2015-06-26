@@ -50,7 +50,7 @@ zk_client_port = str(default('/configurations/zoo.cfg/clientPort', None))
 zk_hosts = config['clusterHostInfo']['zookeeper_hosts']
 zookeeper_hosts = ''
 # Evaluate and setup ZooKeeper quorum string
-for i, val in enumerate(zookeeper_hosts):
+for i, val in enumerate(zk_hosts):
   zookeeper_hosts += val + ":" + zk_client_port
   if (i + 1) < len(zk_hosts):
     zookeeper_hosts += ","
