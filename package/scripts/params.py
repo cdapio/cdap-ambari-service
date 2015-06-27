@@ -48,10 +48,11 @@ kafka_log_dir = map_cdap_site['kafka.log.dir']
 # Get ZooKeeper variables
 zk_client_port = str(default('/configurations/zoo.cfg/clientPort', None))
 zk_hosts = config['clusterHostInfo']['zookeeper_hosts']
+zk_hosts.sort()
 zookeeper_hosts = ''
 # Evaluate and setup ZooKeeper quorum string
 for i, val in enumerate(zk_hosts):
-  zookeeper_hosts += val + ":" + zk_client_port
+  zookeeper_hosts += val + ':' + zk_client_port
   if (i + 1) < len(zk_hosts):
-    zookeeper_hosts += ","
+    zookeeper_hosts += ','
 cdap_zookeeper_quorum = zookeeper_hosts + '/' + root_namespace
