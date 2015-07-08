@@ -14,8 +14,10 @@
 
       <components>
 
+        <!--
+          This is currently commented to focus on core CDAP without perimeter security
         <component>
-          <!-- CDAP Auth Server-->
+          <!-- CDAP Auth Server #-->
           <name>CDAP_AUTH_SERVER</name>
           <displayName>CDAP Auth Server</displayName>
           <category>MASTER</category>
@@ -43,6 +45,7 @@
             </dependency>
           </dependencies>
         </component>
+        -->
 
         <component>
           <!-- CDAP CLI -->
