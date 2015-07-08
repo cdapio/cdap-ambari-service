@@ -87,6 +87,22 @@
           </commandScript>
           <dependencies>
             <dependency>
+              <name>CDAP/CDAP_KAFKA</name>
+              <scope>cluster</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+                <co-locate>CDAP/CDAP_MASTER</co-locate>
+              </auto-deploy>
+            </dependency>
+            <dependency>
+              <name>CDAP/CDAP_ROUTER</name>
+              <scope>cluster</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+                <co-locate>CDAP/CDAP_MASTER</co-locate>
+              </auto-deploy>
+            </dependency>
+            <dependency>
               <name>ZOOKEEPER/ZOOKEEPER_SERVER</name>
               <scope>cluster</scope>
               <auto-deploy>
