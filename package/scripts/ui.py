@@ -36,6 +36,9 @@ class UI(Script):
 
   def configure(self, env):
     print 'Configure the CDAP UI'
+    import params
+    env.set_params(params)
+    helpers.cdap_config('ui')
 
 if __name__ == "__main__":
   UI().execute()

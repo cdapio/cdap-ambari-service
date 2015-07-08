@@ -18,7 +18,7 @@ class Master(Script):
     print 'Start the CDAP Master'
     import params
     self.configure(env)
-    create_hdfs_dir(params.hdfs_namespace, params.hdfs_user, 755)
+    helpers.create_hdfs_dir(params.hdfs_namespace, params.hdfs_user, 755)
     Execute('service cdap-master start')
 
   def stop(self, env):
@@ -35,6 +35,9 @@ class Master(Script):
 
   def configure(self, env):
     print 'Configure the CDAP Master'
+    import params
+    env.set_params(params)
+    helpers.cdap_config('master')
 
 if __name__ == "__main__":
   Master().execute()
