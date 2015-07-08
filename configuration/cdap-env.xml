@@ -38,6 +38,11 @@ if [ "$JAVA_HOME" = "" ]; then
 fi
 
 JAVA=$JAVA_HOME/bin/java
+
+export HADOOP_HOME_WARN_SUPPRESS=1
+
+# Hadoop home directory
+export HADOOP_HOME=${HADOOP_HOME:-/usr/lib/hadoop}
     </value>
   </property>
 </configuration>
