@@ -62,7 +62,7 @@
 
   <property>
     <name>router.bind.address</name>
-    <value>localhost</value>
+    <value>{{hostname}}</value>
   </property>
 
   <property>
