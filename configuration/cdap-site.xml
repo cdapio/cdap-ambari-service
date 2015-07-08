@@ -41,8 +41,13 @@
   </property>
 
   <property>
+    <name>kafka.bind.port</name>
+    <value>9092</value>
+  </property>
+
+  <property>
     <name>kafka.seed.brokers</name>
-    <value>localhost:9092</value>
+    <value>{{cdap_kafka_brokers}}</value>
   </property>
 
   <property>

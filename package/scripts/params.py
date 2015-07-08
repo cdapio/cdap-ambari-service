@@ -57,3 +57,15 @@ for i, val in enumerate(zk_hosts):
   if (i + 1) < len(zk_hosts):
     zookeeper_hosts += ','
 cdap_zookeeper_quorum = zookeeper_hosts + '/' + root_namespace
+
+kafka_bind_port = str(default('/configurations/cdap-site/kafka.bind.port', None))
+kafka_hosts = config['clusterHostInfo']['cdap_kafka_hosts']
+kafka_hosts.sort()
+tmp_kafka_hosts = ''
+for i, val in enumerate(tmp_kafka_hosts):
+  tmp_kafka_hosts += val + ':' + kafka_bind_port
+  if (i + 1) < len(tmp_kafka_hosts):
+    tmp_kafka_hosts += ','
+cdap_kafka_brokers = tmp_kafka_hosts
+
+### TODO: cdap_auth_server_hosts cdap_router_hosts cdap_ui_hosts
