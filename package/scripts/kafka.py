@@ -18,7 +18,6 @@ class Kafka(Script):
     print 'Start the CDAP Kafka Server'
     import params
     self.configure(env)
-    Execute('mkdir -p ' + params.kafka_log_dir)
     Execute('service cdap-kafka-server start')
 
   def stop(self, env):
@@ -38,6 +37,12 @@ class Kafka(Script):
     import params
     env.set_params(params)
     helpers.cdap_config('kafka')
+
+    Directory( params.kafka_log_dir,
+        owner = params.cdap_user,
+        group = params.user_group,
+        recursive = True
+    )
 
 if __name__ == "__main__":
   Kafka().execute()
