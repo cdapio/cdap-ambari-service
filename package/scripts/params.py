@@ -62,7 +62,7 @@ kafka_bind_port = str(default('/configurations/cdap-site/kafka.bind.port', None)
 kafka_hosts = config['clusterHostInfo']['cdap_kafka_hosts']
 kafka_hosts.sort()
 tmp_kafka_hosts = ''
-for i, val in enumerate(tmp_kafka_hosts):
+for i, val in enumerate(kafka_hosts):
   tmp_kafka_hosts += val + ':' + kafka_bind_port
   if (i + 1) < len(tmp_kafka_hosts):
     tmp_kafka_hosts += ','
