@@ -4,6 +4,7 @@ import os
 
 # config object that holds the configurations declared in the -config.xml file
 config = Script.get_config()
+tmp_dir = Script.get_tmp_dir()
 
 stack_dir = os.path.realpath(__file__).split('/scripts')[0]
 package_dir = os.path.realpath(__file__).split('/package')[0] + '/package/'
@@ -69,3 +70,6 @@ for i, val in enumerate(kafka_hosts):
 cdap_kafka_brokers = tmp_kafka_hosts
 
 ### TODO: cdap_auth_server_hosts cdap_router_hosts cdap_ui_hosts
+
+# Get some of our hosts
+hive_metastore_host = config['clusterHostInfo']['hive_metastore_host']
