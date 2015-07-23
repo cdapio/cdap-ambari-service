@@ -17,8 +17,14 @@ class Router(Script):
   def start(self, env):
     print 'Start the CDAP Router'
     import params
+    env.set_params(params)
     self.configure(env)
-    Execute('service cdap-router start')
+    daemon_cmd = format('/opt/cdap/gateway/bin/svc-router start')
+    no_op_test = format('ls {params.cdap_router_pid_file} >/dev/null 2>&1 && ps -p $(<{params.cdap_router_pid_file}) >/dev/null 2>&1')
+    Execute( daemon_cmd,
+             user=params.cdap_user,
+             not_if=no_op_test
+    )
 
   def stop(self, env):
     print 'Stop the CDAP Router'

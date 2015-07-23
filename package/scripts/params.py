@@ -73,3 +73,9 @@ cdap_kafka_brokers = tmp_kafka_hosts
 
 # Get some of our hosts
 hive_metastore_host = config['clusterHostInfo']['hive_metastore_host']
+
+cdap_auth_pid_file = '/var/cdap/run/auth-server-' + cdap_user + '.pid'
+cdap_kafka_pid_file = '/var/cdap/run/kafka-server-' + cdap_user + '.pid'
+cdap_master_pid_file = '/var/cdap/run/master-' + cdap_user + '.pid'
+cdap_router_pid_file = '/var/cdap/run/router-' + cdap_user + '.pid'
+cdap_ui_pid_file = '/var/cdap/run/ui-' + cdap_user + '.pid'
