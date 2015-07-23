@@ -19,6 +19,8 @@ class Master(Script):
     import params
     self.configure(env)
     helpers.create_hdfs_dir(params.hdfs_namespace, params.hdfs_user, 755)
+    # Hack to work around CDAP-1967
+    self.remove_jackson
     Execute('service cdap-master start')
 
   def stop(self, env):
@@ -38,6 +40,9 @@ class Master(Script):
     import params
     env.set_params(params)
     helpers.cdap_config('master')
+
+  def remove_jackson(self):
+    Execute('rm -f /opt/cdap/master/lib/org.codehaus.jackson.jackson-*')
 
 if __name__ == "__main__":
   Master().execute()
