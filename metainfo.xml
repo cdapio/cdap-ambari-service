@@ -14,39 +14,6 @@
 
       <components>
 
-        <!--
-          This is currently commented to focus on core CDAP without perimeter security
-        <component>
-          <!-- CDAP Auth Server #-->
-          <name>CDAP_AUTH_SERVER</name>
-          <displayName>CDAP Auth Server</displayName>
-          <category>MASTER</category>
-          <cardinality>0-1</cardinality>
-          <versionAdvertised>true</versionAdvertised>
-          <commandScript>
-            <script>scripts/auth.py</script>
-            <scriptType>PYTHON</scriptType>
-            <timeout>600</timeout>
-          </commandScript>
-          <dependencies>
-            <dependency>
-              <name>ZOOKEEPER/ZOOKEEPER_CLIENT</name>
-              <scope>host</scope>
-              <auto-deploy>
-                <enabled>true</enabled>
-              </auto-deploy>
-            </dependency>
-            <dependency>
-              <name>HBASE/HBASE_CLIENT</name>
-              <scope>host</scope>
-              <auto-deploy>
-                <enabled>true</enabled>
-              </auto-deploy>
-            </dependency>
-          </dependencies>
-        </component>
-        -->
-
         <component>
           <!-- CDAP CLI -->
           <name>CDAP_CLI</name>
