@@ -9,10 +9,6 @@ def create_hdfs_dir(path, owner, perms):
 def package(name):
   import params
   Execute(params.package_mgr + ' install -y ' + name, user='root')
-  # Replace service script
-  if name[:4] == 'cdap':
-    Execute('rm -f /opt/cdap/' + name[5:] + '/bin/service')
-    Execute('cp ' + params.files_dir + 'service /opt/cdap/' + name[5:] + '/bin/service')
 
 def add_repo(source, dest):
   import params
