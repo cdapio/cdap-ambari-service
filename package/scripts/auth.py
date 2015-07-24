@@ -17,8 +17,14 @@ class Auth(Script):
   def start(self, env):
     print 'Start the CDAP Auth Server'
     import params
+    env.set_params(params)
     self.configure(env)
-    Execute('service cdap-auth-server start')
+    daemon_cmd = format('/opt/cdap/security/bin/svc-auth-server start')
+    no_op_test = format('ls {params.cdap_auth_pid_file} >/dev/null 2>&1 && ps -p $(<{params.cdap_auth_pid_file}) >/dev/null 2>&1')
+    Execute( daemon_cmd,
+             user=params.cdap_user,
+             not_if=no_op_test
+    )
 
   def stop(self, env):
     print 'Stop the CDAP Auth Server'
@@ -27,10 +33,9 @@ class Auth(Script):
     Execute('service cdap-auth-server stop')
 
   def status(self, env):
-    print 'Status of the CDAP Auth Server'
     import params
-    self.configure(env)
-    Execute('service cdap-auth-server status')
+    env.set_params(params)
+    check_process_status(params.cdap_auth_pid_file)
 
   def configure(self, env):
     print 'Configure the CDAP Auth Server'
