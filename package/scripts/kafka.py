@@ -33,10 +33,9 @@ class Kafka(Script):
     Execute('service cdap-kafka-server stop')
 
   def status(self, env):
-    print 'Status of the CDAP Kafka Server'
     import params
-    self.configure(env)
-    Execute('service cdap-kafka-server status')
+    env.set_params(params)
+    check_process_status(params.cdap_kafka_pid_file)
 
   def configure(self, env):
     print 'Configure the CDAP Kafka Server'

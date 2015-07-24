@@ -33,10 +33,9 @@ class Router(Script):
     Execute('service cdap-router stop')
 
   def status(self, env):
-    print 'Status of the CDAP Router'
     import params
-    self.configure(env)
-    Execute('service cdap-router status')
+    env.set_params(params)
+    check_process_status(params.cdap_router_pid_file)
 
   def configure(self, env):
     print 'Configure the CDAP Router'

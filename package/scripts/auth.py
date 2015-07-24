@@ -33,10 +33,9 @@ class Auth(Script):
     Execute('service cdap-auth-server stop')
 
   def status(self, env):
-    print 'Status of the CDAP Auth Server'
     import params
-    self.configure(env)
-    Execute('service cdap-auth-server status')
+    env.set_params(params)
+    check_process_status(params.cdap_auth_pid_file)
 
   def configure(self, env):
     print 'Configure the CDAP Auth Server'
