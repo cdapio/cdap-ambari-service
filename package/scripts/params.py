@@ -84,8 +84,8 @@ cdap_router_host = router_hosts[0]
 # Get some of our hosts
 hive_metastore_host = config['clusterHostInfo']['hive_metastore_host']
 
-cdap_auth_pid_file = '/var/cdap/run/auth-server-' + cdap_user + '.pid'
-cdap_kafka_pid_file = '/var/cdap/run/kafka-server-' + cdap_user + '.pid'
-cdap_master_pid_file = '/var/cdap/run/master-' + cdap_user + '.pid'
-cdap_router_pid_file = '/var/cdap/run/router-' + cdap_user + '.pid'
-cdap_ui_pid_file = '/var/cdap/run/ui-' + cdap_user + '.pid'
+cdap_auth_pid_file = pid_dir + '/auth-server-' + cdap_user + '.pid'
+cdap_kafka_pid_file = pid_dir + '/kafka-server-' + cdap_user + '.pid'
+cdap_master_pid_file = pid_dir + '/master-' + cdap_user + '.pid'
+cdap_router_pid_file = pid_dir + '/router-' + cdap_user + '.pid'
+cdap_ui_pid_file = pid_dir + '/ui-' + cdap_user + '.pid'
