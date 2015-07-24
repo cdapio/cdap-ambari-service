@@ -71,7 +71,7 @@ kafka_hosts.sort()
 tmp_kafka_hosts = ''
 for i, val in enumerate(kafka_hosts):
   tmp_kafka_hosts += val + ':' + kafka_bind_port
-  if (i + 1) < len(tmp_kafka_hosts):
+  if i < len(tmp_kafka_hosts):
     tmp_kafka_hosts += ','
 cdap_kafka_brokers = tmp_kafka_hosts
 
