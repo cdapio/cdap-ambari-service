@@ -77,6 +77,10 @@ cdap_kafka_brokers = tmp_kafka_hosts
 
 ### TODO: cdap_auth_server_hosts cdap_router_hosts cdap_ui_hosts
 
+router_hosts = config['clusterHostInfo']['cdap_router_hosts']
+router_hosts.sort()
+cdap_router_host = router_hosts[0]
+
 # Get some of our hosts
 hive_metastore_host = config['clusterHostInfo']['hive_metastore_host']
 

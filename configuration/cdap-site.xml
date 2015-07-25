@@ -461,7 +461,172 @@
     <final>true</final>
   </property>
 
+  <!-- AppFabric related changes -->
+
+  <property>
+    <name>app.output.dir</name>
+    <value>/programs</value>
+    <description>Directory where all archives are stored</description>
+  </property>
+
+  <property>
+    <name>dataset.table.prefix</name>
+    <value>${root.namespace}</value>
+    <description>Prefix for dataset table name</description>
+  </property>
+
+  <property>
+    <name>dataset.service.output.dir</name>
+    <value>/datasets</value>
+    <description>Directory where all dataset modules archives are stored</description>
+  </property>
+
+  <property>
+    <name>dataset.executor.max.instances</name>
+    <value>${master.service.max.instances}</value>
+    <description>Maximum Number of DataSet Executor Instances</description>
+  </property>
+
+  <property>
+    <name>app.program.jvm.opts</name>
+    <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version}</value>
+    <description>Java options for all program containers</description>
+  </property>
+
+  <!-- Used for MapReduce Info endpoint -->
+
+  <property>
+    <name>mapreduce.jobclient.connect.max.retries</name>
+    <value>2</value>
+    <description>
+      Indicates the maximum number of retries JobClient will make to establish a server connection when retrieving
+      job status and history.
+    </description>
+  </property>
+
+  <property>
+    <name>mapreduce.include.custom.format.classes</name>
+    <value>true</value>
+    <description>
+      Indicates to include custom input / output format classes in the job.jar or not. If set to true,
+      custom format classes will be added to the job.jar and available as part of the MR system classpath.
+    </description>
+  </property>
+
+  <!-- Scheduler related changes -->
+
+  <property>
+    <name>scheduler.max.thread.pool.size</name>
+    <value>30</value>
+    <description>Size of the scheduler thread pool</description>
+  </property>
+
+  <!-- Router configuration -->
+
+  <property>
+    <name>router.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>Specifies the address for router server to bind to</description>
+  </property>
+
+  <property>
+    <name>router.webapp.enabled</name>
+    <value>false</value>
+    <description>Specifies if webapp listening service should be started at Router</description>
+  </property>
+
+  <property>
+    <name>router.bind.port</name>
+    <value>10000</value>
+    <description>Router listening port for gateway</description>
+  </property>
+
+  <property>
+    <name>router.server.port</name>
+    <value>${router.bind.port}</value>
+    <final>true</final>
+  </property>
+
+  <property>
+    <name>router.webapp.bind.port</name>
+    <value>20000</value>
+    <description>Router listening port for webapp</description>
+  </property>
+
+  <property>
+    <name>router.ssl.bind.port</name>
+    <value>10443</value>
+    <description>Secure router listening port for gateway</description>
+  </property>
+
+  <property>
+    <name>router.ssl.server.port</name>
+    <value>${router.ssl.bind.port}</value>
+    <final>true</final>
+  </property>
+
+  <property>
+    <name>router.ssl.webapp.bind.port</name>
+    <value>20443</value>
+    <description>Secure router listening port for webapp</description>
+  </property>
+
+  <!-- New Metrics system settings -->
+
+  <property>
+    <name>metrics.data.table.retention.resolution.1.seconds</name>
+    <value>7200</value>
+    <description>Retention resolution 1 sec table in seconds</description>
+  </property>
+
+  <property>
+    <name>metrics.data.table.retention.resolution.60.seconds</name>
+    <value>2592000</value>
+    <description>Retention resolution for 1 minute table (in seconds). Default retention period is 30 days</description>
+  </property>
+
+  <property>
+    <name>metrics.data.table.retention.resolution.3600.seconds</name>
+    <value>2592000</value>
+    <description>Retention resolution 1 hour table (in seconds). Default retention period is 30 days</description>
+  </property>
+
+  <property>
+    <name>metrics.data.table.ts.rollTime.60</name>
+    <value>60</value>
+    <description>Number of columns in a 1 minute time series table</description>
+  </property>
+
+  <property>
+    <name>metrics.data.table.ts.rollTime.3600</name>
+    <value>24</value>
+    <description>Number of columns in 1 hour time series table</description>
+  </property>
+
+  <property>
+    <name>metrics.kafka.partition.size</name>
+    <value>10</value>
+    <description>Number of partitions for metrics topic</description>
+  </property>
+
+  <property>
+    <name>metrics.connection.backlog</name>
+    <value>${http.service.connection.backlog}</value>
+    <description>Max connection backlog of metrics HTTP service</description>
+  </property>
+
+  <property>
+    <name>metrics.exec.threads</name>
+    <value>${http.service.exec.threads}</value>
+    <description>Number of netty server executor threads for metrics HTTP services</description>
+  </property>
+
   <!-- Unsorted -->
+
+  <property>
+    <name>router.server.address</name>
+    <value>{{cdap_router_host}}</value>
+  </property>
 
   <property>
     <name>kafka.log.dir</name>
@@ -486,16 +651,6 @@
   <property>
     <name>log.retention.duration.days</name>
     <value>7</value>
-  </property>
-
-  <property>
-    <name>router.bind.address</name>
-    <value>{{hostname}}</value>
-  </property>
-
-  <property>
-    <name>router.server.address</name>
-    <value>${router.bind.address}</value>
   </property>
 
   <property>
