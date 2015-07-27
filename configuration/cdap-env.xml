@@ -17,6 +17,32 @@
 -->
 
 <configuration>
+
+  <property>
+    <name>cdap_log_dir</name>
+    <value>/var/log/cdap</value>
+    <description>Log directory for CDAP</description>
+  </property>
+
+  <property>
+    <name>cdap_pid_dir</name>
+    <value>/var/run/cdap</value>
+    <description>PID directory for CDAP</description>
+  </property>
+
+  <property>
+    <name>cdap_master_heapsize</name>
+    <value>1024</value>
+    <description>CDAP Master Heap Size</description>
+  </property>
+
+  <property>
+    <name>cdap_user</name>
+    <value>cdap</value>
+    <property-type>USER</property-type>
+    <description>CDAP User Name</description>
+  </property>
+
   <!-- cdap-env.sh -->
   <property>
     <name>content</name>
@@ -24,11 +50,8 @@
     <value>
 export JAVA_HOME={{java64_home}}
 if [ "$JAVA_HOME" != "" ]; then
-  #echo "run java in $JAVA_HOME"
   JAVA_HOME=$JAVA_HOME
-fi
-
-if [ "$JAVA_HOME" = "" ]; then
+else
   echo "Error: JAVA_HOME is not set."
   exit 1
 fi
@@ -37,8 +60,11 @@ JAVA=$JAVA_HOME/bin/java
 
 export HADOOP_HOME_WARN_SUPPRESS=1
 
-# Hadoop home directory
-export HADOOP_HOME=${HADOOP_HOME:-/usr/lib/hadoop}
+export CDAP_HOME=/opt/cdap
+export CDAP_CONF={{cdap_conf_dir}}
+export LOG_DIR={{log_dir}}
+export PID_DIR={{pid_dir}}
+export MASTER_JAVA_HEAPMAX="-Xmx{{cdap_master_heapsize}}m"
     </value>
   </property>
 </configuration>

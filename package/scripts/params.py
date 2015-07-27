@@ -28,7 +28,11 @@ else :
   key_cmd = 'apt-key add ' + files_dir + 'pubkey.gpg'
   cache_cmd = 'apt-get update'
 
-cdap_user = "cdap"
+cdap_user = config['configurations']['cdap-env']['cdap_user']
+log_dir = config['configurations']['cdap-env']['cdap_log_dir']
+pid_dir = config['configurations']['cdap-env']['cdap_pid_dir']
+cdap_master_heapsize = config['configurations']['cdap-env']['cdap_master_heapsize']
+
 etc_prefix_dir = "/etc/cdap"
 cdap_conf_dir = "/etc/cdap/conf.ambari"
 dfs = config['configurations']['core-site']['fs.defaultFS']
@@ -45,6 +49,8 @@ if map_cdap_site['hdfs.namespace'] == '/${root.namespace}' :
 else:
   hdfs_namespace = map_cdap_site['hdfs.namespace']
 hdfs_user = map_cdap_site['hdfs.user']
+### TODO: Fix this hack -- check if we're still cdap_user
+hdfs_user = cdap_user
 kafka_log_dir = map_cdap_site['kafka.log.dir']
 
 # Get ZooKeeper variables
@@ -70,6 +76,10 @@ for i, val in enumerate(kafka_hosts):
 cdap_kafka_brokers = tmp_kafka_hosts
 
 ### TODO: cdap_auth_server_hosts cdap_router_hosts cdap_ui_hosts
+
+router_hosts = config['clusterHostInfo']['cdap_router_hosts']
+router_hosts.sort()
+cdap_router_host = router_hosts[0]
 
 # Get some of our hosts
 hive_metastore_host = config['clusterHostInfo']['hive_metastore_host']
