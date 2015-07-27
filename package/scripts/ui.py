@@ -37,7 +37,7 @@ class UI(Script):
 
   def status(self, env):
     import status_params
-    Execute('ls ' + status_params.cdap_ui_pid_file + ' >/dev/null 2>&1 && ps -p $(<' + status_params.cdap_ui_pid_file + ') >/dev/null 2>&1')
+    check_process_status(status_params.cdap_ui_pid_file)
 
   def configure(self, env):
     print 'Configure the CDAP UI'
