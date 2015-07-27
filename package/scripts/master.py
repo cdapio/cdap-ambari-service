@@ -17,13 +17,14 @@ class Master(Script):
   def start(self, env):
     print 'Start the CDAP Master'
     import params
+    import status_params
     env.set_params(params)
     self.configure(env)
     helpers.create_hdfs_dir(params.hdfs_namespace, params.hdfs_user, 755)
     # Hack to work around CDAP-1967
     self.remove_jackson(env)
     daemon_cmd = format('/opt/cdap/master/bin/svc-master start')
-    no_op_test = format('ls {params.cdap_master_pid_file} >/dev/null 2>&1 && ps -p $(<{params.cdap_master_pid_file}) >/dev/null 2>&1')
+    no_op_test = format('ls {status_params.cdap_master_pid_file} >/dev/null 2>&1 && ps -p $(<{status_params.cdap_master_pid_file}) >/dev/null 2>&1')
     Execute( daemon_cmd,
              user=params.cdap_user,
              not_if=no_op_test
@@ -36,9 +37,8 @@ class Master(Script):
     Execute('service cdap-master stop')
 
   def status(self, env):
-    import params
-    env.set_params(params)
-    check_process_status(params.cdap_master_pid_file)
+    import status_params
+    Execute('ls ' + status_params.cdap_master_pid_file + ' >/dev/null 2>&1 && ps -p $(<' + status_params.cdap_master_pid_file + ') >/dev/null 2>&1')
 
   def configure(self, env):
     print 'Configure the CDAP Master'

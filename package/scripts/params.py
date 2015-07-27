@@ -71,7 +71,7 @@ kafka_hosts.sort()
 tmp_kafka_hosts = ''
 for i, val in enumerate(kafka_hosts):
   tmp_kafka_hosts += val + ':' + kafka_bind_port
-  if (i + 1) < len(tmp_kafka_hosts):
+  if i < len(tmp_kafka_hosts):
     tmp_kafka_hosts += ','
 cdap_kafka_brokers = tmp_kafka_hosts
 
@@ -83,9 +83,3 @@ cdap_router_host = router_hosts[0]
 
 # Get some of our hosts
 hive_metastore_host = config['clusterHostInfo']['hive_metastore_host']
-
-cdap_auth_pid_file = '/var/cdap/run/auth-server-' + cdap_user + '.pid'
-cdap_kafka_pid_file = '/var/cdap/run/kafka-server-' + cdap_user + '.pid'
-cdap_master_pid_file = '/var/cdap/run/master-' + cdap_user + '.pid'
-cdap_router_pid_file = '/var/cdap/run/router-' + cdap_user + '.pid'
-cdap_ui_pid_file = '/var/cdap/run/ui-' + cdap_user + '.pid'

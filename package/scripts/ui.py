@@ -19,10 +19,11 @@ class UI(Script):
   def start(self, env):
     print 'Start the CDAP UI'
     import params
+    import status_params
     env.set_params(params)
     self.configure(env)
     daemon_cmd = format('/opt/cdap/ui/bin/svc-ui start')
-    no_op_test = format('ls {params.cdap_ui_pid_file} >/dev/null 2>&1 && ps -p $(<{params.cdap_ui_pid_file}) >/dev/null 2>&1')
+    no_op_test = format('ls {status_params.cdap_ui_pid_file} >/dev/null 2>&1 && ps -p $(<{status_params.cdap_ui_pid_file}) >/dev/null 2>&1')
     Execute( daemon_cmd,
              user=params.cdap_user,
              not_if=no_op_test
@@ -35,9 +36,8 @@ class UI(Script):
     Execute('service cdap-ui stop')
 
   def status(self, env):
-    import params
-    env.set_params(params)
-    check_process_status(params.cdap_ui_pid_file)
+    import status_params
+    Execute('ls ' + status_params.cdap_ui_pid_file + ' >/dev/null 2>&1 && ps -p $(<' + status_params.cdap_ui_pid_file + ') >/dev/null 2>&1')
 
   def configure(self, env):
     print 'Configure the CDAP UI'
