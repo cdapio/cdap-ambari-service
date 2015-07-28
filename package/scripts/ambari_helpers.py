@@ -43,6 +43,7 @@ def cdap_config(name=None):
        content=InlineTemplate(params.cdap_env_sh_template)
   )
 
+  cleanup_opts()
   Execute('update-alternatives --install /etc/cdap/conf cdap-conf ' + params.cdap_conf_dir + ' 50')
 
 def has_hive():
@@ -72,3 +73,6 @@ def get_hdp_version():
     raise Fail('Failed to get extracted version')
 
   return hdp_version
+
+def cleanup_opts():
+  Execute('sed -i \'s/"$OPTS"/$OPTS/g\' /opt/cdap/*/bin/service')
