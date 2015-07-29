@@ -36,7 +36,9 @@ else :
 cdap_user = config['configurations']['cdap-env']['cdap_user']
 log_dir = config['configurations']['cdap-env']['cdap_log_dir']
 pid_dir = config['configurations']['cdap-env']['cdap_pid_dir']
+cdap_kafka_heapsize = config['configurations']['cdap-env']['cdap_kafka_heapsize']
 cdap_master_heapsize = config['configurations']['cdap-env']['cdap_master_heapsize']
+cdap_router_heapsize = config['configurations']['cdap-env']['cdap_router_heapsize']
 
 etc_prefix_dir = "/etc/cdap"
 cdap_conf_dir = "/etc/cdap/conf.ambari"
