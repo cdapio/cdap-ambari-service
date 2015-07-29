@@ -44,6 +44,12 @@ def cdap_config(name=None):
   )
 
   cleanup_opts()
+
+  # Copy logback.xml and logback-container.xml
+  for i in 'logback.xml', 'logback-container.xml':
+    no_op_test = 'ls ' + params.cdap_conf_dir + '/' + i + ' 2>/dev/null'
+    Execute('cp -f /etc/cdap/conf.dist/' + i + ' ' + params.cdap_conf_dir, not_if=no_op_test)
+
   Execute('update-alternatives --install /etc/cdap/conf cdap-conf ' + params.cdap_conf_dir + ' 50')
 
 def has_hive():
