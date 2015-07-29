@@ -15,8 +15,10 @@ distribution = platform.linux_distribution()[0].lower()
 hostname = config['hostname']
 java64_home = config['hostLevelParams']['java_home']
 user_group = config['configurations']['cluster-env']['user_group']
-### TODO: Add this back with a safe version of the function
-# hdp_version = helpers.get_hdp_version()
+
+### TODO: this only works on HDP 2.2+
+hdp_version = helpers.get_hdp_version()
+hadoop_lib_home = '/usr/hdp/' + hdp_version + '/hadoop/lib'
 
 if distribution in ['centos', 'redhat'] :
   os_repo_dir = '/etc/yum.repos.d/'

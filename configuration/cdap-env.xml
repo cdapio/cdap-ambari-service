@@ -60,6 +60,9 @@ JAVA=$JAVA_HOME/bin/java
 
 export HADOOP_HOME_WARN_SUPPRESS=1
 
+# Set native libs PATH
+export JAVA_LIBRARY_PATH=${JAVA_LIBRARY_PATH}:{{hadoop_lib_home}}/native/Linux-amd64-64:{{hadoop_lib_home}}/native
+
 export CDAP_HOME=/opt/cdap
 export CDAP_CONF={{cdap_conf_dir}}
 export LOG_DIR={{log_dir}}
