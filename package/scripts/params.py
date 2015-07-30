@@ -1,6 +1,7 @@
 from resource_management import *
 from resource_management.libraries.functions.version import format_hdp_stack_version, compare_versions
 import os
+import ambari_helpers as helpers
 
 # config object that holds the configurations declared in the -config.xml file
 config = Script.get_config()
@@ -14,6 +15,7 @@ distribution = platform.linux_distribution()[0].lower()
 hostname = config['hostname']
 java64_home = config['hostLevelParams']['java_home']
 user_group = config['configurations']['cluster-env']['user_group']
+hdp_version = helpers.get_hdp_version()
 
 if distribution in ['centos', 'redhat'] :
   os_repo_dir = '/etc/yum.repos.d/'

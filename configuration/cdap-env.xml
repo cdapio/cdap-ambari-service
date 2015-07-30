@@ -65,6 +65,7 @@ export CDAP_CONF={{cdap_conf_dir}}
 export LOG_DIR={{log_dir}}
 export PID_DIR={{pid_dir}}
 export MASTER_JAVA_HEAPMAX="-Xmx{{cdap_master_heapsize}}m"
+export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}}"
     </value>
   </property>
 </configuration>
