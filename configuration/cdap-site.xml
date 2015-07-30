@@ -654,6 +654,16 @@
   </property>
 
   <property>
+    <name>router.bind.port</name>
+    <value>{{cdap_router_port}}</name>
+  </property>
+
+  <property>
+    <name>router.server.port</name>
+    <value>${router.bind.port}</value>
+  </property>
+
+  <property>
     <name>dashboard.bind.port</name>
     <value>9999</value>
   </property>
