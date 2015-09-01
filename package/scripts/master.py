@@ -6,13 +6,13 @@ class Master(Script):
   def install(self, env):
     print 'Install the CDAP Master'
     import params
-    # Install any global packages
-    self.install_packages(env)
-    self.configure(env)
     # Add repository file
     helpers.add_repo(params.files_dir + params.repo_file, params.os_repo_dir)
+    # Install any global packages
+    self.install_packages(env)
     # Install package
     helpers.package('cdap-master')
+    self.configure(env)
 
   def start(self, env):
     print 'Start the CDAP Master'
