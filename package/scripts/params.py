@@ -15,7 +15,8 @@ distribution = platform.linux_distribution()[0].lower()
 hostname = config['hostname']
 java64_home = config['hostLevelParams']['java_home']
 user_group = config['configurations']['cluster-env']['user_group']
-hdp_version = helpers.get_hdp_version()
+### TODO: Add this back with a safe version of the function
+# hdp_version = helpers.get_hdp_version()
 
 if distribution in ['centos', 'redhat'] :
   os_repo_dir = '/etc/yum.repos.d/'

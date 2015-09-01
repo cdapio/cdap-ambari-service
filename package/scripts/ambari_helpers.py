@@ -53,6 +53,7 @@ def has_hive():
   else:
     return false
 
+### TODO: Update this with a safe version, as hdp-select doesn't exist on HDP < 2.2
 def get_hdp_version():
   try:
     command = 'hdp-select status hadoop-client'
