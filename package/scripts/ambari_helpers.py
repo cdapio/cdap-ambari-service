@@ -43,7 +43,7 @@ def cdap_config(name=None):
        content=InlineTemplate(params.cdap_env_sh_template)
   )
 
-  cleanup_opts()
+  cleanup_opts(name)
 
   # Copy logback.xml and logback-container.xml
   for i in 'logback.xml', 'logback-container.xml':
@@ -75,5 +75,7 @@ def get_hdp_version():
 
   return hdp_version
 
-def cleanup_opts():
-  Execute('sed -i \'s/"$OPTS"/$OPTS/g\' /opt/cdap/*/bin/service')
+def cleanup_opts(name):
+  command = 'sed -i \'s/"$OPTS"/$OPTS/g\' /opt/cdap/' + name + '/bin/service'
+  return_code, output = shell.call(command, timeout=20)
+  # Execute('sed -i \'s/"$OPTS"/$OPTS/g\' /opt/cdap/' + name + '/bin/service', not_if=no_op_test)
