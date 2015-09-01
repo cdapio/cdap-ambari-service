@@ -59,21 +59,15 @@ def has_hive():
   else:
     return false
 
-### TODO: Update this with a safe version, as hdp-select doesn't exist on HDP < 2.2
 def get_hdp_version():
-  try:
-    command = 'hdp-select status hadoop-client'
-    return_code, hdp_output = shell.call(command, timeout=20)
-  except Exception, e:
-    Logger.error(str(e))
-    raise Fail('Unable to execute hdp-select command to retrieve the version.')
+  command = 'hadoop version | head -n 1 | cut -d. -f4-'
+  return_code, hdp_output = shell.call(command, timeout=20)
 
   if return_code != 0:
     raise Fail(
       'Unable to determine the current version because of a non-zero return code of {0}'.format(str(return_code)))
 
-  hdp_version = re.sub('hadoop-client - ', '', hdp_output)
-  hdp_version = hdp_version.rstrip()
+  hdp_version = hdp_output.rstrip()
   match = re.match('[0-9]+.[0-9]+.[0-9]+.[0-9]+-[0-9]+', hdp_version)
 
   if match is None:
