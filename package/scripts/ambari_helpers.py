@@ -94,4 +94,4 @@ def get_hadoop_lib():
 def cleanup_opts(dirname):
   command = "sed -i 's/\"$OPTS\"/$OPTS/g' /opt/cdap/%s/bin/service" % (dirname)
   # We ignore errors here, in case we are called before package installation
-  return_code, output = shell.call(command, timeout=20)
+  shell.call(command, timeout=20)
