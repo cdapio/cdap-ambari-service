@@ -71,8 +71,7 @@ def get_hdp_version():
   return_code, hdp_output = shell.call(command, timeout=20)
 
   if return_code != 0:
-    raise Fail(
-      'Unable to determine the current version because of a non-zero return code of {0}'.format(str(return_code)))
+    raise Fail("Unable to determine the current hadoop version: %s" % (hdp_output))
 
   line = hdp_output.rstrip().split('\n')[0]
   arr = line.split('.')
