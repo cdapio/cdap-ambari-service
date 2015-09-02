@@ -23,13 +23,13 @@ if distribution in ['centos', 'redhat'] :
   os_repo_dir = '/etc/yum.repos.d/'
   repo_file = 'cdap-3.0.repo'
   package_mgr = 'yum'
-  key_cmd = 'rpm --import ' + files_dir + 'pubkey.gpg'
+  key_cmd = "rpm --import %s/pubkey.gpg" % (files_dir)
   cache_cmd = 'yum makecache'
 else :
   os_repo_dir = '/etc/apt/sources.list.d/'
   repo_file = 'cdap-3.0.list'
   package_mgr = 'apt-get'
-  key_cmd = 'apt-key add ' + files_dir + 'pubkey.gpg'
+  key_cmd = "apt-key add %s/pubkey.gpg" % (files_dir)
   cache_cmd = 'apt-get update'
 
 cdap_user = config['configurations']['cdap-env']['cdap_user']

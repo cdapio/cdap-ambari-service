@@ -2,18 +2,18 @@ from resource_management import *
 import os
 
 def create_hdfs_dir(path, owner, perms):
-  Execute('hadoop fs -mkdir -p '+path, user='hdfs')
-  Execute('hadoop fs -chown ' + owner + ' ' + path, user='hdfs')
-  Execute('hadoop fs -chmod ' + str(perms) + ' ' + path, user='hdfs')
+  Execute("hadoop fs -mkdir -p %s" % (path), user='hdfs')
+  Execute("hadoop fs -chown %s %s" % (owner, path), user='hdfs')
+  Execute("hadoop fs -chmod %s %s" % (str(perms), path), user='hdfs')
 
 def package(name):
   import params
-  Execute(params.package_mgr + ' install -y ' + name, user='root')
+  Execute("%s install -y %s" % (params.package_mgr, name), user='root')
 
 def add_repo(source, dest):
   import params
   if not os.path.isfile(dest + params.repo_file):
-    Execute('cp ' + source + ' ' + dest)
+    Execute("cp %s %s" % (source, dest)
     Execute(params.key_cmd)
     Execute(params.cache_cmd)
 
@@ -31,7 +31,7 @@ def cdap_config(name=None):
             recursive = True
   )
 
-  XmlConfig("cdap-site.xml",
+  XmlConfig('cdap-site.xml',
             conf_dir = params.cdap_conf_dir,
             configurations = params.config['configurations']['cdap-site'],
             owner = params.cdap_user,
@@ -54,10 +54,10 @@ def cdap_config(name=None):
 
   # Copy logback.xml and logback-container.xml
   for i in 'logback.xml', 'logback-container.xml':
-    no_op_test = 'ls ' + params.cdap_conf_dir + '/' + i + ' 2>/dev/null'
-    Execute('cp -f /etc/cdap/conf.dist/' + i + ' ' + params.cdap_conf_dir, not_if=no_op_test)
+    no_op_test = "ls %s/%s 2>/dev/null" % (params.cdap_conf_dir, i)
+    Execute("cp -f /etc/cdap/conf.dist/%s %s" % (i, params.cdap_conf_dir), not_if=no_op_test)
 
-  Execute('update-alternatives --install /etc/cdap/conf cdap-conf ' + params.cdap_conf_dir + ' 50')
+  Execute("update-alternatives --install /etc/cdap/conf cdap-conf %s 50" % (params.cdap_conf_dir)
 
 def has_hive():
   import params
@@ -83,15 +83,15 @@ def get_hdp_version():
 
 def get_hadoop_lib():
   v = self.get_hdp_version()
-  a, b, c, d = v.split('.')
-  maj_min = float(a + '.' + b)
+  arr = v.split('.')
+  maj_min = float("%s.%s" % (arr[0], arr[1]))
   if maj_min > 2.2:
-    hadoop_lib = '/usr/hdp/' + v + '/hadoop/lib'
+    hadoop_lib = "/usr/hdp/%s/hadoop/lib" % (v)
   else:
     hadoop_lib = '/usr/lib/hadoop/lib'
   return hadoop_lib
 
 def cleanup_opts(dirname):
-  command = 'sed -i \'s/"$OPTS"/$OPTS/g\' /opt/cdap/' + dirname + '/bin/service'
+  command = "sed -i 's/\"$OPTS\"/$OPTS/g' /opt/cdap/%s/bin/service" % (dirname)
+  # We ignore errors here, in case we are called before package installation
   return_code, output = shell.call(command, timeout=20)
-  # Execute('sed -i \'s/"$OPTS"/$OPTS/g\' /opt/cdap/' + dirname + '/bin/service', not_if=no_op_test)
