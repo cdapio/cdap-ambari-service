@@ -13,7 +13,7 @@ def package(name):
 def add_repo(source, dest):
   import params
   if not os.path.isfile(dest + params.repo_file):
-    Execute("cp %s %s" % (source, dest)
+    Execute("cp %s %s" % (source, dest))
     Execute(params.key_cmd)
     Execute(params.cache_cmd)
 
@@ -57,7 +57,7 @@ def cdap_config(name=None):
     no_op_test = "ls %s/%s 2>/dev/null" % (params.cdap_conf_dir, i)
     Execute("cp -f /etc/cdap/conf.dist/%s %s" % (i, params.cdap_conf_dir), not_if=no_op_test)
 
-  Execute("update-alternatives --install /etc/cdap/conf cdap-conf %s 50" % (params.cdap_conf_dir)
+  Execute("update-alternatives --install /etc/cdap/conf cdap-conf %s 50" % (params.cdap_conf_dir))
 
 def has_hive():
   import params
