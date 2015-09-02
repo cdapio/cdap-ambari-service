@@ -83,9 +83,9 @@ def get_hdp_version():
 def get_hadoop_lib():
   v = self.get_hdp_version()
   a, b, c, d = v.split('.')
-  majmin = float(a + '.' + b)
+  maj_min = float(a + '.' + b)
   if maj_min > 2.2:
-    hadoop_lib = '/usr/hdp/' + hdp_version + '/hadoop/lib'
+    hadoop_lib = '/usr/hdp/' + v + '/hadoop/lib'
   else:
     hadoop_lib = '/usr/lib/hadoop/lib'
   return hadoop_lib
