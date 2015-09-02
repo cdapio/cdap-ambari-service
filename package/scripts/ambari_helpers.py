@@ -76,11 +76,19 @@ def get_hdp_version():
 
   hdp_version = hdp_output.rstrip()
   match = re.match('[0-9]+.[0-9]+.[0-9]+.[0-9]+-[0-9]+', hdp_version)
-
   if match is None:
     raise Fail('Failed to get extracted version')
-
   return hdp_version
+
+def get_hadoop_lib():
+  v = self.get_hdp_version()
+  a, b, c, d = v.split('.')
+  majmin = float(a + '.' + b)
+  if maj_min > 2.2:
+    hadoop_lib = '/usr/hdp/' + hdp_version + '/hadoop/lib'
+  else:
+    hadoop_lib = '/usr/lib/hadoop/lib'
+  return hadoop_lib
 
 def cleanup_opts(dirname):
   command = 'sed -i \'s/"$OPTS"/$OPTS/g\' /opt/cdap/' + dirname + '/bin/service'
