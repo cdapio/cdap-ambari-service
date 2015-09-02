@@ -67,14 +67,16 @@ def has_hive():
     return false
 
 def get_hdp_version():
-  command = 'hadoop version | head -n 1 | cut -d. -f4-'
+  command = 'hadoop version'
   return_code, hdp_output = shell.call(command, timeout=20)
 
   if return_code != 0:
     raise Fail(
       'Unable to determine the current version because of a non-zero return code of {0}'.format(str(return_code)))
 
-  hdp_version = hdp_output.rstrip()
+  line = hdp_output.rstrip().split('\n')[0]
+  arr = line.split('.')
+  hdp_version = "%s.%s.%s.%s" % (arr[3], arr[4], arr[5], arr[6])
   match = re.match('[0-9]+.[0-9]+.[0-9]+.[0-9]+-[0-9]+', hdp_version)
   if match is None:
     raise Fail('Failed to get extracted version')
