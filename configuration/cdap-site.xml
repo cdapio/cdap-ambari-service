@@ -542,6 +542,11 @@
   </property>
 
   <property>
+    <name>router.bind.port</name>
+    <value>{{cdap_router_port}}</value>
+  </property>
+
+  <property>
     <name>router.server.port</name>
     <value>${router.bind.port}</value>
     <final>true</final>
@@ -553,6 +558,7 @@
     <description>Router listening port for webapp</description>
   </property>
 
+  <!-- Disable until SSL support
   <property>
     <name>router.ssl.bind.port</name>
     <value>10443</value>
@@ -570,6 +576,7 @@
     <value>20443</value>
     <description>Secure router listening port for webapp</description>
   </property>
+  -->
 
   <!-- New Metrics system settings -->
 
@@ -621,22 +628,70 @@
     <description>Number of netty server executor threads for metrics HTTP services</description>
   </property>
 
-  <!-- Unsorted -->
-
   <property>
-    <name>router.server.address</name>
-    <value>{{cdap_router_host}}</value>
+    <name>metrics.boss.threads</name>
+    <value>${http.service.boss.threads}</value>
+    <description>Number of netty server boss threads for metrics HTTP services</description>
   </property>
 
   <property>
-    <name>kafka.log.dir</name>
-    <value>/data/cdap-kafka/logs</value>
+    <name>metrics.worker.threads</name>
+    <value>${http.service.worker.threads}</value>
+    <description>Number of netty server worker threads for metrics HTTP services</description>
   </property>
 
   <property>
-    <name>kafka.bind.port</name>
-    <value>9092</value>
+    <name>metrics.num.instances</name>
+    <value>1</value>
   </property>
+
+  <property>
+    <name>metrics.max.instances</name>
+    <value>${master.service.max.instances}</value>
+  </property>
+
+  <property>
+    <name>metrics.num.cores</name>
+    <value>${master.service.num.cores}</value>
+  </property>
+
+  <property>
+    <name>metrics.memory.mb</name>
+    <value>${master.service.memory.mb}</value>
+  </property>
+
+  <!-- Metrics Processor Configuration -->
+
+  <property>
+    <name>metrics.processor.num.instances</name>
+    <value>1</value>
+    <description>Number of instances for Metrics Processor Service Apache Twill Runnable</description>
+  </property>
+
+  <property>
+    <name>metrics.processor.max.instances</name>
+    <value>${master.service.max.instances}</value>
+  </property>
+
+  <property>
+    <name>metrics.processor.num.cores</name>
+    <value>1</value>
+    <description>Number of cores for Metrics Processor Service Apache Twill Runnable</description>
+  </property>
+
+  <property>
+    <name>metrics.processor.memory.mb</name>
+    <value>512</value>
+    <description>Size of Memory in MB for Metrics Processor Service Apache Twill Runnable</description>
+  </property>
+
+  <property>
+    <name>metrics.dataset.hbase.stats.report.interval</name>
+    <value>60</value>
+    <description>Report interval for hbase stats, in seconds.</description>
+  </property>
+
+  <!-- Logging Configuration -->
 
   <property>
     <name>kafka.seed.brokers</name>
@@ -644,8 +699,15 @@
   </property>
 
   <property>
-    <name>kafka.default.replication.factor</name>
-    <value>1</value>
+    <name>log.publish.num.partitions</name>
+    <value>10</value>
+    <description>Number of Kafka partitions to publish the logs to</description>
+  </property>
+
+  <property>
+    <name>log.base.dir</name>
+    <value>/logs/avro</value>
+    <description>Base log directory</description>
   </property>
 
   <property>
@@ -654,18 +716,150 @@
   </property>
 
   <property>
-    <name>router.bind.port</name>
-    <value>{{cdap_router_port}}</name>
+    <name>log.cleanup.run.interval.mins</name>
+    <value>1440</value>
+    <description>Interval at which to run log cleanup</description>
   </property>
 
   <property>
-    <name>router.server.port</name>
-    <value>${router.bind.port}</value>
+    <name>log.saver.num.instances</name>
+    <value>1</value>
+    <description>Number of log saver instances to run in yarn</description>
+  </property>
+
+  <property>
+    <name>log.saver.max.instances</name>
+    <value>${master.service.max.instances}</value>
+  </property>
+
+  <property>
+    <name>log.saver.run.memory.megs</name>
+    <value>1024</value>
+    <description>Memory in MB for log saver instances to run in yarn</description>
+  </property>
+
+  <!-- Kafka Configuration -->
+
+  <property>
+    <name>kafka.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>Kafka server hostname to bind to</description>
+  </property>
+
+  <property>
+    <name>kafka.bind.port</name>
+    <value>9092</value>
+    <description>Kafka server port</description>
+  </property>
+
+  <property>
+    <name>kafka.num.partitions</name>
+    <value>10</value>
+    <description>Default number of partitions for a topic</description>
+  </property>
+
+  <property>
+    <name>kafka.log.dir</name>
+    <value>/data/cdap-kafka/logs</value>
+    <description>Directory to store Kafka logs</description>
+  </property>
+
+  <property>
+    <name>kafka.zookeeper.namespace</name>
+    <value>kafka</value>
+    <description>ZK namespace for Kafka</description>
+  </property>
+
+  <property>
+    <name>kafka.default.replication.factor</name>
+    <value>1</value>
+    <description>Kafka replication factor</description>
+  </property>
+
+  <!-- Web App Configuration -->
+
+  <property>
+    <name>dashboard.bind.address</name>
+    <value>0.0.0.0</value>
   </property>
 
   <property>
     <name>dashboard.bind.port</name>
     <value>9999</value>
+  </property>
+
+  <!-- Disable until SSL support
+  <property>
+    <name>dashboard.ssl.bind.port</name>
+    <value>9443</value>
+  </property>
+
+  <property>
+    <name>dashboard.ssl.disable.cert.check</name>
+    <value>false</value>
+  </property>
+  -->
+
+  <property>
+    <name>router.server.address</name>
+    <value>{{cdap_router_host}}</value>
+  </property>
+
+  <!-- Explore Configuration -->
+
+  <property>
+    <name>explore.enabled</name>
+    <value>false</value>
+    <description>Whether ad-hoc SQL queries are enabled</description>
+  </property>
+
+  <property>
+    <name>explore.writes.enabled</name>
+    <value>true</value>
+    <description>Whether writing to a table through ad-hoc SQL queries is enabled</description>
+  </property>
+
+  <property>
+    <name>explore.start.on.demand</name>
+    <value>false</value>
+  </property>
+
+  <property>
+    <name>explore.executor.container.instances</name>
+    <value>1</value>
+    <description>Number of explore executor instances</description>
+  </property>
+
+  <property>
+    <name>explore.executor.max.instances</name>
+    <value>1</value>
+    <description>Maximum number of explore executor instances</description>
+  </property>
+
+  <property>
+    <name>explore.active.operation.timeout.secs</name>
+    <value>86400</value>
+    <description>Timeout value in seconds for a SQL operation whose result is not fetched completely</description>
+  </property>
+
+  <property>
+    <name>explore.inactive.operation.timeout.secs</name>
+    <value>3600</value>
+    <description>Timeout value in seconds for a SQL operation which does not have any more results to be fetched</description>
+  </property>
+
+  <property>
+    <name>explore.cleanup.job.schedule.secs</name>
+    <value>60</value>
+    <description>Time in secs to schedule clean up job to timeout operations</description>
+  </property>
+
+  <!-- Notification System Settings -->
+
+  <property>
+    <name>notification.transport.system</name>
+    <value>kafka</value>
+    <description>Transport system used by the Notification system - can be kafka/stream</description>
   </property>
 
 </configuration>

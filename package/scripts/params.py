@@ -15,26 +15,29 @@ distribution = platform.linux_distribution()[0].lower()
 hostname = config['hostname']
 java64_home = config['hostLevelParams']['java_home']
 user_group = config['configurations']['cluster-env']['user_group']
-### TODO: Add this back with a safe version of the function
-# hdp_version = helpers.get_hdp_version()
+
+hdp_version = helpers.get_hdp_version()
+hadoop_lib_home = helpers.get_hadoop_lib()
 
 if distribution in ['centos', 'redhat'] :
   os_repo_dir = '/etc/yum.repos.d/'
   repo_file = 'cdap-3.0.repo'
   package_mgr = 'yum'
-  key_cmd = 'rpm --import ' + files_dir + 'pubkey.gpg'
+  key_cmd = "rpm --import %s/pubkey.gpg" % (files_dir)
   cache_cmd = 'yum makecache'
 else :
   os_repo_dir = '/etc/apt/sources.list.d/'
   repo_file = 'cdap-3.0.list'
   package_mgr = 'apt-get'
-  key_cmd = 'apt-key add ' + files_dir + 'pubkey.gpg'
+  key_cmd = "apt-key add %s/pubkey.gpg" % (files_dir)
   cache_cmd = 'apt-get update'
 
 cdap_user = config['configurations']['cdap-env']['cdap_user']
 log_dir = config['configurations']['cdap-env']['cdap_log_dir']
 pid_dir = config['configurations']['cdap-env']['cdap_pid_dir']
+cdap_kafka_heapsize = config['configurations']['cdap-env']['cdap_kafka_heapsize']
 cdap_master_heapsize = config['configurations']['cdap-env']['cdap_master_heapsize']
+cdap_router_heapsize = config['configurations']['cdap-env']['cdap_router_heapsize']
 
 etc_prefix_dir = "/etc/cdap"
 cdap_conf_dir = "/etc/cdap/conf.ambari"
