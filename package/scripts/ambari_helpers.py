@@ -82,7 +82,7 @@ def get_hdp_version():
   return hdp_version
 
 def get_hadoop_lib():
-  v = self.get_hdp_version()
+  v = get_hdp_version()
   arr = v.split('.')
   maj_min = float("%s.%s" % (arr[0], arr[1]))
   if maj_min >= 2.2:
