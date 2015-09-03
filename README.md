@@ -2,6 +2,12 @@
 
 This is currently a work in progress.
 
+It has been tested with Ambari 2.0 and HDP 2.2 release.
+
+## Installation
+
+Simply check out the repository on your Ambari server as described and restart Ambari.
+
 ```
 git clone https://github.com/caskdata/ambari-cdap-stack.git /var/lib/ambari-server/resources/stacks/HDP/2.2/services/CDAP
 
