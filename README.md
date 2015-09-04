@@ -6,13 +6,15 @@ It has been tested with Ambari 2.0 and HDP 2.2 release.
 
 ## Installation
 
-Simply check out the repository on your Ambari server as described and restart Ambari.
+Simply check out the repository on your Ambari server as described and restart Ambari. This
+will check out the CDAP service using the latest release of CDAP. Specific versions of CDAP
+can be gotten by pulling the corresponding branch. For example, for CDAP 3.1, you would
+checkout the `release/3.1` branch.
 
 ```
 git clone https://github.com/caskdata/ambari-cdap-stack.git /var/lib/ambari-server/resources/stacks/HDP/2.2/services/CDAP
-
+git checkout release/3.1 # Optional
 ambari-server restart
-
 ```
 
 ## License
