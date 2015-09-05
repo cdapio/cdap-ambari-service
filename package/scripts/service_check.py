@@ -5,7 +5,7 @@ class CdapServiceCheck(Script):
     import params
     env.set_params(params)
 
-    status_url = "http://%s:%s/v3/system/services" % (params.cdap_router_host, params.cdap_router_port)
+    status_url = "http://%s:%s/v3/system/services/status" % (params.cdap_router_host, params.cdap_router_port)
 
     ### TODO: do something useful here
 
