@@ -13,7 +13,6 @@ for i in ${SUPPORTED_AMBARI_VERSIONS} ; do
 done
 
 LICENSE="Copyright © 2015 Cask Data, Inc. Licensed under the Apache License, Version 2.0."
-COMMON_FPM_ARGS="--name cdap-ambari-service --license ${LICENSE} --vendor Cask Data, Inc. --maintainer support@cask.co --description Ambari service for Cask Data Application Platform -s dir -a all --url http://cask.co --category misc --depends python > 2.6 --depends ambari-server > 2.0 --version ${SERVICE_VERSION} --iteration 1"
 RPM_FPM_ARGS="-t rpm --rpm-os linux"
 DEB_FPM_ARGS="-t deb"
 
