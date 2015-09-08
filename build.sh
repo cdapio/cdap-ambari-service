@@ -16,6 +16,7 @@ LICENSE="Copyright © 2015 Cask Data, Inc. Licensed under the Apache License, Ve
 RPM_FPM_ARGS="-t rpm --rpm-os linux"
 DEB_FPM_ARGS="-t deb"
 
+__failed=0
 for p in ${PACKAGE_FORMATS} ; do
   case ${p} in
     deb)
