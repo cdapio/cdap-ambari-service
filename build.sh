@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-SUPPORTED_AMBARI_VERSIONS=${SUPPORTED_AMBARI_VERSIONS:-2.0 2.1 2.2}
-SERVICE_VERSION=${SERVICE_VERSION:-2.2.0} # This is lower than real versions, for testing
+SUPPORTED_HDP_VERSIONS=${SUPPORTED_HDP_VERSIONS:-2.0 2.1 2.2 2.3}
+SERVICE_VERSION=${SERVICE_VERSION:-3.2.0}
 PACKAGE_FORMATS=${PACKAGE_FORMATS:-deb rpm}
 
 rm -rf var
 mkdir -p var/lib/ambari-server/resources/stacks/HDP
-for i in ${SUPPORTED_AMBARI_VERSIONS} ; do
+for i in ${SUPPORTED_HDP_VERSIONS} ; do
   __target=var/lib/ambari-server/resources/stacks/HDP/${i}/services/CDAP
   mkdir -p ${__target}
   cp -a *.json *.xml configuration package themes ${__target}
