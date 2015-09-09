@@ -61,7 +61,7 @@ dfs = config['configurations']['core-site']['fs.defaultFS']
 cdap_env_sh_template = config['configurations']['cdap-env']['content']
 
 security_enabled = config['configurations']['cluster-env']['security_enabled']
-map_cdap_site = config['configurations']['cdap-site'];
+map_cdap_site = config['configurations']['cdap-site']
 
 # Example: root.namespace
 root_namespace = map_cdap_site['root.namespace']
