@@ -70,7 +70,7 @@ if map_cdap_site['hdfs.namespace'] == '/${root.namespace}':
 else:
     hdfs_namespace = map_cdap_site['hdfs.namespace']
 hdfs_user = map_cdap_site['hdfs.user']
-### TODO: Fix this hack -- check if we're still cdap_user
+# TODO: Fix this hack -- check if we're still cdap_user
 hdfs_user = cdap_user
 kafka_log_dir = map_cdap_site['kafka.log.dir']
 
@@ -108,4 +108,4 @@ if len(hive_server_host) > 0 and hive_server_host == cdap_router_host:
 else:
     cdap_router_port = '10000'
 
-### TODO: cdap_auth_server_hosts cdap_ui_hosts
+# TODO: cdap_auth_server_hosts cdap_ui_hosts
