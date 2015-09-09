@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SUPPORTED_AMBARI_VERSIONS=${SUPPORTED_AMBARI_VERSIONS:-2.0 2.1 2.2}
-SERVICE_VERSION=${SERVICE_VERSION:-2.2.0} # This is lower than real versions, for testing
+SERVICE_VERSION=${SERVICE_VERSION:-3.1.0} # This is lower than real versions, for testing
 PACKAGE_FORMATS=${PACKAGE_FORMATS:-deb rpm}
 
 rm -rf var
