@@ -65,9 +65,9 @@ class Kafka(Script):
 
         Directory(
             params.kafka_log_dir,
-            owner = params.cdap_user,
-            group = params.user_group,
-            recursive = True
+            owner=params.cdap_user,
+            group=params.user_group,
+            recursive=True
         )
 
 if __name__ == "__main__":

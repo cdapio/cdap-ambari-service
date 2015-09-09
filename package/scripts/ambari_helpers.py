@@ -47,22 +47,22 @@ def cdap_config(name=None):
 
     Directory(
         params.cdap_conf_dir,
-        owner = params.cdap_user,
-        group = params.user_group,
-        recursive = True
+        owner=params.cdap_user,
+        group=params.user_group,
+        recursive=True
     )
 
     XmlConfig(
         'cdap-site.xml',
-        conf_dir = params.cdap_conf_dir,
-        configurations = params.config['configurations']['cdap-site'],
-        owner = params.cdap_user,
-        group = params.user_group
+        conf_dir=params.cdap_conf_dir,
+        configurations=params.config['configurations']['cdap-site'],
+        owner=params.cdap_user,
+        group=params.user_group
     )
 
     File(
         format("{params.cdap_conf_dir}/cdap-env.sh"),
-        owner = params.cdap_user,
+        owner=params.cdap_user,
         content=InlineTemplate(params.cdap_env_sh_template)
     )
 
