@@ -78,7 +78,10 @@ def cdap_config(name=None):
     # Copy logback.xml and logback-container.xml
     for i in 'logback.xml', 'logback-container.xml':
         no_op_test = "ls %s/%s 2>/dev/null" % (params.cdap_conf_dir, i)
-        Execute("cp -f /etc/cdap/conf.dist/%s %s" % (i, params.cdap_conf_dir), not_if=no_op_test)
+        Execute(
+            "cp -f /etc/cdap/conf.dist/%s %s" % (i, params.cdap_conf_dir),
+            not_if=no_op_test
+        )
 
     Execute("update-alternatives --install /etc/cdap/conf cdap-conf %s 50" % (params.cdap_conf_dir))
 
