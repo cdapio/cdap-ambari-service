@@ -34,13 +34,13 @@ user_group = config['configurations']['cluster-env']['user_group']
 hdp_version = helpers.get_hdp_version()
 hadoop_lib_home = helpers.get_hadoop_lib()
 
-if distribution in ['centos', 'redhat'] :
+if distribution in ['centos', 'redhat']:
     os_repo_dir = '/etc/yum.repos.d/'
     repo_file = 'cdap-3.1.repo'
     package_mgr = 'yum'
     key_cmd = "rpm --import %s/pubkey.gpg" % (files_dir)
     cache_cmd = 'yum makecache'
-else :
+else:
     os_repo_dir = '/etc/apt/sources.list.d/'
     repo_file = 'cdap-3.1.list'
     package_mgr = 'apt-get'
@@ -65,7 +65,7 @@ map_cdap_site = config['configurations']['cdap-site'];
 
 # Example: root.namespace
 root_namespace = map_cdap_site['root.namespace']
-if map_cdap_site['hdfs.namespace'] == '/${root.namespace}' :
+if map_cdap_site['hdfs.namespace'] == '/${root.namespace}':
     hdfs_namespace = '/' + root_namespace
 else:
     hdfs_namespace = map_cdap_site['hdfs.namespace']
