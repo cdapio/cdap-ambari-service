@@ -20,17 +20,17 @@ hdp_version = helpers.get_hdp_version()
 hadoop_lib_home = helpers.get_hadoop_lib()
 
 if distribution in ['centos', 'redhat'] :
-  os_repo_dir = '/etc/yum.repos.d/'
-  repo_file = 'cdap-3.1.repo'
-  package_mgr = 'yum'
-  key_cmd = "rpm --import %s/pubkey.gpg" % (files_dir)
-  cache_cmd = 'yum makecache'
+    os_repo_dir = '/etc/yum.repos.d/'
+    repo_file = 'cdap-3.1.repo'
+    package_mgr = 'yum'
+    key_cmd = "rpm --import %s/pubkey.gpg" % (files_dir)
+    cache_cmd = 'yum makecache'
 else :
-  os_repo_dir = '/etc/apt/sources.list.d/'
-  repo_file = 'cdap-3.1.list'
-  package_mgr = 'apt-get'
-  key_cmd = "apt-key add %s/pubkey.gpg" % (files_dir)
-  cache_cmd = 'apt-get update'
+    os_repo_dir = '/etc/apt/sources.list.d/'
+    repo_file = 'cdap-3.1.list'
+    package_mgr = 'apt-get'
+    key_cmd = "apt-key add %s/pubkey.gpg" % (files_dir)
+    cache_cmd = 'apt-get update'
 
 cdap_user = config['configurations']['cdap-env']['cdap_user']
 log_dir = config['configurations']['cdap-env']['cdap_log_dir']
@@ -51,9 +51,9 @@ map_cdap_site = config['configurations']['cdap-site'];
 # Example: root.namespace
 root_namespace = map_cdap_site['root.namespace']
 if map_cdap_site['hdfs.namespace'] == '/${root.namespace}' :
-  hdfs_namespace = '/' + root_namespace
+    hdfs_namespace = '/' + root_namespace
 else:
-  hdfs_namespace = map_cdap_site['hdfs.namespace']
+    hdfs_namespace = map_cdap_site['hdfs.namespace']
 hdfs_user = map_cdap_site['hdfs.user']
 ### TODO: Fix this hack -- check if we're still cdap_user
 hdfs_user = cdap_user
@@ -66,9 +66,9 @@ zk_hosts.sort()
 zookeeper_hosts = ''
 # Evaluate and setup ZooKeeper quorum string
 for i, val in enumerate(zk_hosts):
-  zookeeper_hosts += val + ':' + zk_client_port
-  if (i + 1) < len(zk_hosts):
-    zookeeper_hosts += ','
+    zookeeper_hosts += val + ':' + zk_client_port
+    if (i + 1) < len(zk_hosts):
+        zookeeper_hosts += ','
 cdap_zookeeper_quorum = zookeeper_hosts + '/' + root_namespace
 
 kafka_bind_port = str(default('/configurations/cdap-site/kafka.bind.port', None))
@@ -76,9 +76,9 @@ kafka_hosts = config['clusterHostInfo']['cdap_kafka_hosts']
 kafka_hosts.sort()
 tmp_kafka_hosts = ''
 for i, val in enumerate(kafka_hosts):
-  tmp_kafka_hosts += val + ':' + kafka_bind_port
-  if (i + 1) < len(kafka_hosts):
-    tmp_kafka_hosts += ','
+    tmp_kafka_hosts += val + ':' + kafka_bind_port
+    if (i + 1) < len(kafka_hosts):
+        tmp_kafka_hosts += ','
 cdap_kafka_brokers = tmp_kafka_hosts
 
 router_hosts = config['clusterHostInfo']['cdap_router_hosts']
@@ -89,8 +89,8 @@ cdap_router_host = router_hosts[0]
 hive_metastore_host = config['clusterHostInfo']['hive_metastore_host']
 hive_server_host = config['clusterHostInfo']['hive_server_host']
 if len(hive_server_host) > 0 and hive_server_host == cdap_router_host:
-  cdap_router_port = '11015'
+    cdap_router_port = '11015'
 else:
-  cdap_router_port = '10000'
+    cdap_router_port = '10000'
 
 ### TODO: cdap_auth_server_hosts cdap_ui_hosts
