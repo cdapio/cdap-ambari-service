@@ -16,14 +16,17 @@
 from resource_management import *
 import os
 
+
 def create_hdfs_dir(path, owner, perms):
     Execute("hadoop fs -mkdir -p %s" % (path), user='hdfs')
     Execute("hadoop fs -chown %s %s" % (owner, path), user='hdfs')
     Execute("hadoop fs -chmod %s %s" % (str(perms), path), user='hdfs')
 
+
 def package(name):
     import params
     Execute("%s install -y %s" % (params.package_mgr, name), user='root')
+
 
 def add_repo(source, dest):
     import params
@@ -31,6 +34,7 @@ def add_repo(source, dest):
         Execute("cp %s %s" % (source, dest))
         Execute(params.key_cmd)
         Execute(params.cache_cmd)
+
 
 def cdap_config(name=None):
     import params
@@ -43,22 +47,22 @@ def cdap_config(name=None):
 
     Directory(
         params.cdap_conf_dir,
-        owner = params.cdap_user,
-        group = params.user_group,
-        recursive = True
+        owner=params.cdap_user,
+        group=params.user_group,
+        recursive=True
     )
 
     XmlConfig(
         'cdap-site.xml',
-        conf_dir = params.cdap_conf_dir,
-        configurations = params.config['configurations']['cdap-site'],
-        owner = params.cdap_user,
-        group = params.user_group
+        conf_dir=params.cdap_conf_dir,
+        configurations=params.config['configurations']['cdap-site'],
+        owner=params.cdap_user,
+        group=params.user_group
     )
 
     File(
         format("{params.cdap_conf_dir}/cdap-env.sh"),
-        owner = params.cdap_user,
+        owner=params.cdap_user,
         content=InlineTemplate(params.cdap_env_sh_template)
     )
 
@@ -74,9 +78,13 @@ def cdap_config(name=None):
     # Copy logback.xml and logback-container.xml
     for i in 'logback.xml', 'logback-container.xml':
         no_op_test = "ls %s/%s 2>/dev/null" % (params.cdap_conf_dir, i)
-        Execute("cp -f /etc/cdap/conf.dist/%s %s" % (i, params.cdap_conf_dir), not_if=no_op_test)
+        Execute(
+            "cp -f /etc/cdap/conf.dist/%s %s" % (i, params.cdap_conf_dir),
+            not_if=no_op_test
+        )
 
     Execute("update-alternatives --install /etc/cdap/conf cdap-conf %s 50" % (params.cdap_conf_dir))
+
 
 def has_hive():
     import params
@@ -84,6 +92,7 @@ def has_hive():
         return true
     else:
         return false
+
 
 def get_hdp_version():
     command = 'hadoop version'
@@ -100,6 +109,7 @@ def get_hdp_version():
         raise Fail('Failed to get extracted version')
     return hdp_version
 
+
 def get_hadoop_lib():
     v = get_hdp_version()
     arr = v.split('.')
@@ -109,6 +119,7 @@ def get_hadoop_lib():
     else:
         hadoop_lib = '/usr/lib/hadoop/lib'
     return hadoop_lib
+
 
 def cleanup_opts(dirname):
     command = "sed -i 's/\"$OPTS\"/$OPTS/g' /opt/cdap/%s/bin/service" % (dirname)

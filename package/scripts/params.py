@@ -34,13 +34,13 @@ user_group = config['configurations']['cluster-env']['user_group']
 hdp_version = helpers.get_hdp_version()
 hadoop_lib_home = helpers.get_hadoop_lib()
 
-if distribution in ['centos', 'redhat'] :
+if distribution in ['centos', 'redhat']:
     os_repo_dir = '/etc/yum.repos.d/'
     repo_file = 'cdap-3.1.repo'
     package_mgr = 'yum'
     key_cmd = "rpm --import %s/pubkey.gpg" % (files_dir)
     cache_cmd = 'yum makecache'
-else :
+else:
     os_repo_dir = '/etc/apt/sources.list.d/'
     repo_file = 'cdap-3.1.list'
     package_mgr = 'apt-get'
@@ -61,16 +61,16 @@ dfs = config['configurations']['core-site']['fs.defaultFS']
 cdap_env_sh_template = config['configurations']['cdap-env']['content']
 
 security_enabled = config['configurations']['cluster-env']['security_enabled']
-map_cdap_site = config['configurations']['cdap-site'];
+map_cdap_site = config['configurations']['cdap-site']
 
 # Example: root.namespace
 root_namespace = map_cdap_site['root.namespace']
-if map_cdap_site['hdfs.namespace'] == '/${root.namespace}' :
+if map_cdap_site['hdfs.namespace'] == '/${root.namespace}':
     hdfs_namespace = '/' + root_namespace
 else:
     hdfs_namespace = map_cdap_site['hdfs.namespace']
 hdfs_user = map_cdap_site['hdfs.user']
-### TODO: Fix this hack -- check if we're still cdap_user
+# TODO: Fix this hack -- check if we're still cdap_user
 hdfs_user = cdap_user
 kafka_log_dir = map_cdap_site['kafka.log.dir']
 
@@ -108,4 +108,4 @@ if len(hive_server_host) > 0 and hive_server_host == cdap_router_host:
 else:
     cdap_router_port = '10000'
 
-### TODO: cdap_auth_server_hosts cdap_ui_hosts
+# TODO: cdap_auth_server_hosts cdap_ui_hosts
