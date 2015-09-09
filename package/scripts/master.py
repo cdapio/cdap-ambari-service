@@ -13,7 +13,6 @@
 # the License.
 #
 
-import sys
 import ambari_helpers as helpers
 from resource_management import *
 
@@ -48,8 +47,6 @@ class Master(Script):
 
     def stop(self, env):
         print 'Stop the CDAP Master'
-        import params
-        self.configure(env)
         Execute('service cdap-master stop')
 
     def status(self, env):
