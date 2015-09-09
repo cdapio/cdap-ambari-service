@@ -16,14 +16,17 @@
 from resource_management import *
 import os
 
+
 def create_hdfs_dir(path, owner, perms):
     Execute("hadoop fs -mkdir -p %s" % (path), user='hdfs')
     Execute("hadoop fs -chown %s %s" % (owner, path), user='hdfs')
     Execute("hadoop fs -chmod %s %s" % (str(perms), path), user='hdfs')
 
+
 def package(name):
     import params
     Execute("%s install -y %s" % (params.package_mgr, name), user='root')
+
 
 def add_repo(source, dest):
     import params
@@ -31,6 +34,7 @@ def add_repo(source, dest):
         Execute("cp %s %s" % (source, dest))
         Execute(params.key_cmd)
         Execute(params.cache_cmd)
+
 
 def cdap_config(name=None):
     import params
@@ -78,12 +82,14 @@ def cdap_config(name=None):
 
     Execute("update-alternatives --install /etc/cdap/conf cdap-conf %s 50" % (params.cdap_conf_dir))
 
+
 def has_hive():
     import params
     if len(params.hive_metastore_host) > 0:
         return true
     else:
         return false
+
 
 def get_hdp_version():
     command = 'hadoop version'
@@ -100,6 +106,7 @@ def get_hdp_version():
         raise Fail('Failed to get extracted version')
     return hdp_version
 
+
 def get_hadoop_lib():
     v = get_hdp_version()
     arr = v.split('.')
@@ -109,6 +116,7 @@ def get_hadoop_lib():
     else:
         hadoop_lib = '/usr/lib/hadoop/lib'
     return hadoop_lib
+
 
 def cleanup_opts(dirname):
     command = "sed -i 's/\"$OPTS\"/$OPTS/g' /opt/cdap/%s/bin/service" % (dirname)

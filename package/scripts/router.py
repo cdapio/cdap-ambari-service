@@ -17,6 +17,7 @@ import sys
 import ambari_helpers as helpers
 from resource_management import *
 
+
 class Router(Script):
     def install(self, env):
         print 'Install the CDAP Router'
