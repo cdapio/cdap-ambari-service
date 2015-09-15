@@ -13,7 +13,6 @@
 # the License.
 #
 
-import sys
 import ambari_helpers as helpers
 from resource_management import *
 
@@ -49,8 +48,6 @@ class Kafka(Script):
 
     def stop(self, env):
         print 'Stop the CDAP Kafka Server'
-        import params
-        self.configure(env)
         Execute('service cdap-kafka-server stop')
 
     def status(self, env):

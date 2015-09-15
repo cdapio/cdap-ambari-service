@@ -13,7 +13,6 @@
 # the License.
 #
 
-import sys
 import ambari_helpers as helpers
 from resource_management import *
 

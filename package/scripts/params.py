@@ -13,10 +13,9 @@
 # the License.
 #
 
-from resource_management import *
-from resource_management.libraries.functions.version import format_hdp_stack_version, compare_versions
 import os
 import ambari_helpers as helpers
+from resource_management import *
 
 # config object that holds the configurations declared in the -config.xml file
 config = Script.get_config()
