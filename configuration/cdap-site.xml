@@ -446,22 +446,15 @@
     <description>Specifies the number of days to keep program run run-history in metadata</description>
   </property>
 
-  <!-- Template configuration -->
-
-  <property>
-    <name>app.template.dir</name>
-    <value>/opt/cdap/master/templates</value>
-    <description>Directory where all archives for app templates are stored</description>
-  </property>
-
-  <property>
-    <name>app.template.plugin.dir</name>
-    <value>${app.template.dir}/plugins</value>
-    <description>Directory where template plugins are stored</description>
-    <final>true</final>
-  </property>
-
   <!-- AppFabric related changes -->
+
+  <property>
+    <name>app.artifact.dir</name>
+    <value>/opt/cdap/master/artifacts</value>
+    <description>
+      Directory where all system artifacts and their corresponding config files are stored
+    </description>
+  </property>
 
   <property>
     <name>app.output.dir</name>
@@ -577,6 +570,67 @@
     <description>Secure router listening port for webapp</description>
   </property>
   -->
+
+  <!-- Metadata Configuration -->
+
+  <property>
+    <name>metadata.max.allowed.chars</name>
+    <value>50</value>
+    <description>
+      Maximum number of characters for metadata keys, values, and tags
+    </description>
+  </property>
+
+  <property>
+    <name>metadata.service.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      Default inet address for binding metadata HTTP service
+    </description>
+  </property>
+
+  <property>
+    <name>metadata.service.exec.threads</name>
+    <value>${http.service.exec.threads}</value>
+    <description>
+      Number of Netty server executor threads for metadata HTTP service
+    </description>
+  </property>
+
+  <property>
+    <name>metadata.service.worker.threads</name>
+    <value>${http.service.worker.threads}</value>
+    <description>
+      Number of Netty server IO worker threads for metadata HTTP service
+    </description>
+  </property>
+
+  <property>
+    <name>metadata.updates.kafka.broker.list</name>
+    <value>127.0.0.1:${kafka.bind.port}</value>
+    <description>
+      Kafka broker list to which metadata update notifications are published
+    </description>
+  </property>
+
+  <property>
+    <name>metadata.updates.kafka.topic</name>
+    <value>cdap-metadata-updates</value>
+    <description>
+      Kafka topic to which metadata update notifications are published
+    </description>
+  </property>
+
+  <property>
+    <name>metadata.updates.publish.enabled</name>
+    <value>false</value>
+    <description>
+      Determines if metadata updates will be published to Apache Kafka.
+      External systems can subscribe to the Kafka topic determined by
+      ${metadata.updates.kafka.topic} to receive notifications of metadata
+      updates.
+    </description>
+  </property>
 
   <!-- New Metrics system settings -->
 
