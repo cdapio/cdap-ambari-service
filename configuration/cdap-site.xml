@@ -489,7 +489,7 @@
 
   <property>
     <name>app.program.jvm.opts</name>
-    <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version}</value>
+    <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version} -Dspark.yarn.am.extraJavaOptions=-Dhdp.version=${hdp.version}</value>
     <description>Java options for all program containers</description>
   </property>
 
