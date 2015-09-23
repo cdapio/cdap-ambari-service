@@ -452,7 +452,7 @@
     <name>app.artifact.dir</name>
     <value>/opt/cdap/master/artifacts</value>
     <description>
-      Directory where all archives for application templates are stored
+      Directory where all system artifacts and their corresponding config files are stored
     </description>
   </property>
 
@@ -623,7 +623,7 @@
 
   <property>
     <name>metadata.updates.publish.enabled</name>
-    <value>true</value>
+    <value>false</value>
     <description>
       Determines if metadata updates will be published to Apache Kafka.
       External systems can subscribe to the Kafka topic determined by
