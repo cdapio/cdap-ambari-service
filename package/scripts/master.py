@@ -55,8 +55,7 @@ class Master(Script):
         Execute('service cdap-master stop')
 
     def status(self, env):
-        import status_params
-        check_process_status(status_params.cdap_master_pid_file)
+        Execute('service cdap-master status')
 
     def configure(self, env):
         print 'Configure the CDAP Master'
