@@ -54,8 +54,7 @@ class UI(Script):
         Execute('service cdap-ui stop')
 
     def status(self, env):
-        import status_params
-        check_process_status(status_params.cdap_ui_pid_file)
+        Execute('service cdap-ui status')
 
     def configure(self, env):
         print 'Configure the CDAP UI'
