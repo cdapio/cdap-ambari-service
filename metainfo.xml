@@ -227,6 +227,7 @@
         <service>HDFS</service>
         <service>YARN</service>
         <service>ZOOKEEPER</service>
+        <service>HIVE</service>
       </requiredServices>
 
       <!-- names for config files (under configuration dir) -->
