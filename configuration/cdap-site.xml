@@ -641,8 +641,7 @@
     <name>router.webapp.enabled</name>
     <value>false</value>
     <description>
-      Determines if the webapp listening service should be started
-      (deprecated)
+      Determines if the webapp listening service should be started (deprecated)
     </description>
   </property>
 
@@ -738,7 +737,7 @@
     <name>metadata.updates.kafka.broker.list</name>
     <value>127.0.0.1:${kafka.bind.port}</value>
     <description>
-      CDAP Kafka service broker list to which metadata update notifications are published
+      Kafka service broker list to which metadata update notifications are published
     </description>
   </property>
 
@@ -746,7 +745,7 @@
     <name>metadata.updates.kafka.topic</name>
     <value>cdap-metadata-updates</value>
     <description>
-      CDAP Kafka service topic to which metadata update notifications are published
+      Kafka service topic to which metadata update notifications are published
     </description>
   </property>
 
@@ -754,7 +753,7 @@
     <name>metadata.updates.publish.enabled</name>
     <value>false</value>
     <description>
-      Determines if metadata updates will be published to Apache Kafka.
+      Determines if metadata updates will be published to Kafka.
       External systems can subscribe to the Kafka topic determined by
       ${metadata.updates.kafka.topic} to receive notifications of metadata
       updates.
