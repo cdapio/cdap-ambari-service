@@ -34,7 +34,7 @@ user_group = config['configurations']['cluster-env']['user_group']
 hdp_version = helpers.get_hdp_version()
 hadoop_lib_home = helpers.get_hadoop_lib()
 
-if distribution in ['centos', 'redhat']:
+if distribution.startswith('centos') or distribution.startswith('redhat'):
     os_repo_dir = '/etc/yum.repos.d/'
     repo_file = 'cdap-3.2.repo'
     package_mgr = 'yum'
