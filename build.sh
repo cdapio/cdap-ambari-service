@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SUPPORTED_HDP_VERSIONS=${SUPPORTED_HDP_VERSIONS:-2.0 2.1 2.2 2.3}
-SERVICE_VERSION=${SERVICE_VERSION:-3.3.0}
+SERVICE_VERSION=${SERVICE_VERSION:-3.4.0}
 PACKAGE_FORMATS=${PACKAGE_FORMATS:-deb rpm}
 
 rm -rf var
@@ -12,7 +12,7 @@ for i in ${SUPPORTED_HDP_VERSIONS} ; do
   cp -a *.json *.xml configuration package themes ${__target}
 done
 
-LICENSE="Copyright © 2015 Cask Data, Inc. Licensed under the Apache License, Version 2.0."
+LICENSE="Copyright © 2015-2016 Cask Data, Inc. Licensed under the Apache License, Version 2.0."
 RPM_FPM_ARGS="-t rpm --rpm-os linux"
 DEB_FPM_ARGS="-t deb"
 
