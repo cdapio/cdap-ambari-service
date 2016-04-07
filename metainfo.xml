@@ -10,7 +10,7 @@
         such as HBase, Hive, Tephra, and Tigon that enables developers to rapidly build, and operations to easily manage,
         real-time and batch data applications
       </comment>
-      <version>3.3.0</version>
+      <version>3.4.0</version>
 
       <components>
 
