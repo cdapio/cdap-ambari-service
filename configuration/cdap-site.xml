@@ -30,10 +30,21 @@
   </property>
 
   <property>
+    <name>instance.name</name>
+    <value>${root.namespace}</value>
+    <description>
+      Determines a unique identifier for a CDAP instance. It is used for providing authorization to a particular CDAP
+      instance. Must be alphanumeric, and should not be changed after CDAP has been started. If it is changed, there is
+      a risk of losing data (for example, authorization policies).
+    </description>
+  </property>
+
+  <property>
     <name>zookeeper.quorum</name>
     <value>{{cdap_zookeeper_quorum}}</value>
     <description>
-      ZooKeeper quorum string; specifies the ZooKeeper host:port
+      ZooKeeper quorum string; specifies the ZooKeeper host:port; substitute the quorum
+      (FQDN1:2181,FQDN2:2181,...) for the components shown here
     </description>
   </property>
 
@@ -42,6 +53,36 @@
     <value>40000</value>
     <description>
       ZooKeeper session timeout in milliseconds
+    </description>
+  </property>
+
+  <property>
+    <name>master.startup.checks.enabled</name>
+    <value>true</value>
+    <description>
+      Whether checks should be run before startup to determine if the CDAP Master can be run correctly.
+      Which checks are run is determined by the master.startup.checks.packages and master.startup.checks.classes
+      settings. If any checks fail, the CDAP Master will fail to start instead of waiting for the problem to be fixed.
+      This setting only affects Distributed CDAP. It does not apply to Standalone CDAP.
+    </description>
+  </property>
+
+  <property>
+    <name>master.startup.checks.packages</name>
+    <value>co.cask.cdap.master.startup</value>
+    <description>
+      Comma-separated list of packages containing checks that will be run before the CDAP Master starts up.
+      If any of the checks fails, the CDAP Master will not start up.
+      Checks will only be run if master.startup.checks.enabled is set to true.
+    </description>
+  </property>
+
+  <property>
+    <name>master.startup.checks.classes</name>
+    <description>
+      Comma-separated list of classnames for checks that will be run before the CDAP Master starts up.
+      If any of the checks fails, the CDAP Master will not start up.
+      Checks will only be run if master.startup.checks.enabled is set to true.
     </description>
   </property>
 
@@ -199,6 +240,23 @@
     <name>http.service.worker.threads</name>
     <value>10</value>
     <description>Number of Netty service worker threads for master HTTP services</description>
+  </property>
+
+  <property>
+    <name>master.collect.app.containers.log.level</name>
+    <value>ERROR</value>
+    <description>
+      The log level of application container logs that are streamed back to the CDAP Master process log.
+      The levels supported are [ ALL, TRACE, DEBUG, INFO, WARN, ERROR, OFF ].
+    </description>
+  </property>
+
+  <property>
+    <name>master.collect.containers.log</name>
+    <value>true</value>
+    <description>
+      Determines if master service container logs are streamed back to the CDAP Master process log
+    </description>
   </property>
 
   <!-- Stream handles -->
@@ -366,6 +424,24 @@
     <name>stream.batch.buffer.threshold</name>
     <value>1048576</value>
     <description>Bytes retained in-memory before writing to a new stream file</description>
+  </property>
+
+  <!-- Audit Configuration -->
+
+  <property>
+    <name>audit.enabled</name>
+    <value>false</value>
+    <description>
+      Determines whether to publish audit messages to Apache Kafka
+    </description>
+  </property>
+
+  <property>
+    <name>audit.kafka.topic</name>
+    <value>audit</value>
+    <description>
+      Apache Kafka topic name to which audit messages are published
+    </description>
   </property>
 
   <!-- DataFabric Configuration -->
@@ -573,6 +649,28 @@
   </property>
 
   <property>
+    <name>app.program.runtime.extensions.dir</name>
+    <value>/opt/cdap/master/ext/runtimes</value>
+    <description>
+      Semicolon-separated list of local directories that are scanned for program runtime extensions
+    </description>
+  </property>
+
+  <property>
+    <name>app.program.spark.yarn.client.rewrite.enabled</name>
+    <value>true</value>
+    <description>
+      Specify whether to rewrite the yarn.Client class in Spark to work
+      around the issue SPARK-13441 in some clusters.
+    </description>
+  </property>
+
+  <property>
+    <name>app.temp.dir</name>
+    <value>/tmp</value>
+  </property>
+
+  <property>
     <name>dataset.table.prefix</name>
     <value>${root.namespace}</value>
     <description>Prefix for dataset table name</description>
@@ -585,10 +683,34 @@
   </property>
 
   <property>
+    <name>dataset.executor.container.memory.mb</name>
+    <value>512</value>
+    <description>
+      Size of Memory in megabytes for each dataset executor instance
+    </description>
+  </property>
+
+  <property>
+    <name>dataset.executor.container.num.cores</name>
+    <value>1</value>
+    <description>
+      Number of virtual cores for each dataset executor instance
+    </description>
+  </property>
+
+  <property>
     <name>dataset.executor.max.instances</name>
     <value>${master.service.max.instances}</value>
     <description>
       Maximum number of dataset executor instances
+    </description>
+  </property>
+
+  <property>
+    <name>dataset.extensions.dir</name>
+    <value>/opt/cdap/ext/lib</value>
+    <description>
+      Directory where all dataset extensions are stored
     </description>
   </property>
 
@@ -623,7 +745,7 @@
 
   <property>
     <name>scheduler.max.thread.pool.size</name>
-    <value>30</value>
+    <value>100</value>
     <description>Size of the scheduler thread pool</description>
   </property>
 
@@ -638,24 +760,37 @@
   </property>
 
   <property>
-    <name>router.webapp.enabled</name>
-    <value>false</value>
-    <description>
-      Determines if the webapp listening service should be started (deprecated)
-    </description>
-  </property>
-
-  <property>
     <name>router.bind.port</name>
-    <value>10000</value>
+    <value>{{cdap_router_port}}</value>
     <description>
       CDAP Router service bind port
     </description>
   </property>
 
   <property>
-    <name>router.bind.port</name>
-    <value>{{cdap_router_port}}</value>
+    <name>router.client.boss.threads</name>
+    <value>1</value>
+    <description>The number of boss threads in the CDAP Router service client</description>
+  </property>
+
+  <property>
+    <name>router.client.worker.threads</name>
+    <value>10</value>
+    <description>The number of worker threads in the CDAP Router service client</description>
+  </property>
+
+  <property>
+    <name>router.connection.backlog</name>
+    <value>20000</value>
+    <description>The connection backlog in the CDAP Router service</description>
+  </property>
+
+  <property>
+    <name>router.connection.idle.timeout.secs</name>
+    <value>15</value>
+    <description>
+      The number of seconds after an HTTP request completes that idle router connections are closed
+    </description>
   </property>
 
   <property>
@@ -664,14 +799,6 @@
     <final>true</final>
     <description>
       CDAP Router service port to which CDAP UI connects
-    </description>
-  </property>
-
-  <property>
-    <name>router.webapp.bind.port</name>
-    <value>20000</value>
-    <description>
-      CDAP Router service bind port for webapp (deprecated)
     </description>
   </property>
 
@@ -690,14 +817,19 @@
     <final>true</final>
   </property>
 
+  -->
+
   <property>
-    <name>router.ssl.webapp.bind.port</name>
-    <value>20443</value>
+    <name>master.startup.service.timeout.seconds</name>
+    <value>600</value>
     <description>
-      CDAP Router service bind port for webapp for HTTPS (deprecated)
+      Timeout in seconds for master services to wait for their dependent services to be available.
+      For example, the dataset executor master service requires the transaction service, and will wait for
+      the transaction service to become available while it is starting up.
+      If the timeout is hit, the service will fail to start and the master service will shut itself down.
+      If set to 0 or below, master services will not wait for their dependent services to start before starting themselves.
     </description>
   </property>
-  -->
 
   <!-- Metadata Configuration -->
 
@@ -916,6 +1048,14 @@
   </property>
 
   <property>
+    <name>log.kafka.topic</name>
+    <value>logs.user-v2</value>
+    <description>
+      Kafka topic name used to publish logs
+    </description>
+  </property>
+
+  <property>
     <name>log.publish.num.partitions</name>
     <value>10</value>
     <description>Number of CDAP Kafka service partitions to publish the logs to</description>
@@ -939,6 +1079,14 @@
     <name>log.cleanup.run.interval.mins</name>
     <value>1440</value>
     <description>Log cleanup interval in minutes</description>
+  </property>
+
+  <property>
+    <name>log.saver.run.num.cores</name>
+    <value>2</value>
+    <description>
+      Number of cores for each log saver instance in YARN
+    </description>
   </property>
 
   <property>
@@ -1024,6 +1172,15 @@
     </description>
   </property>
 
+  <property>
+    <name>dashboard.router.check.timeout.secs</name>
+    <value>0</value>
+    <description>
+      Amount of time, in seconds, CDAP UI waits before exiting when unable to connect to
+      CDAP Router service on startup; use a timeout of 0 to wait indefinitely
+    </description>
+  </property>
+
   <!-- Disable until SSL support
   <property>
     <name>dashboard.ssl.bind.port</name>
@@ -1041,6 +1198,18 @@
     </description>
   </property>
   -->
+
+  <property>
+    <name>router.server.boss.threads</name>
+    <value>1</value>
+    <description>The number of boss threads in the CDAP Router service</description>
+  </property>
+
+  <property>
+    <name>router.server.worker.threads</name>
+    <value>10</value>
+    <description>The number of worker threads in the CDAP Router service</description>
+  </property>
 
   <property>
     <name>router.server.address</name>
@@ -1087,6 +1256,22 @@
   </property>
 
   <property>
+    <name>explore.executor.container.num.cores</name>
+    <value>1</value>
+    <description>
+      Number of virtual cores for each explore executor instance
+    </description>
+  </property>
+
+  <property>
+    <name>explore.executor.container.memory.mb</name>
+    <value>1024</value>
+    <description>
+      Size of Memory in megabytes for each explore executor instance
+    </description>
+  </property>
+
+  <property>
     <name>explore.executor.max.instances</name>
     <value>1</value>
     <description>Maximum number of explore executor instances</description>
@@ -1121,11 +1306,26 @@
   <!-- Notification System Settings -->
 
   <property>
+    <name>notification.kafka.topic</name>
+    <value>notifications</value>
+    <description>
+      Kafka topic name used to publish notifications
+    </description>
+  </property>
+
+  <property>
     <name>notification.transport.system</name>
     <value>kafka</value>
     <description>
-      Transport system used by the notification system; can be either
-      'kafka' or 'stream'
+      Transport system used by the notification system; can be either 'kafka' or 'stream'
+    </description>
+  </property>
+
+  <property>
+    <name>http.client.connection.timeout.ms</name>
+    <value>60000</value>
+    <description>
+      Timeout in milliseconds for internal HTTP requests
     </description>
   </property>
 
