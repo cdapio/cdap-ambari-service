@@ -19,6 +19,26 @@
 <configuration>
 
   <property>
+    <name>apt_repo_url</name>
+    <value>http://repository.cask.co/ubuntu/precise/amd64/cdap/3.4</value>
+    <description>
+      URL to an APT repository hosting this version of CDAP. Defaults to
+      the public Cask repository address
+    </description>
+    <display-name>APT Repository URL</display-name>
+  </property>
+
+  <property>
+    <name>yum_repo_url</name>
+    <value>http://repository.cask.co/centos/6/x86_64/cdap/3.4</value>
+    <description>
+      URL to an YUM repository hosting this version of CDAP. Defaults to
+      the public Cask repository address
+    </description>
+    <display-name>YUM Repository URL</display-name>
+  </property>
+
+  <property>
     <name>cdap_log_dir</name>
     <value>/var/log/cdap</value>
     <description>Log directory for CDAP</description>
