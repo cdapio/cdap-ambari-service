@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SUPPORTED_HDP_VERSIONS=${SUPPORTED_HDP_VERSIONS:-2.0 2.1 2.2 2.3}
+SUPPORTED_HDP_VERSIONS=${SUPPORTED_HDP_VERSIONS:-2.0.6}
 SERVICE_VERSION=${SERVICE_VERSION:-3.4.0}
 PACKAGE_FORMATS=${PACKAGE_FORMATS:-deb rpm}
 
@@ -9,7 +9,7 @@ mkdir -p var/lib/ambari-server/resources/stacks/HDP
 for i in ${SUPPORTED_HDP_VERSIONS} ; do
   __target=var/lib/ambari-server/resources/stacks/HDP/${i}/services/CDAP
   mkdir -p ${__target}
-  cp -a *.json *.xml configuration package themes ${__target}
+  cp -a *.json *.xml configuration package themes ${__target} 2>/dev/null
 done
 
 LICENSE="Copyright © 2015-2016 Cask Data, Inc. Licensed under the Apache License, Version 2.0."
