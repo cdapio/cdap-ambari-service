@@ -32,7 +32,7 @@
     <name>yum_repo_url</name>
     <value>http://repository.cask.co/centos/6/x86_64/cdap/3.4</value>
     <description>
-      URL to an YUM repository hosting this version of CDAP. Defaults to
+      URL to a YUM repository hosting this version of CDAP. Defaults to
       the public Cask repository address
     </description>
     <display-name>YUM Repository URL</display-name>
