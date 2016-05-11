@@ -100,12 +100,4 @@ router_hosts = config['clusterHostInfo']['cdap_router_hosts']
 router_hosts.sort()
 cdap_router_host = router_hosts[0]
 
-# Get some of our hosts
-hive_metastore_host = config['clusterHostInfo']['hive_metastore_host']
-hive_server_host = config['clusterHostInfo']['hive_server_host']
-if len(hive_server_host) > 0 and hive_server_host == cdap_router_host:
-    cdap_router_port = '11015'
-else:
-    cdap_router_port = '10000'
-
 # TODO: cdap_auth_server_hosts cdap_ui_hosts
