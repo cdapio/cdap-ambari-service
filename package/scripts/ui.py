@@ -1,5 +1,5 @@
 # coding=utf8
-# Copyright © 2015 Cask Data, Inc.
+# Copyright © 2015-2016 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -32,8 +32,6 @@ class UI(Script):
         # Install package
         helpers.package('cdap-ui')
         self.configure(env)
-        # TODO: make sure this is available
-        helpers.package('nodejs')
 
     def start(self, env):
         print 'Start the CDAP UI'
