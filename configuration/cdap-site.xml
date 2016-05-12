@@ -747,7 +747,7 @@
     <name>dataset.executor.container.memory.mb</name>
     <value>512</value>
     <description>
-      Size of Memory in megabytes for each dataset executor instance
+      Size of memory in megabytes for each dataset executor instance
     </description>
     <display-name>Dataset Executor YARN Memory</display-name>
     <value-attributes>
