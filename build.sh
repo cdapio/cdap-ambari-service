@@ -18,7 +18,7 @@ RPM_FPM_ARGS="-t rpm --rpm-os linux"
 DEB_FPM_ARGS="-t deb"
 
 if [[ ${PACKAGE_VERSION} =~ "-SNAPSHOT" ]] ; then
-  PACKAGE_VERSION=${PACKAGE_VERSION/-SNAPSHOT/$(date +%s)}
+  PACKAGE_VERSION=${PACKAGE_VERSION/-SNAPSHOT/.$(date +%s)}
 fi
 
 __failed=0
