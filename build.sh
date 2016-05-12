@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 SUPPORTED_HDP_VERSIONS=${SUPPORTED_HDP_VERSIONS:-2.0.6}
-SERVICE_VERSION=${SERVICE_VERSION:-3.4.0}
+PACKAGE_VERSION=${PACKAGE_VERSION:-3.5.0-SNAPSHOT}
+PACKAGE_ITERATION=${PACKAGE_ITERATION:-1}
 PACKAGE_FORMATS=${PACKAGE_FORMATS:-deb rpm}
 
 rm -rf var
@@ -15,6 +16,10 @@ done
 LICENSE="Copyright © 2015-2016 Cask Data, Inc. Licensed under the Apache License, Version 2.0."
 RPM_FPM_ARGS="-t rpm --rpm-os linux"
 DEB_FPM_ARGS="-t deb"
+
+if [[ ${PACKAGE_VERSION} =~ "-SNAPSHOT" ]] ; then
+  PACKAGE_VERSION=${PACKAGE_VERSION/-SNAPSHOT/$(date +%s)}
+fi
 
 __failed=0
 for p in ${PACKAGE_FORMATS} ; do
@@ -32,8 +37,8 @@ for p in ${PACKAGE_FORMATS} ; do
         --category misc \
         --depends "python > 2.6" \
         --depends "ambari-server > 2.0" \
-        --version ${SERVICE_VERSION} \
-        --iteration 1 \
+        --version ${PACKAGE_VERSION} \
+        --iteration ${PACKAGE_ITERATION} \
         ${DEB_FPM_ARGS} \
         var
       __ret=$?
@@ -51,8 +56,8 @@ for p in ${PACKAGE_FORMATS} ; do
         --category misc \
         --depends "python > 2.6" \
         --depends "ambari-server > 2.0" \
-        --version ${SERVICE_VERSION} \
-        --iteration 1 \
+        --version ${PACKAGE_VERSION} \
+        --iteration ${PACKAGE_ITERATION} \
         ${RPM_FPM_ARGS} \
         var
       __ret=$?
