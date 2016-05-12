@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
-  Copyright © 2015 Cask Data, Inc.
+  Copyright © 2015-2016 Cask Data, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy of
@@ -65,6 +65,11 @@
       settings. If any checks fail, the CDAP Master will fail to start instead of waiting for the problem to be fixed.
       This setting only affects Distributed CDAP. It does not apply to Standalone CDAP.
     </description>
+    <display-name>Master Startup Checks</display-name>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -200,6 +205,14 @@
     <name>master.service.num.cores</name>
     <value>2</value>
     <description>Number of cores for Master Service instance</description>
+    <display-name>CDAP Master YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -208,6 +221,15 @@
     <description>
       Size of memory in megabytes for Master Service instance
     </description>
+    <display-name>CDAP Master YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>0</minimum>
+      <maximum>268435456</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -375,6 +397,14 @@
       Number of virtual core for the YARN container that runs the stream
       handler
     </description>
+    <display-name>Stream YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -384,6 +414,15 @@
       Amount of memory in megabytes for the YARN container that runs the
       stream handler
     </description>
+    <display-name>Stream YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>0</minimum>
+      <maximum>268435456</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -434,6 +473,11 @@
     <description>
       Determines whether to publish audit messages to Apache Kafka
     </description>
+    <display-name>Publish Audit Logs</display-name>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -570,18 +614,35 @@
 
   <property>
     <name>data.tx.num.cores</name>
-    <value>${master.service.num.cores}</value>
+    <value>2</value>
     <description>
       Maximum number of transaction client cores
     </description>
+    <display-name>Transaction Client YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
     <name>data.tx.memory.mb</name>
-    <value>${master.service.memory.mb}</value>
+    <value>512</value>
     <description>
       Memory in megabytes of the transaction clients
     </description>
+    <display-name>Transaction Client YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>0</minimum>
+      <maximum>268435456</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -686,8 +747,17 @@
     <name>dataset.executor.container.memory.mb</name>
     <value>512</value>
     <description>
-      Size of Memory in megabytes for each dataset executor instance
+      Size of memory in megabytes for each dataset executor instance
     </description>
+    <display-name>Dataset Executor YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>0</minimum>
+      <maximum>268435456</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -696,6 +766,14 @@
     <description>
       Number of virtual cores for each dataset executor instance
     </description>
+    <display-name>Dataset Executor YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -761,7 +839,7 @@
 
   <property>
     <name>router.bind.port</name>
-    <value>{{cdap_router_port}}</value>
+    <value>11015</value>
     <description>
       CDAP Router service bind port
     </description>
@@ -890,6 +968,11 @@
       ${metadata.updates.kafka.topic} to receive notifications of metadata
       updates.
     </description>
+    <display-name>Publish Metadata Updates</display-name>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <!-- New Metrics system settings -->
@@ -980,18 +1063,35 @@
 
   <property>
     <name>metrics.num.cores</name>
-    <value>${master.service.num.cores}</value>
+    <value>2</value>
     <description>
       Number of virtual cores for the metrics service
     </description>
+    <display-name>Metrics Service YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
     <name>metrics.memory.mb</name>
-    <value>${master.service.memory.mb}</value>
+    <value>512</value>
     <description>
       Memory assigned to the metrics service in megabytes
     </description>
+    <display-name>Metrics Service YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>0</minimum>
+      <maximum>268435456</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <!-- Metrics Processor Configuration -->
@@ -1020,6 +1120,14 @@
     <description>
       Number of cores for metrics processor service Apache Twill runnable
     </description>
+    <display-name>Metrics Processor YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -1029,6 +1137,15 @@
       Size of memory in megabytes for metrics processor service Apache Twill
       runnable
     </description>
+    <display-name>Metrics Processor YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>0</minimum>
+      <maximum>268435456</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -1087,6 +1204,14 @@
     <description>
       Number of cores for each log saver instance in YARN
     </description>
+    <display-name>Log Saver YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -1227,6 +1352,11 @@
     <description>
       Determines if the CDAP Explore Service (ad-hoc SQL queries) is enabled
     </description>
+    <display-name>Explore Enabled</display-name>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -1261,6 +1391,14 @@
     <description>
       Number of virtual cores for each explore executor instance
     </description>
+    <display-name>Explore Executor YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -1269,6 +1407,15 @@
     <description>
       Size of Memory in megabytes for each explore executor instance
     </description>
+    <display-name>Explore Executor YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>0</minimum>
+      <maximum>268435456</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>

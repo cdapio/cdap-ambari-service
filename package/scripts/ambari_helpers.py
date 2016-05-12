@@ -31,10 +31,10 @@ def package(name):
 
 def add_repo(source, dest):
     import params
-    if not os.path.isfile(dest + params.repo_file):
-        Execute("cp %s %s" % (source, dest))
-        Execute(params.key_cmd)
-        Execute(params.cache_cmd)
+    dest_file = dest + params.repo_file
+    Execute("sed -e 's#REPO_URL#%s#' %s > %s" % (params.repo_url, source, dest_file))
+    Execute(params.key_cmd)
+    Execute(params.cache_cmd)
 
 
 def cdap_config(name=None):

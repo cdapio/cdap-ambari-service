@@ -40,12 +40,14 @@ if distribution.startswith('centos') or distribution.startswith('redhat'):
     package_mgr = 'yum'
     key_cmd = "rpm --import %s/pubkey.gpg" % (files_dir)
     cache_cmd = 'yum makecache'
+    repo_url = config['configurations']['cdap-env']['yum_repo_url']
 else:
     os_repo_dir = '/etc/apt/sources.list.d/'
     repo_file = 'cdap-3.4.list'
     package_mgr = 'apt-get'
     key_cmd = "apt-key add %s/pubkey.gpg" % (files_dir)
     cache_cmd = 'apt-get update'
+    repo_url = config['configurations']['cdap-env']['apt_repo_url']
 
 cdap_user = config['configurations']['cdap-env']['cdap_user']
 log_dir = config['configurations']['cdap-env']['cdap_log_dir']
@@ -99,13 +101,5 @@ cdap_kafka_brokers = tmp_kafka_hosts
 router_hosts = config['clusterHostInfo']['cdap_router_hosts']
 router_hosts.sort()
 cdap_router_host = router_hosts[0]
-
-# Get some of our hosts
-hive_metastore_host = config['clusterHostInfo']['hive_metastore_host']
-hive_server_host = config['clusterHostInfo']['hive_server_host']
-if len(hive_server_host) > 0 and hive_server_host == cdap_router_host:
-    cdap_router_port = '11015'
-else:
-    cdap_router_port = '10000'
 
 # TODO: cdap_auth_server_hosts cdap_ui_hosts

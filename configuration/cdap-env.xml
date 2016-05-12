@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
-  Copyright © 2015 Cask Data, Inc.
+  Copyright © 2015-2016 Cask Data, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy of
@@ -19,27 +19,63 @@
 <configuration>
 
   <property>
+    <name>apt_repo_url</name>
+    <value>http://repository.cask.co/ubuntu/precise/amd64/cdap/3.4</value>
+    <description>
+      URL to an APT repository hosting this version of CDAP. Defaults to
+      the public Cask repository address
+    </description>
+    <display-name>APT Repository URL</display-name>
+    <value-attributes>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>yum_repo_url</name>
+    <value>http://repository.cask.co/centos/6/x86_64/cdap/3.4</value>
+    <description>
+      URL to a YUM repository hosting this version of CDAP. Defaults to
+      the public Cask repository address
+    </description>
+    <display-name>YUM Repository URL</display-name>
+    <value-attributes>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
     <name>cdap_log_dir</name>
     <value>/var/log/cdap</value>
     <description>Log directory for CDAP</description>
+    <display-name>Log directory for CDAP</display-name>
+    <value-attributes>
+      <type>directories</type>
+    </value-attributes>
   </property>
 
   <property>
     <name>cdap_pid_dir</name>
     <value>/var/run/cdap</value>
     <description>PID directory for CDAP</description>
+    <display-name>PID directory for CDAP</display-name>
+    <value-attributes>
+      <type>directories</type>
+    </value-attributes>
   </property>
 
   <property>
     <name>cdap_kafka_heapsize</name>
     <value>1024</value>
     <description>CDAP Kafka Heap Size</description>
+    <display-name>CDAP Kafka Heap Size</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
       <maximum>268435456</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
+      <overridable>false</overridable>
     </value-attributes>
   </property>
 
@@ -47,12 +83,14 @@
     <name>cdap_master_heapsize</name>
     <value>1024</value>
     <description>CDAP Master Heap Size</description>
+    <display-name>CDAP Master Heap Size</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
       <maximum>268435456</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
+      <overridable>false</overridable>
     </value-attributes>
   </property>
 
@@ -60,12 +98,14 @@
     <name>cdap_router_heapsize</name>
     <value>1024</value>
     <description>CDAP Router Heap Size</description>
+    <display-name>CDAP Router Heap Size</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
       <maximum>268435456</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
+      <overridable>false</overridable>
     </value-attributes>
   </property>
 
@@ -74,6 +114,7 @@
     <value>cdap</value>
     <property-type>USER</property-type>
     <description>CDAP User Name</description>
+    <display-name>CDAP User Name</display-name>
   </property>
 
   <!-- cdap-env.sh -->
@@ -108,5 +149,9 @@ export ROUTER_JAVA_HEAPMAX="-Xmx{{cdap_router_heapsize}}m"
 export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}}"
 export TEZ_HOME="/usr/hdp/{{hdp_version}}/tez"
 export TEZ_CONF_DIR="/etc/tez/conf"</value>
+    <display-name>Contents of cdap-env.sh</display-name>
+    <value-attributes>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 </configuration>
