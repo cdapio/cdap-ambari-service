@@ -65,7 +65,7 @@
       settings. If any checks fail, the CDAP Master will fail to start instead of waiting for the problem to be fixed.
       This setting only affects Distributed CDAP. It does not apply to Standalone CDAP.
     </description>
-    <display-name>Master startup checks</display-name>
+    <display-name>Master Startup Checks</display-name>
     <value-attributes>
       <type>boolean</type>
       <overridable>false</overridable>
@@ -205,7 +205,7 @@
     <name>master.service.num.cores</name>
     <value>2</value>
     <description>Number of cores for Master Service instance</description>
-    <display-name>CDAP Master YARN CPU cores</display-name>
+    <display-name>CDAP Master YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
@@ -397,7 +397,7 @@
       Number of virtual core for the YARN container that runs the stream
       handler
     </description>
-    <display-name>Stream YARN CPU cores</display-name>
+    <display-name>Stream YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
@@ -473,7 +473,7 @@
     <description>
       Determines whether to publish audit messages to Apache Kafka
     </description>
-    <display-name>Publish audit logs</display-name>
+    <display-name>Publish Audit Logs</display-name>
     <value-attributes>
       <type>boolean</type>
       <overridable>false</overridable>
@@ -618,7 +618,7 @@
     <description>
       Maximum number of transaction client cores
     </description>
-    <display-name>Transaction client YARN CPU cores</display-name>
+    <display-name>Transaction Client YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
@@ -634,7 +634,7 @@
     <description>
       Memory in megabytes of the transaction clients
     </description>
-    <display-name>Transaction client YARN Memory</display-name>
+    <display-name>Transaction Client YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>0</minimum>
@@ -749,7 +749,7 @@
     <description>
       Size of Memory in megabytes for each dataset executor instance
     </description>
-    <display-name>Dataset executor YARN Memory</display-name>
+    <display-name>Dataset Executor YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>0</minimum>
@@ -766,7 +766,7 @@
     <description>
       Number of virtual cores for each dataset executor instance
     </description>
-    <display-name>Dataset executor YARN CPU cores</display-name>
+    <display-name>Dataset Executor YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
@@ -968,7 +968,7 @@
       ${metadata.updates.kafka.topic} to receive notifications of metadata
       updates.
     </description>
-    <display-name>Publish metadata updates</display-name>
+    <display-name>Publish Metadata Updates</display-name>
     <value-attributes>
       <type>boolean</type>
       <overridable>false</overridable>
@@ -1067,7 +1067,7 @@
     <description>
       Number of virtual cores for the metrics service
     </description>
-    <display-name>Metrics service YARN CPU cores</display-name>
+    <display-name>Metrics Service YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
@@ -1083,7 +1083,7 @@
     <description>
       Memory assigned to the metrics service in megabytes
     </description>
-    <display-name>Metrics service YARN Memory</display-name>
+    <display-name>Metrics Service YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>0</minimum>
@@ -1120,7 +1120,7 @@
     <description>
       Number of cores for metrics processor service Apache Twill runnable
     </description>
-    <display-name>Metrics processor YARN CPU cores</display-name>
+    <display-name>Metrics Processor YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
@@ -1137,7 +1137,7 @@
       Size of memory in megabytes for metrics processor service Apache Twill
       runnable
     </description>
-    <display-name>Metrics processor YARN Memory</display-name>
+    <display-name>Metrics Processor YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>0</minimum>
@@ -1204,7 +1204,7 @@
     <description>
       Number of cores for each log saver instance in YARN
     </description>
-    <display-name>Log saver YARN CPU cores</display-name>
+    <display-name>Log Saver YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
@@ -1352,7 +1352,7 @@
     <description>
       Determines if the CDAP Explore Service (ad-hoc SQL queries) is enabled
     </description>
-    <display-name>Explore enabled</display-name>
+    <display-name>Explore Enabled</display-name>
     <value-attributes>
       <type>boolean</type>
       <overridable>false</overridable>
@@ -1391,7 +1391,7 @@
     <description>
       Number of virtual cores for each explore executor instance
     </description>
-    <display-name>Explore executor YARN CPU cores</display-name>
+    <display-name>Explore Executor YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
@@ -1407,7 +1407,7 @@
     <description>
       Size of Memory in megabytes for each explore executor instance
     </description>
-    <display-name>Explore executor YARN Memory</display-name>
+    <display-name>Explore Executor YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>0</minimum>
