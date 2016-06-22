@@ -1380,12 +1380,6 @@
   </property>
 
   <property>
-    <name>explore.executor.container.instances</name>
-    <value>1</value>
-    <description>Number of explore executor instances</description>
-  </property>
-
-  <property>
     <name>explore.executor.container.num.cores</name>
     <value>1</value>
     <description>
