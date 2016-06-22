@@ -1413,12 +1413,6 @@
   </property>
 
   <property>
-    <name>explore.executor.max.instances</name>
-    <value>1</value>
-    <description>Maximum number of explore executor instances</description>
-  </property>
-
-  <property>
     <name>explore.active.operation.timeout.secs</name>
     <value>86400</value>
     <description>
