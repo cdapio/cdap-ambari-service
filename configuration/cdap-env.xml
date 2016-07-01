@@ -117,6 +117,16 @@
     <display-name>CDAP User Name</display-name>
   </property>
 
+  <property>
+    <name>cdap_principal_name</name>
+    <description>CDAP principal name</description>
+  </property>
+
+  <property>
+    <name>cdap_user_keytab</name>
+    <description>CDAP keytab path</description>
+  </property>
+
   <!-- cdap-env.sh -->
   <property>
     <name>content</name>
@@ -146,7 +156,11 @@ export PID_DIR={{pid_dir}}
 export KAFKA_JAVA_HEAPMAX="-Xmx{{cdap_kafka_heapsize}}m"
 export MASTER_JAVA_HEAPMAX="-Xmx{{cdap_master_heapsize}}m"
 export ROUTER_JAVA_HEAPMAX="-Xmx{{cdap_router_heapsize}}m"
+{% if security_enabled %}
+export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}} -Djava.security.auth.login.config={{master_jaas_config_file}}"
+{% else %}
 export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}}"
+{% endif %}
 export TEZ_HOME="/usr/hdp/{{hdp_version}}/tez"
 export TEZ_CONF_DIR="/etc/tez/conf"</value>
     <display-name>Contents of cdap-env.sh</display-name>

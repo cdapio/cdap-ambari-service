@@ -1,5 +1,5 @@
 # coding=utf8
-# Copyright © 2015 Cask Data, Inc.
+# Copyright © 2015-2016 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -17,6 +17,7 @@
 import os
 import ambari_helpers as helpers
 from resource_management import *
+from resource_management.libraries.functions import get_kinit_path
 
 # config object that holds the configurations declared in the -config.xml file
 config = Script.get_config()
@@ -27,7 +28,7 @@ package_dir = os.path.realpath(__file__).split('/package')[0] + '/package/'
 files_dir = package_dir + 'files/'
 scripts_dir = package_dir + 'scripts/'
 distribution = platform.linux_distribution()[0].lower()
-hostname = config['hostname']
+hostname = config['hostname'].lower()
 java64_home = config['hostLevelParams']['java_home']
 user_group = config['configurations']['cluster-env']['user_group']
 
@@ -71,10 +72,28 @@ if map_cdap_site['hdfs.namespace'] == '/${root.namespace}':
     hdfs_namespace = '/' + root_namespace
 else:
     hdfs_namespace = map_cdap_site['hdfs.namespace']
-hdfs_user = map_cdap_site['hdfs.user']
-# TODO: Fix this hack -- check if we're still cdap_user
-hdfs_user = cdap_user
 kafka_log_dir = map_cdap_site['kafka.log.dir']
+
+# Kerberos stuff
+hdfs_user_keytab = config['configurations']['hadoop-env']['hdfs_user_keytab']
+hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
+hdfs_principal_name = config['configurations']['hadoop-env']['hdfs_principal_name']
+kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executable_search_paths', None))
+cdap_principal_name = config['configurations']['cdap-env']['cdap_principal_name']
+cdap_user_keytab = config['configurations']['cdap-env']['cdap_user_keytab']
+
+if security_enabled:
+    master_jaas_princ = config['configurations']['cdap-site']['cdap.master.kerberos.principal'].replace('_HOST', hostname)
+    master_keytab_path = config['configurations']['cdap-site']['cdap.master.kerberos.keytab']
+    client_jaas_config_file = format("{cdap_conf_dir}/cdap_client_jaas.conf")
+    master_jaas_config_file = format("{cdap_conf_dir}/cdap_master_jaas.conf")
+    kinit_cmd = format("{kinit_path_local} -kt {cdap_user_keytab} {cdap_principal_name};")
+    kinit_cmd_hdfs = format("{kinit_path_local} -kt {hdfs_user_keytab} {hdfs_principal_name};")
+    kinit_cmd_master = format("{kinit_path_local} -kt {master_keytab_path} {master_jaas_princ};")
+else:
+    kinit_cmd = ""
+    kinit_cmd_hdfs = ""
+    kinit_cmd_master = ""
 
 # Get ZooKeeper variables
 zk_client_port = str(default('/configurations/zoo.cfg/clientPort', None))

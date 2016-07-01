@@ -897,6 +897,50 @@
 
   -->
 
+  <!-- Kerberos -->
+
+  <property>
+    <name>cdap.master.kerberos.keytab</name>
+    <value></value>
+    <description>
+      The full path to the Kerberos keytab file containing the CDAP Master service's
+      credentials
+    </description>
+  </property>
+
+  <property>
+    <name>cdap.master.kerberos.principal</name>
+    <value></value>
+    <description>
+      Example: "CDAP_PRINCIPAL/_HOST@EXAMPLE.COM". The Kerberos primary user
+      that should be used to login to the CDAP Master service. Substitute
+      the Kerberos primary (user) for CDAP_PRINCIPAL, and your domain for
+      EXAMPLE.COM. The string "_HOST" will be substituted with the local
+      hostname.
+    </description>
+  </property>
+
+  <property>
+    <name>kerberos.auth.enabled</name>
+    <value>false</value>
+    <description>
+      Determines if Kerberos authentication is enabled
+    </description>
+    <display-name>Kerberos Enabled</display-name>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>kerberos.auth.relogin.interval.seconds</name>
+    <value>300</value>
+    <description>
+      Relogin interval for Kerberos keytab
+    </description>
+  </property>
+
   <property>
     <name>master.startup.service.timeout.seconds</name>
     <value>600</value>

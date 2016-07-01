@@ -41,9 +41,9 @@ class Master(Script):
         import status_params
         env.set_params(params)
         self.configure(env)
-        helpers.create_hdfs_dir(params.hdfs_namespace, params.hdfs_user, 755)
+        helpers.create_hdfs_dir(params.hdfs_namespace, params.cdap_user, 755)
         # Create user's HDFS home
-        helpers.create_hdfs_dir('/user/' + params.hdfs_user, params.hdfs_user, 755)
+        helpers.create_hdfs_dir('/user/' + params.cdap_user, params.cdap_user, 755)
         # Hack to work around CDAP-1967
         self.remove_jackson(env)
         daemon_cmd = format('/opt/cdap/master/bin/svc-master start')

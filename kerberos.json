@@ -1,0 +1,126 @@
+{
+  "services": [
+    {
+      "name": "CDAP",
+      "identities": [
+        {
+          "name": "/spnego"
+        },
+        {
+          "name": "/hdfs"
+        },
+        {
+          "name": "cdap",
+          "principal": {
+            "value": "cdap@${realm}",
+            "type" : "user",
+            "configuration": "cdap-env/cdap_principal_name",
+            "local_username": "cdap"
+          },
+          "keytab": {
+            "file": "${keytab_dir}/cdap.headless.keytab",
+            "owner": {
+              "name": "cdap",
+              "access": "r"
+            },
+            "group": {
+              "name": "${cluster-env/user_group}",
+              "access": "r"
+            },
+            "configuration": "cdap-env/cdap_user_keytab"
+          }
+        },
+        {
+          "name": "/smokeuser"
+        }
+      ],
+      "configurations": [
+        {
+          "cdap-site": {
+            "kerberos.auth.enabled": "true"
+          }
+        }
+      ],
+      "components": [
+        {
+          "name": "CDAP_MASTER",
+          "identities": [
+            {
+              "name": "cdap_master_cdap",
+              "principal": {
+                "value": "cdap/_HOST@${realm}",
+                "type" : "service",
+                "configuration": "cdap-site/cdap.master.kerberos.principal",
+                "local_username": "cdap"
+              },
+              "keytab": {
+                "file": "${keytab_dir}/cdap.service.keytab",
+                "owner": {
+                  "name": "cdap",
+                  "access": "r"
+                },
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": ""
+                },
+                "configuration": "cdap-site/cdap.master.kerberos.keytab"
+              }
+            }
+          ]
+        },
+        {
+          "name": "CDAP_AUTH_SERVER",
+          "identities": [
+            {
+              "name": "cdap_auth_server_cdap",
+              "principal": {
+                "value": "cdap/_HOST@${realm}",
+                "type" : "service",
+                "configuration": "cdap-site/cdap.master.kerberos.principal",
+                "local_username": "cdap"
+              },
+              "keytab": {
+                "file": "${keytab_dir}/cdap.service.keytab",
+                "owner": {
+                  "name": "cdap",
+                  "access": "r"
+                },
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": ""
+                },
+                "configuration": "cdap-site/cdap.master.kerberos.keytab"
+              }
+            }
+          ]
+        },
+        {
+          "name": "CDAP_ROUTER",
+          "identities": [
+            {
+              "name": "cdap_router_cdap",
+              "principal": {
+                "value": "cdap/_HOST@${realm}",
+                "type" : "service",
+                "configuration": "cdap-site/cdap.master.kerberos.principal",
+                "local_username": "cdap"
+              },
+              "keytab": {
+                "file": "${keytab_dir}/cdap.service.keytab",
+                "owner": {
+                  "name": "cdap",
+                  "access": "r"
+                },
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": ""
+                },
+                "configuration": "cdap-site/cdap.master.kerberos.keytab"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

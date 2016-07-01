@@ -1,5 +1,5 @@
 # coding=utf8
-# Copyright © 2015 Cask Data, Inc.
+# Copyright © 2015-2016 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -14,14 +14,19 @@
 # the License.
 #
 
-from resource_management import *
 import os
+from resource_management import *
 
 
 def create_hdfs_dir(path, owner, perms):
-    Execute("hadoop fs -mkdir -p %s" % (path), user='hdfs')
-    Execute("hadoop fs -chown %s %s" % (owner, path), user='hdfs')
-    Execute("hadoop fs -chmod %s %s" % (str(perms), path), user='hdfs')
+    import params
+    kinit_cmd = params.kinit_cmd_hdfs
+    mkdir_cmd = format("{kinit_cmd} hadoop fs -mkdir -p {path}")
+    chown_cmd = format("{kinit_cmd} hadoop fs -chown {owner} {path}")
+    chmod_cmd = format("{kinit_cmd} hadoop fs -chmod {perms} {path}")
+    Execute(mkdir_cmd, user='hdfs')
+    Execute(chown_cmd, user='hdfs')
+    Execute(chmod_cmd, user='hdfs')
 
 
 def package(name):
@@ -67,6 +72,19 @@ def cdap_config(name=None):
         content=InlineTemplate(params.cdap_env_sh_template)
     )
 
+    File(
+        format(params.client_jaas_config_file),
+        owner=params.cdap_user,
+        content=Template("cdap_client_jaas.conf.j2")
+    )
+
+    File(
+        format(params.master_jaas_config_file),
+        owner=params.cdap_user,
+        content=Template("cdap_master_jaas.conf.j2")
+    )
+
+    # Set dirname
     if name == 'auth':
         dirname = 'security'
     elif name == 'router':
