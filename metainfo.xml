@@ -36,6 +36,9 @@
               <dictionaryName>cdap-env</dictionaryName>
             </configFile>
           </configFiles>
+          <configuration-dependencies>
+            <config-type>cdap-site</config-type>
+          </configuration-dependencies>
         </component>
 
         <component>
