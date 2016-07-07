@@ -30,12 +30,10 @@
               <fileName>cdap-site.xml</fileName>
               <dictionaryName>cdap-site</dictionaryName>
             </configFile>
-            <configFile>
-              <type>env</type>
-              <fileName>cdap-env.sh</fileName>
-              <dictionaryName>cdap-env</dictionaryName>
-            </configFile>
           </configFiles>
+          <configuration-dependencies>
+            <config-type>cdap-site</config-type>
+          </configuration-dependencies>
         </component>
 
         <component>
@@ -49,6 +47,18 @@
             <scriptType>PYTHON</scriptType>
             <timeout>600</timeout>
           </commandScript>
+          <configFiles>
+            <configFile>
+              <type>xml</type>
+              <fileName>cdap-site.xml</fileName>
+              <dictionaryName>cdap-site</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>env</type>
+              <fileName>cdap-env.sh</fileName>
+              <dictionaryName>cdap-env</dictionaryName>
+            </configFile>
+          </configFiles>
           <dependencies>
             <dependency>
               <name>CDAP/CDAP_KAFKA</name>
@@ -159,6 +169,18 @@
             <scriptType>PYTHON</scriptType>
             <timeout>600</timeout>
           </commandScript>
+          <configFiles>
+            <configFile>
+              <type>xml</type>
+              <fileName>cdap-site.xml</fileName>
+              <dictionaryName>cdap-site</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>env</type>
+              <fileName>cdap-env.sh</fileName>
+              <dictionaryName>cdap-env</dictionaryName>
+            </configFile>
+          </configFiles>
           <dependencies>
             <dependency>
               <name>ZOOKEEPER/ZOOKEEPER_SERVER</name>
@@ -195,6 +217,9 @@
             <scriptType>PYTHON</scriptType>
             <timeout>600</timeout>
           </commandScript>
+          <configuration-dependencies>
+            <config-type>cdap-site</config-type>
+          </configuration-dependencies>
         </component>
 
       </components>
