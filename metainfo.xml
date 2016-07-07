@@ -41,7 +41,8 @@
           <name>CDAP_MASTER</name>
           <displayName>CDAP Master</displayName>
           <category>MASTER</category>
-          <cardinality>1</cardinality>
+          <cardinality>1+</cardinality>
+          <timelineAppid>CDAP</timelineAppid>
           <commandScript>
             <script>scripts/master.py</script>
             <scriptType>PYTHON</scriptType>
@@ -192,7 +193,8 @@
           <name>CDAP_ROUTER</name>
           <displayName>CDAP Router</displayName>
           <category>MASTER</category>
-          <cardinality>1</cardinality>
+          <cardinality>1+</cardinality>
+          <timelineAppid>CDAP</timelineAppid>
           <commandScript>
             <script>scripts/router.py</script>
             <scriptType>PYTHON</scriptType>
@@ -240,7 +242,8 @@
           <name>CDAP_UI</name>
           <displayName>CDAP UI</displayName>
           <category>MASTER</category>
-          <cardinality>1</cardinality>
+          <cardinality>1+</cardinality>
+          <timelineAppid>CDAP</timelineAppid>
           <commandScript>
             <script>scripts/ui.py</script>
             <scriptType>PYTHON</scriptType>

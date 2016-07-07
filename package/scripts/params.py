@@ -119,6 +119,15 @@ cdap_kafka_brokers = tmp_kafka_hosts
 
 router_hosts = config['clusterHostInfo']['cdap_router_hosts']
 router_hosts.sort()
-cdap_router_host = router_hosts[0]
+if len(router_hosts) > 1:
+    for val in router_hosts:
+        if val == hostname:
+            cdap_router_host = hostname
+    if cdap_router_host == hostname:
+        pass
+    else:
+        cdap_router_host = router_hosts[0]
+else:
+    cdap_router_host = router_hosts[0]
 
 # TODO: cdap_auth_server_hosts cdap_ui_hosts
