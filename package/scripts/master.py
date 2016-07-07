@@ -67,6 +67,33 @@ class Master(Script):
         env.set_params(params)
         helpers.cdap_config('master')
 
+    def upgrade(self, env):
+        print 'Run CDAP Upgrade Tool'
+        upgrade_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.UpgradeTool upgrade force')
+        Execute(
+            upgrade_cmd,
+            user=params.cdap_user,
+            not_if=self.status
+        )
+
+    def upgrade_hbase(self, env):
+        print 'Run CDAP HBase Coprocessor Upgrade Tool'
+        upgrade_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.UpgradeTool upgrade_hbase force')
+        Execute(
+            upgrade_cmd,
+            user=params.cdap_user,
+            not_if=self.status
+        )
+
+    def postupgrade(self, env):
+        print 'Run CDAP Post-Upgrade Tool'
+        upgrade_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.flow.FlowQueuePendingCorrector')
+        Execute(
+            upgrade_cmd,
+            user=params.cdap_user,
+            only_if=self.status
+        )
+
     def remove_jackson(self, env):
         jackson_check = format('ls -1 /opt/cdap/master/lib/org.codehaus.jackson* 2>/dev/null')
         Execute(

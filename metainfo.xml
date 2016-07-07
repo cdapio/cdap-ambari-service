@@ -59,6 +59,35 @@
               <dictionaryName>cdap-env</dictionaryName>
             </configFile>
           </configFiles>
+          <customCommands>
+            <customCommand>
+              <name>UPGRADE</name>
+              <displayName>Run CDAP Upgrade Tool</displayName>
+              <commandScript>
+                <script>scripts/master.py</script>
+                <scriptType>PYTHON</scriptType>
+                <timeout>1800</timeout>
+              </commandScript>
+            </customCommand>
+            <customCommand>
+              <name>UPGRADE_HBASE</name>
+              <displayName>Run CDAP HBase Coprocessor Upgrade Tool</displayName>
+              <commandScript>
+                <script>scripts/master.py</script>
+                <scriptType>PYTHON</scriptType>
+                <timeout>1800</timeout>
+              </commandScript>
+            </customCommand>
+            <customCommand>
+              <name>POSTUPGRADE</name>
+              <displayName>Run CDAP Post-Upgrade Tasks</displayName>
+              <commandScript>
+                <script>scripts/master.py</script>
+                <scriptType>PYTHON</scriptType>
+                <timeout>1800</timeout>
+              </commandScript>
+            </customCommand>
+          </customCommands>
           <dependencies>
             <dependency>
               <name>CDAP/CDAP_KAFKA</name>
