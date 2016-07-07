@@ -989,7 +989,7 @@
 
   <property>
     <name>metadata.updates.kafka.broker.list</name>
-    <value>127.0.0.1:${kafka.bind.port}</value>
+    <value>{{cdap_kafka_brokers}}</value>
     <description>
       Apache Kafka broker list to which metadata update notifications are published
     </description>
