@@ -18,15 +18,28 @@
 
 <configuration supports_final="true">
 
+  <!-- General Configuration -->
+
   <property>
-    <name>root.namespace</name>
-    <value>cdap</value>
+    <name>hdfs.lib.dir</name>
+    <value>${hdfs.namespace}/lib</value>
     <description>
-      Root for this CDAP instance; used as the parent (or root) node for
-      ZooKeeper, as the directory under which all CDAP data and metadata is
-      stored in HDFS, and as the prefix for all HBase tables created by
-      CDAP; must be composed of alphanumeric characters
+      Common directory in HDFS for, among others, JAR files for coprocessors
     </description>
+  </property>
+
+  <property>
+    <name>hdfs.namespace</name>
+    <value>/${root.namespace}</value>
+    <description>
+      Root directory for HDFS files written by CDAP
+    </description>
+  </property>
+
+  <property>
+    <name>hdfs.user</name>
+    <value>{{cdap_user}}</value>
+    <description>User name for accessing HDFS</description>
   </property>
 
   <property>
@@ -40,19 +53,54 @@
   </property>
 
   <property>
-    <name>zookeeper.quorum</name>
-    <value>{{cdap_zookeeper_quorum}}</value>
+    <name>local.data.dir</name>
+    <value>data</value>
     <description>
-      ZooKeeper quorum string; specifies the ZooKeeper host:port; substitute the quorum
-      (FQDN1:2181,FQDN2:2181,...) for the components shown here
+      Data directory relative to LOCAL_DIR for the master process in distributed CDAP
     </description>
   </property>
 
   <property>
-    <name>zookeeper.session.timeout.millis</name>
-    <value>40000</value>
+    <name>mapreduce.include.custom.format.classes</name>
+    <value>true</value>
     <description>
-      ZooKeeper session timeout in milliseconds
+      Indicates whether to include custom input/output format classes in the job.jar or
+      not; if set to true, custom format classes will be added to the job.jar and
+      available as part of the MapReduce system classpath
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>mapreduce.jobclient.connect.max.retries</name>
+    <value>2</value>
+    <description>
+      Indicates the maximum number of retries JobClient will make to establish a service
+      connection when retrieving job status and history
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>namespaces.dir</name>
+    <value>namespaces</value>
+    <description>The sub-directory of ${hdfs.namespace} in which namespaces are stored</description>
+  </property>
+
+  <property>
+    <name>root.namespace</name>
+    <value>cdap</value>
+    <description>
+      Root for this CDAP instance; used as the parent (or root) node for
+      ZooKeeper, as the directory under which all CDAP data and metadata is
+      stored in HDFS, and as the prefix for all HBase tables created by
+      CDAP; must be composed of alphanumeric characters
     </description>
   </property>
 
@@ -102,27 +150,10 @@
   </property>
 
   <property>
-    <name>twill.zookeeper.namespace</name>
-    <value>/twill</value>
-    <description>
-      ZooKeeper namespace prefix for Apache Twill
-    </description>
-  </property>
-
-  <property>
     <name>twill.java.reserved.memory.mb</name>
     <value>250</value>
     <description>
       Reserved non-heap memory in megabytes for Apache Twill container
-    </description>
-  </property>
-
-  <property>
-    <name>twill.no.container.timeout</name>
-    <value>120000</value>
-    <description>
-      Amount of time in milliseconds to wait for at least one container for
-      Apache Twill runnable
     </description>
   </property>
 
@@ -138,331 +169,164 @@
   </property>
 
   <property>
-    <name>hdfs.namespace</name>
-    <value>/${root.namespace}</value>
+    <name>twill.no.container.timeout</name>
+    <value>120000</value>
     <description>
-      Root directory for HDFS files written by CDAP
+      Amount of time in milliseconds to wait for at least one container for
+      Apache Twill runnable
     </description>
   </property>
 
   <property>
-    <name>hdfs.user</name>
-    <value>{{cdap_user}}</value>
-    <description>User name for accessing HDFS</description>
-  </property>
-
-  <property>
-    <name>namespaces.dir</name>
-    <value>namespaces</value>
-    <description>The sub-directory of ${hdfs.namespace} in which namespaces are stored</description>
-  </property>
-
-  <property>
-    <name>hdfs.lib.dir</name>
-    <value>${hdfs.namespace}/lib</value>
+    <name>twill.zookeeper.namespace</name>
+    <value>/twill</value>
     <description>
-      Common directory in HDFS for, among others, JAR files for coprocessors
-    </description>
-  </property>
-
-  <!-- AppFabric -->
-
-  <property>
-    <name>app.connection.backlog</name>
-    <value>20000</value>
-    <description>
-      Max connection backlog of CDAP Master
+      ZooKeeper namespace prefix for Apache Twill
     </description>
   </property>
 
   <property>
-    <name>app.exec.threads</name>
-    <value>20</value>
+    <name>zookeeper.quorum</name>
+    <value>{{cdap_zookeeper_quorum}}</value>
     <description>
-      Number of Netty service executor threads
+      ZooKeeper quorum string; specifies the ZooKeeper host:port; substitute the quorum
+      (FQDN1:2181,FQDN2:2181,...) for the components shown here
     </description>
   </property>
 
   <property>
-    <name>app.boss.threads</name>
-    <value>1</value>
+    <name>zookeeper.session.timeout.millis</name>
+    <value>40000</value>
     <description>
-      Number of Netty service boss threads
+      ZooKeeper session timeout in milliseconds
+    </description>
+  </property>
+
+  <!-- Global Configuration -->
+
+  <property>
+    <name>dataset.unchecked.upgrade</name>
+    <value>false</value>
+    <description>
+      By default, any changes made to existing datasets are not deployed
+      when an app is redeployed; setting this value to true allows the
+      dataset changes to be deployed upon app redeployment.
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>enable.unrecoverable.reset</name>
+    <value>false</value>
+    <description>
+      Determines if resetting CDAP should be enabled. **WARNING: Enabling
+      this option makes it possible to delete all applications and data; NO
+      RECOVERY IS POSSIBLE!**
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <!-- Applications Configuration -->
+
+  <property>
+    <name>app.artifact.dir</name>
+    <value>/opt/cdap/master/artifacts</value>
+    <description>
+      Semicolon-separated list of local directories scanned for system artifacts
+      to add to the artifact repository
     </description>
   </property>
 
   <property>
-    <name>app.worker.threads</name>
-    <value>10</value>
+    <name>app.output.dir</name>
+    <value>/programs</value>
+    <description>Directory where all archives are stored</description>
+  </property>
+
+  <property>
+    <name>app.program.extra.classpath</name>
+    <value></value>
     <description>
-      Number of Netty service worker threads
+      Extra Java classpath for CDAP programs
     </description>
   </property>
 
-  <!-- YARN Services Parameters -->
+  <property>
+    <name>app.program.jvm.opts</name>
+    <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version} -Dspark.yarn.am.extraJavaOptions=-Dhdp.version=${hdp.version}</value>
+    <description>Java options for all program containers</description>
+  </property>
 
   <property>
-    <name>master.service.num.cores</name>
-    <value>2</value>
-    <description>Number of cores for Master Service instance</description>
-    <display-name>CDAP Master YARN CPU Cores</display-name>
+    <name>app.program.runid.corrector.interval</name>
+    <value>180</value>
+    <description>
+      The interval of how often the run id corrector thread will run in
+      seconds; this value should be greater than 0
+    </description>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
-      <maximum>4</maximum>
-      <increment-step>1</increment-step>
       <overridable>false</overridable>
     </value-attributes>
   </property>
 
   <property>
-    <name>master.service.memory.mb</name>
-    <value>512</value>
+    <name>app.program.runtime.extensions.dir</name>
+    <value>/opt/cdap/master/ext/runtimes</value>
     <description>
-      Size of memory in megabytes for Master Service instance
-    </description>
-    <display-name>CDAP Master YARN Memory</display-name>
-    <value-attributes>
-      <type>int</type>
-      <minimum>0</minimum>
-      <maximum>268435456</maximum>
-      <unit>MB</unit>
-      <increment-step>256</increment-step>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>master.service.max.instances</name>
-    <value>5</value>
-    <description>Maximum number of Master Service instances</description>
-  </property>
-
-  <!-- Master Services HTTP handles -->
-
-  <property>
-    <name>http.service.connection.backlog</name>
-    <value>20000</value>
-    <description>Max connection backlog of master HTTP service</description>
-  </property>
-
-  <property>
-    <name>http.service.exec.threads</name>
-    <value>20</value>
-    <description>Number of Netty service executor threads for master HTTP services</description>
-  </property>
-
-  <property>
-    <name>http.service.boss.threads</name>
-    <value>1</value>
-    <description>Number of Netty service boss threads for master HTTP services</description>
-  </property>
-
-  <property>
-    <name>http.service.worker.threads</name>
-    <value>10</value>
-    <description>Number of Netty service worker threads for master HTTP services</description>
-  </property>
-
-  <property>
-    <name>master.collect.app.containers.log.level</name>
-    <value>ERROR</value>
-    <description>
-      The log level of application container logs that are streamed back to the CDAP Master process log.
-      The levels supported are [ ALL, TRACE, DEBUG, INFO, WARN, ERROR, OFF ].
+      Semicolon-separated list of local directories that are scanned for program runtime extensions
     </description>
   </property>
 
   <property>
-    <name>master.collect.containers.log</name>
+    <name>app.program.spark.yarn.client.rewrite.enabled</name>
     <value>true</value>
     <description>
-      Determines if master service container logs are streamed back to the CDAP Master process log
+      Specify whether to rewrite the yarn.Client class in Spark to work
+      around the issue SPARK-13441 in some clusters.
     </description>
-  </property>
-
-  <!-- Stream handles -->
-
-  <property>
-    <name>stream.flume.port</name>
-    <value>10004</value>
-  </property>
-
-  <property>
-    <name>stream.flume.threads</name>
-    <value>100</value>
-  </property>
-
-  <property>
-    <name>stream.base.dir</name>
-    <value>/streams</value>
-    <description>The directory root for all stream files, relative to the HDFS namespace</description>
-  </property>
-
-  <property>
-    <name>stream.partition.duration</name>
-    <value>3600000</value>
-    <description>
-      The default duration of a stream partition in milliseconds
-    </description>
-  </property>
-
-  <property>
-    <name>stream.index.interval</name>
-    <value>10000</value>
-    <description>
-      Default time interval in milliseconds for emitting new index entry in
-      stream file
-    </description>
-  </property>
-
-  <property>
-    <name>stream.event.ttl</name>
-    <value>9223372036854775807</value>
-    <description>
-      Default time to live in milliseconds (Long.MAX_VALUE) for stream
-      events
-    </description>
-  </property>
-
-  <property>
-    <name>stream.container.instance.id</name>
-    <value>0</value>
-    <description>
-      Instance ID for the stream service container; the actual value will be
-      set at runtime by the system automatically
-    </description>
-  </property>
-
-  <property>
-    <name>stream.notification.threshold</name>
-    <value>1024</value>
-    <description>
-      Size of data, in megabytes, to be ingested by a stream before a
-      notification is published
-    </description>
-  </property>
-
-  <property>
-    <name>stream.size.schedule.polling.delay</name>
-    <value>600</value>
-    <description>Delay, in seconds, to poll a stream in a StreamSizeSchedule if no notification is received</description>
-  </property>
-
-  <property>
-    <name>stream.file.prefix</name>
-    <value>file</value>
-    <description>
-      Prefix of file name for stream file
-    </description>
-  </property>
-
-  <property>
-    <name>stream.instance.file.prefix</name>
-    <value>${stream.file.prefix}.${stream.container.instance.id}</value>
-    <description>
-      Prefix of file name for stream file per writer instance
-    </description>
-    <final>true</final>
-  </property>
-
-  <property>
-    <name>stream.consumer.table.presplits</name>
-    <value>16</value>
-    <description>
-      Number of splits for the stream consumer table
-    </description>
-  </property>
-
-  <property>
-    <name>stream.bind.address</name>
-    <value>0.0.0.0</value>
-    <description>
-      Stream HTTP service bind address
-    </description>
-  </property>
-
-  <property>
-    <name>stream.worker.threads</name>
-    <value>${http.service.worker.threads}</value>
-    <description>
-      Default number of IO worker threads for the stream HTTP service
-    </description>
-  </property>
-
-  <property>
-    <name>stream.container.num.cores</name>
-    <value>2</value>
-    <description>
-      Number of virtual core for the YARN container that runs the stream
-      handler
-    </description>
-    <display-name>Stream YARN CPU Cores</display-name>
     <value-attributes>
-      <type>int</type>
-      <minimum>1</minimum>
-      <maximum>4</maximum>
-      <increment-step>1</increment-step>
+      <type>boolean</type>
       <overridable>false</overridable>
     </value-attributes>
   </property>
 
   <property>
-    <name>stream.container.memory.mb</name>
-    <value>512</value>
+    <name>app.temp.dir</name>
+    <value>/tmp</value>
     <description>
-      Amount of memory in megabytes for the YARN container that runs the
-      stream handler
+      Temp directory
     </description>
-    <display-name>Stream YARN Memory</display-name>
+  </property>
+
+  <property>
+    <name>scheduler.max.thread.pool.size</name>
+    <value>100</value>
+    <description>Size of the scheduler thread pool</description>
     <value-attributes>
       <type>int</type>
-      <minimum>0</minimum>
-      <maximum>268435456</maximum>
-      <unit>MB</unit>
-      <increment-step>256</increment-step>
       <overridable>false</overridable>
     </value-attributes>
   </property>
 
   <property>
-    <name>stream.container.instances</name>
-    <value>1</value>
+    <name>workflow.token.max.size.mb</name>
+    <value>30</value>
     <description>
-      Number of YARN container instances for the stream handler; in
-      standalone mode, it's always one
+      Maximum allowed size of a Workflow Token, in megabytes; if the
+      workflow token exceeds this size, no further updates are allowed
     </description>
-  </property>
-
-  <property>
-    <name>stream.file.cleanup.period</name>
-    <value>300000</value>
-    <description>
-      Default time interval in milliseconds for running the stream file
-      cleanup process
-    </description>
-  </property>
-
-  <property>
-    <name>stream.async.worker.threads</name>
-    <value>${stream.worker.threads}</value>
-    <description>
-      Number of async worker threads for handling async write requests
-    </description>
-  </property>
-
-  <property>
-    <name>stream.async.queue.size</name>
-    <value>100</value>
-    <description>
-      Queue size per async worker thread for queuing up async write requests
-    </description>
-  </property>
-
-  <property>
-    <name>stream.batch.buffer.threshold</name>
-    <value>1048576</value>
-    <description>Bytes retained in-memory before writing to a new stream file</description>
+    <value-attributes>
+      <type>int</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <!-- Audit Configuration -->
@@ -488,42 +352,24 @@
     </description>
   </property>
 
-  <!-- DataFabric Configuration -->
-
-  <property>
-    <name>data.tx.server.io.threads</name>
-    <value>2</value>
-    <description>
-      Number of IO threads for the transaction service
-    </description>
-  </property>
-
-  <property>
-    <name>data.tx.server.threads</name>
-    <value>25</value>
-    <description>
-      Number of threads for the transaction service
-    </description>
-  </property>
-
-  <property>
-    <name>data.tx.discovery.service.name</name>
-    <value>transaction</value>
-    <description>Name in discovery service for the transaction service</description>
-  </property>
+  <!-- Datasets Configuration -->
 
   <property>
     <name>data.tx.client.count</name>
-    <value>5</value>
+    <value>50</value>
     <description>
       The number of pooled instances of the transaction client;
       increase this to increase transaction concurrency
     </description>
+    <value-attributes>
+      <type>int</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
     <name>data.tx.client.provider</name>
-    <value>thread-local</value>
+    <value>pool</value>
     <description>
       Provider strategy for transaction clients; valid values are "pool" and
       "thread-local"
@@ -531,13 +377,9 @@
   </property>
 
   <property>
-    <name>data.tx.thrift.max.read.buffer</name>
-    <value>${thrift.max.read.buffer}</value>
-    <description>
-      Maximum read buffer size (in bytes) used by the transaction service;
-      the value should be set to something greater than the maximum frame
-      sent on the RPC channel
-    </description>
+    <name>data.tx.discovery.service.name</name>
+    <value>transaction</value>
+    <description>Name in discovery service for the transaction service</description>
   </property>
 
   <property>
@@ -549,59 +391,16 @@
   </property>
 
   <property>
-    <name>data.tx.snapshot.codecs</name>
-    <value>
-      co.cask.cdap.data2.transaction.snapshot.SnapshotCodecV1,
-      co.cask.cdap.data2.transaction.snapshot.SnapshotCodecV2,
-      co.cask.tephra.snapshot.SnapshotCodecV3
-    </value>
-    <description>Specifies the class names of all supported transaction state codecs</description>
-  </property>
-
-  <property>
-    <name>data.tx.snapshot.dir</name>
-    <value>${hdfs.namespace}/tx.snapshot</value>
-    <description>Directory in HDFS used to store snapshots and logs of transaction state</description>
-  </property>
-
-  <property>
-    <name>data.tx.snapshot.interval</name>
-    <value>60</value>
-    <description>
-      Frequency of transaction snapshots in seconds
-    </description>
-  </property>
-
-  <property>
-    <name>data.tx.snapshot.retain</name>
-    <value>10</value>
-    <description>Number of transaction snapshot files to retain as backups</description>
-  </property>
-
-  <property>
     <name>data.tx.janitor.enable</name>
     <value>true</value>
     <description>
       Determines if the TransactionDataJanitor coprocessor is enabled on
       tables; normally should be true
     </description>
-  </property>
-
-  <property>
-    <name>data.tx.timeout</name>
-    <value>30</value>
-    <description>
-      Timeout value in seconds for a transaction; if the transaction is not
-      finished in that time, it is marked invalid
-    </description>
-  </property>
-
-  <property>
-    <name>data.tx.num.instances</name>
-    <value>1</value>
-    <description>
-      Requested number of transaction client instances
-    </description>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -610,20 +409,9 @@
     <description>
       Maximum number of transaction client instances
     </description>
-  </property>
-
-  <property>
-    <name>data.tx.num.cores</name>
-    <value>2</value>
-    <description>
-      Maximum number of transaction client cores
-    </description>
-    <display-name>Transaction Client YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
-      <maximum>4</maximum>
-      <increment-step>1</increment-step>
       <overridable>false</overridable>
     </value-attributes>
   </property>
@@ -646,101 +434,137 @@
   </property>
 
   <property>
+    <name>data.tx.num.cores</name>
+    <value>2</value>
+    <description>
+      Maximum number of transaction client cores
+    </description>
+    <display-name>Transaction Client YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>data.tx.num.instances</name>
+    <value>1</value>
+    <description>
+      Requested number of transaction client instances
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>data.tx.server.io.threads</name>
+    <value>2</value>
+    <description>
+      Number of IO threads for the transaction service
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>data.tx.server.threads</name>
+    <value>25</value>
+    <description>
+      Number of threads for the transaction service
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>data.tx.snapshot.codecs</name>
+    <value>
+      co.cask.cdap.data2.transaction.snapshot.SnapshotCodecV1,
+      co.cask.cdap.data2.transaction.snapshot.SnapshotCodecV2,
+      co.cask.tephra.snapshot.SnapshotCodecV3,
+      co.cask.tephra.snapshot.SnapshotCodecV4
+    </value>
+    <description>Specifies the class names of all supported transaction state codecs</description>
+  </property>
+
+  <property>
+    <name>data.tx.snapshot.dir</name>
+    <value>${hdfs.namespace}/tx.snapshot</value>
+    <description>Directory in HDFS used to store snapshots and logs of transaction state</description>
+  </property>
+
+  <property>
+    <name>data.tx.snapshot.interval</name>
+    <value>60</value>
+    <description>
+      Frequency of transaction snapshots in seconds
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>data.tx.snapshot.retain</name>
+    <value>10</value>
+    <description>Number of transaction snapshot files to retain as backups</description>
+  </property>
+
+  <property>
+    <name>data.tx.thrift.max.read.buffer</name>
+    <value>${thrift.max.read.buffer}</value>
+    <description>
+      Maximum read buffer size (in bytes) used by the transaction service;
+      the value should be set to something greater than the maximum frame
+      sent on the RPC channel
+    </description>
+  </property>
+
+  <property>
+    <name>data.tx.timeout</name>
+    <value>30</value>
+    <description>
+      Timeout value in seconds for a transaction; if the transaction is not
+      finished in that time, it is marked invalid
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
     <name>dataset.data.dir</name>
     <value>data</value>
     <description>Base directory for user data on the filesystem</description>
   </property>
 
-  <!-- Queue Configuration -->
-
   <property>
-    <name>data.queue.table.name</name>
-    <value>queues</value>
-    <description>Specifies the name of the table for queues</description>
-  </property>
-
-  <property>
-    <name>data.queue.dequeue.tx.percent</name>
-    <value>30</value>
+    <name>dataset.executor.container.instances</name>
+    <value>1</value>
     <description>
-      Percentage of transaction time allowed to spend in dequeue; it should
-      be an integer between 1-100
+      Number of dataset executor instances
     </description>
-  </property>
-
-  <property>
-    <name>data.queue.config.update.interval</name>
-    <value>5</value>
-    <description>
-      Frequency, in seconds, of updates to the queue consumer configuration used in evicting queue entries on flush and compaction
-    </description>
-  </property>
-
-  <property>
-    <name>data.queue.table.presplits</name>
-    <value>16</value>
-    <description>
-      Number of splits in the queue table
-    </description>
-  </property>
-
-  <!-- Metadata Service Configuration -->
-
-  <property>
-    <name>metadata.program.run.history.keepdays</name>
-    <value>30</value>
-    <description>Specifies the number of days to keep program run run-history in metadata</description>
-  </property>
-
-  <!-- AppFabric related changes -->
-
-  <property>
-    <name>app.artifact.dir</name>
-    <value>/opt/cdap/master/artifacts</value>
-    <description>
-      Semicolon-separated list of local directories scanned for system artifacts
-      to add to the artifact repository
-    </description>
-  </property>
-
-  <property>
-    <name>app.output.dir</name>
-    <value>/programs</value>
-    <description>Directory where all archives are stored</description>
-  </property>
-
-  <property>
-    <name>app.program.runtime.extensions.dir</name>
-    <value>/opt/cdap/master/ext/runtimes</value>
-    <description>
-      Semicolon-separated list of local directories that are scanned for program runtime extensions
-    </description>
-  </property>
-
-  <property>
-    <name>app.program.spark.yarn.client.rewrite.enabled</name>
-    <value>true</value>
-    <description>
-      Specify whether to rewrite the yarn.Client class in Spark to work
-      around the issue SPARK-13441 in some clusters.
-    </description>
-  </property>
-
-  <property>
-    <name>app.temp.dir</name>
-    <value>/tmp</value>
-  </property>
-
-  <property>
-    <name>dataset.table.prefix</name>
-    <value>${root.namespace}</value>
-    <description>Prefix for dataset table name</description>
-  </property>
-
-  <property>
-    <name>dataset.service.output.dir</name>
-    <value>/datasets</value>
-    <description>Directory where all dataset modules archives are stored</description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -793,140 +617,43 @@
   </property>
 
   <property>
-    <name>app.program.jvm.opts</name>
-    <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version} -Dspark.yarn.am.extraJavaOptions=-Dhdp.version=${hdp.version}</value>
-    <description>Java options for all program containers</description>
+    <name>dataset.service.output.dir</name>
+    <value>/datasets</value>
+    <description>Directory where all dataset modules archives are stored</description>
   </property>
 
-  <!-- Used for MapReduce Info endpoint -->
+  <property>
+    <name>dataset.table.prefix</name>
+    <value>${root.namespace}</value>
+    <description>Prefix for dataset table name</description>
+  </property>
+
+  <!-- Explore Service Configuration -->
 
   <property>
-    <name>mapreduce.jobclient.connect.max.retries</name>
-    <value>2</value>
+    <name>explore.active.operation.timeout.secs</name>
+    <value>86400</value>
     <description>
-      Indicates the maximum number of retries JobClient will make to establish a service
-      connection when retrieving job status and history
+      Timeout value in seconds for an SQL operation whose result was not
+      fetched completely
     </description>
   </property>
 
   <property>
-    <name>mapreduce.include.custom.format.classes</name>
+    <name>explore.cleanup.job.schedule.secs</name>
+    <value>60</value>
+    <description>
+      Time in seconds to schedule clean-up job to timeout operations
+    </description>
+  </property>
+
+  <property>
+    <name>explore.enabled</name>
     <value>true</value>
     <description>
-      Indicates whether to include custom input/output format classes in the job.jar or
-      not; if set to true, custom format classes will be added to the job.jar and
-      available as part of the MapReduce system classpath
+      Determines if the CDAP Explore Service (ad-hoc SQL queries) is enabled
     </description>
-  </property>
-
-  <!-- Scheduler related changes -->
-
-  <property>
-    <name>scheduler.max.thread.pool.size</name>
-    <value>100</value>
-    <description>Size of the scheduler thread pool</description>
-  </property>
-
-  <!-- Router configuration -->
-
-  <property>
-    <name>router.bind.address</name>
-    <value>0.0.0.0</value>
-    <description>
-      CDAP Router service bind address
-    </description>
-  </property>
-
-  <property>
-    <name>router.bind.port</name>
-    <value>11015</value>
-    <description>
-      CDAP Router service bind port
-    </description>
-  </property>
-
-  <property>
-    <name>router.client.boss.threads</name>
-    <value>1</value>
-    <description>The number of boss threads in the CDAP Router service client</description>
-  </property>
-
-  <property>
-    <name>router.client.worker.threads</name>
-    <value>10</value>
-    <description>The number of worker threads in the CDAP Router service client</description>
-  </property>
-
-  <property>
-    <name>router.connection.backlog</name>
-    <value>20000</value>
-    <description>The connection backlog in the CDAP Router service</description>
-  </property>
-
-  <property>
-    <name>router.connection.idle.timeout.secs</name>
-    <value>15</value>
-    <description>
-      The number of seconds after an HTTP request completes that idle router connections are closed
-    </description>
-  </property>
-
-  <property>
-    <name>router.server.port</name>
-    <value>${router.bind.port}</value>
-    <final>true</final>
-    <description>
-      CDAP Router service port to which CDAP UI connects
-    </description>
-  </property>
-
-  <!-- Disable until SSL support
-  <property>
-    <name>router.ssl.bind.port</name>
-    <value>10443</value>
-    <description>
-      CDAP Router service bind port for HTTPS
-    </description>
-  </property>
-
-  <property>
-    <name>router.ssl.server.port</name>
-    <value>${router.ssl.bind.port}</value>
-    <final>true</final>
-  </property>
-
-  -->
-
-  <!-- Kerberos -->
-
-  <property>
-    <name>cdap.master.kerberos.keytab</name>
-    <value></value>
-    <description>
-      The full path to the Kerberos keytab file containing the CDAP Master service's
-      credentials
-    </description>
-  </property>
-
-  <property>
-    <name>cdap.master.kerberos.principal</name>
-    <value></value>
-    <description>
-      Example: "CDAP_PRINCIPAL/_HOST@EXAMPLE.COM". The Kerberos primary user
-      that should be used to login to the CDAP Master service. Substitute
-      the Kerberos primary (user) for CDAP_PRINCIPAL, and your domain for
-      EXAMPLE.COM. The string "_HOST" will be substituted with the local
-      hostname.
-    </description>
-  </property>
-
-  <property>
-    <name>kerberos.auth.enabled</name>
-    <value>false</value>
-    <description>
-      Determines if Kerberos authentication is enabled
-    </description>
-    <display-name>Kerberos Enabled</display-name>
+    <display-name>Explore Enabled</display-name>
     <value-attributes>
       <type>boolean</type>
       <overridable>false</overridable>
@@ -934,11 +661,308 @@
   </property>
 
   <property>
-    <name>kerberos.auth.relogin.interval.seconds</name>
-    <value>300</value>
+    <name>explore.executor.container.num.cores</name>
+    <value>1</value>
     <description>
-      Relogin interval for Kerberos keytab
+      Number of virtual cores for each explore executor instance
     </description>
+    <display-name>Explore Executor YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>explore.executor.container.memory.mb</name>
+    <value>1024</value>
+    <description>
+      Size of Memory in megabytes for each explore executor instance
+    </description>
+    <display-name>Explore Executor YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>0</minimum>
+      <maximum>268435456</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>explore.inactive.operation.timeout.secs</name>
+    <value>3600</value>
+    <description>
+      Timeout value in seconds for an SQL operation which does not have any
+      more results to be fetched
+    </description>
+  </property>
+
+  <property>
+    <name>explore.start.on.demand</name>
+    <value>false</value>
+    <description>
+      Determines the start-up of the CDAP Explore Service (ad-hoc SQL
+      queries); if false, the explore service starts up when CDAP is
+      started; if true, the CDAP Explore Service will start upon the first query
+      it receives
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>explore.writes.enabled</name>
+    <value>true</value>
+    <description>
+      Determines if writing to a table through the CDAP Explore Service (ad-hoc SQL queries) is enabled
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <!-- Gateway Configuration -->
+
+  <property>
+    <name>app.boss.threads</name>
+    <value>1</value>
+    <description>
+      Number of Netty service boss threads
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>app.connection.backlog</name>
+    <value>20000</value>
+    <description>
+      Max connection backlog of CDAP Master
+    </description>
+  </property>
+
+  <property>
+    <name>app.exec.threads</name>
+    <value>20</value>
+    <description>
+      Number of Netty service executor threads
+    </description>
+  </property>
+
+  <property>
+    <name>app.worker.threads</name>
+    <value>10</value>
+    <description>
+      Number of Netty service worker threads
+    </description>
+  </property>
+
+  <!-- Logging Configuration -->
+
+  <property>
+    <name>kafka.seed.brokers</name>
+    <value>{{cdap_kafka_brokers}}</value>
+    <description>
+      Comma-separated list of Kafka service brokers; for distributed CDAP, replace with list of FQDN:port brokers
+    </description>
+  </property>
+
+  <property>
+    <name>log.base.dir</name>
+    <value>/logs/avro</value>
+    <description>Base log directory</description>
+  </property>
+
+  <property>
+    <name>log.cleanup.run.interval.mins</name>
+    <value>1440</value>
+    <description>Log cleanup interval in minutes</description>
+  </property>
+
+  <property>
+    <name>log.kafka.topic</name>
+    <value>logs.user-v2</value>
+    <description>
+      Kafka topic name used to publish logs
+    </description>
+  </property>
+
+  <property>
+    <name>log.publish.num.partitions</name>
+    <value>10</value>
+    <description>Number of CDAP Kafka service partitions to publish the logs to</description>
+  </property>
+
+  <property>
+    <name>log.retention.duration.days</name>
+    <value>7</value>
+    <description>
+      Log file HDFS retention duration in days
+    </description>
+  </property>
+
+  <property>
+    <name>log.saver.max.instances</name>
+    <value>${master.service.max.instances}</value>
+    <description>
+      Maximum number of log saver instances to run in YARN
+    </description>
+  </property>
+
+  <property>
+    <name>log.saver.num.instances</name>
+    <value>1</value>
+    <description>Number of log saver instances to run in YARN</description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>log.saver.run.memory.megs</name>
+    <value>1024</value>
+    <description>Memory in megabytes allocated for log saver instances to run in YARN</description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>0</minimum>
+      <maximum>268435456</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>log.saver.run.num.cores</name>
+    <value>2</value>
+    <description>
+      Number of cores for each log saver instance in YARN
+    </description>
+    <display-name>Log Saver YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <!-- Master Configuration -->
+
+  <property>
+    <name>http.service.boss.threads</name>
+    <value>1</value>
+    <description>Number of Netty service boss threads for master HTTP services</description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>http.service.connection.backlog</name>
+    <value>20000</value>
+    <description>Max connection backlog of master HTTP service</description>
+  </property>
+
+  <property>
+    <name>http.service.exec.threads</name>
+    <value>20</value>
+    <description>Number of Netty service executor threads for master HTTP services</description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>http.service.worker.threads</name>
+    <value>10</value>
+    <description>Number of Netty service worker threads for master HTTP services</description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>master.collect.app.containers.log.level</name>
+    <value>ERROR</value>
+    <description>
+      The log level of application container logs that are streamed back to the CDAP Master process log.
+      The levels supported are [ ALL, TRACE, DEBUG, INFO, WARN, ERROR, OFF ].
+    </description>
+  </property>
+
+  <property>
+    <name>master.collect.containers.log</name>
+    <value>true</value>
+    <description>
+      Determines if master service container logs are streamed back to the CDAP Master process log
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>master.service.max.instances</name>
+    <value>5</value>
+    <description>Maximum number of Master Service instances</description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>master.service.memory.mb</name>
+    <value>512</value>
+    <description>
+      Size of memory in megabytes for Master Service instance
+    </description>
+    <display-name>CDAP Master YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>0</minimum>
+      <maximum>268435456</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>master.service.num.cores</name>
+    <value>2</value>
+    <description>Number of cores for Master Service instance</description>
+    <display-name>CDAP Master YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -951,6 +975,10 @@
       If the timeout is hit, the service will fail to start and the master service will shut itself down.
       If set to 0 or below, master services will not wait for their dependent services to start before starting themselves.
     </description>
+    <value-attributes>
+      <type>int</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <!-- Metadata Configuration -->
@@ -960,14 +988,6 @@
     <value>50</value>
     <description>
       Maximum number of characters for metadata keys, values, and tags
-    </description>
-  </property>
-
-  <property>
-    <name>metadata.service.bind.address</name>
-    <value>0.0.0.0</value>
-    <description>
-      Metadata HTTP service bind address
     </description>
   </property>
 
@@ -1019,21 +1039,24 @@
     </value-attributes>
   </property>
 
-  <!-- New Metrics system settings -->
+  <!-- Metrics Configuration -->
+
+  <property>
+    <name>metrics.boss.threads</name>
+    <value>${http.service.boss.threads}</value>
+    <description>Number of Netty service boss threads for metrics HTTP services</description>
+  </property>
+
+  <property>
+    <name>metrics.connection.backlog</name>
+    <value>${http.service.connection.backlog}</value>
+    <description>Max connection backlog of metrics HTTP service</description>
+  </property>
 
   <property>
     <name>metrics.data.table.retention.resolution.1.seconds</name>
     <value>7200</value>
     <description>Retention resolution of the 1-second resolution table in seconds; default retention period is 2 hours</description>
-  </property>
-
-  <property>
-    <name>metrics.data.table.retention.resolution.60.seconds</name>
-    <value>2592000</value>
-    <description>
-      Retention resolution for 1-minute resolution table (in seconds);
-      default retention period is 30 days
-    </description>
   </property>
 
   <property>
@@ -1046,9 +1069,12 @@
   </property>
 
   <property>
-    <name>metrics.data.table.ts.rollTime.60</name>
-    <value>60</value>
-    <description>Number of columns in a 1-minute resolution timeseries table</description>
+    <name>metrics.data.table.retention.resolution.60.seconds</name>
+    <value>2592000</value>
+    <description>
+      Retention resolution for 1-minute resolution table (in seconds);
+      default retention period is 30 days
+    </description>
   </property>
 
   <property>
@@ -1058,15 +1084,15 @@
   </property>
 
   <property>
-    <name>metrics.kafka.partition.size</name>
-    <value>10</value>
-    <description>Number of partitions for metrics topic</description>
+    <name>metrics.data.table.ts.rollTime.60</name>
+    <value>60</value>
+    <description>Number of columns in a 1-minute resolution timeseries table</description>
   </property>
 
   <property>
-    <name>metrics.connection.backlog</name>
-    <value>${http.service.connection.backlog}</value>
-    <description>Max connection backlog of metrics HTTP service</description>
+    <name>metrics.dataset.hbase.stats.report.interval</name>
+    <value>60</value>
+    <description>Report interval for HBase stats, in seconds</description>
   </property>
 
   <property>
@@ -1076,25 +1102,9 @@
   </property>
 
   <property>
-    <name>metrics.boss.threads</name>
-    <value>${http.service.boss.threads}</value>
-    <description>Number of Netty service boss threads for metrics HTTP services</description>
-  </property>
-
-  <property>
-    <name>metrics.worker.threads</name>
-    <value>${http.service.worker.threads}</value>
-    <description>
-      Number of Netty service worker threads for metrics HTTP services
-    </description>
-  </property>
-
-  <property>
-    <name>metrics.num.instances</name>
-    <value>1</value>
-    <description>
-      Number of instances for the metrics service
-    </description>
+    <name>metrics.kafka.partition.size</name>
+    <value>10</value>
+    <description>Number of partitions for metrics topic</description>
   </property>
 
   <property>
@@ -1103,22 +1113,6 @@
     <description>
       Maximum number of instances for the metrics service
     </description>
-  </property>
-
-  <property>
-    <name>metrics.num.cores</name>
-    <value>2</value>
-    <description>
-      Number of virtual cores for the metrics service
-    </description>
-    <display-name>Metrics Service YARN CPU Cores</display-name>
-    <value-attributes>
-      <type>int</type>
-      <minimum>1</minimum>
-      <maximum>4</maximum>
-      <increment-step>1</increment-step>
-      <overridable>false</overridable>
-    </value-attributes>
   </property>
 
   <property>
@@ -1138,33 +1132,13 @@
     </value-attributes>
   </property>
 
-  <!-- Metrics Processor Configuration -->
-
   <property>
-    <name>metrics.processor.num.instances</name>
-    <value>1</value>
+    <name>metrics.num.cores</name>
+    <value>2</value>
     <description>
-      Number of instances for metrics processor service Apache Twill
-      runnable
+      Number of virtual cores for the metrics service
     </description>
-  </property>
-
-  <property>
-    <name>metrics.processor.max.instances</name>
-    <value>${master.service.max.instances}</value>
-    <description>
-      Maximum number of instances for metrics processor service Apache Twill
-      runnable
-    </description>
-  </property>
-
-  <property>
-    <name>metrics.processor.num.cores</name>
-    <value>1</value>
-    <description>
-      Number of cores for metrics processor service Apache Twill runnable
-    </description>
-    <display-name>Metrics Processor YARN CPU Cores</display-name>
+    <display-name>Metrics Service YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
@@ -1172,6 +1146,27 @@
       <increment-step>1</increment-step>
       <overridable>false</overridable>
     </value-attributes>
+  </property>
+
+  <property>
+    <name>metrics.num.instances</name>
+    <value>1</value>
+    <description>
+      Number of instances for the metrics service
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>metrics.processor.max.instances</name>
+    <value>${master.service.max.instances}</value>
+    <description>
+      Maximum number of instances for metrics processor service Apache Twill runnable
+    </description>
   </property>
 
   <property>
@@ -1193,62 +1188,12 @@
   </property>
 
   <property>
-    <name>metrics.dataset.hbase.stats.report.interval</name>
-    <value>60</value>
-    <description>Report interval for HBase stats, in seconds</description>
-  </property>
-
-  <!-- Logging Configuration -->
-
-  <property>
-    <name>kafka.seed.brokers</name>
-    <value>{{cdap_kafka_brokers}}</value>
+    <name>metrics.processor.num.cores</name>
+    <value>1</value>
     <description>
-    Comma-separated list of CDAP Kafka service brokers; for distributed CDAP, replace with list of FQDN:port brokers
+      Number of cores for metrics processor service Apache Twill runnable
     </description>
-  </property>
-
-  <property>
-    <name>log.kafka.topic</name>
-    <value>logs.user-v2</value>
-    <description>
-      Kafka topic name used to publish logs
-    </description>
-  </property>
-
-  <property>
-    <name>log.publish.num.partitions</name>
-    <value>10</value>
-    <description>Number of CDAP Kafka service partitions to publish the logs to</description>
-  </property>
-
-  <property>
-    <name>log.base.dir</name>
-    <value>/logs/avro</value>
-    <description>Base log directory</description>
-  </property>
-
-  <property>
-    <name>log.retention.duration.days</name>
-    <value>7</value>
-    <description>
-      Log file HDFS retention duration in days
-    </description>
-  </property>
-
-  <property>
-    <name>log.cleanup.run.interval.mins</name>
-    <value>1440</value>
-    <description>Log cleanup interval in minutes</description>
-  </property>
-
-  <property>
-    <name>log.saver.run.num.cores</name>
-    <value>2</value>
-    <description>
-      Number of cores for each log saver instance in YARN
-    </description>
-    <display-name>Log Saver YARN CPU Cores</display-name>
+    <display-name>Metrics Processor YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
@@ -1259,67 +1204,422 @@
   </property>
 
   <property>
-    <name>log.saver.num.instances</name>
+    <name>metrics.processor.num.instances</name>
     <value>1</value>
-    <description>Number of log saver instances to run in YARN</description>
+    <description>
+      Number of instances for metrics processor service Apache Twill runnable
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
-    <name>log.saver.max.instances</name>
-    <value>${master.service.max.instances}</value>
+    <name>metrics.query.bind.port</name>
+    <value>45005</value>
     <description>
-      Maximum number of log saver instances to run in YARN
+      Metrics Query service bind port
     </description>
   </property>
 
   <property>
-    <name>log.saver.run.memory.megs</name>
-    <value>1024</value>
-    <description>Memory in megabytes allocated for log saver instances to run in YARN</description>
+    <name>metrics.worker.threads</name>
+    <value>${http.service.worker.threads}</value>
+    <description>
+      Number of Netty service worker threads for metrics HTTP services
+    </description>
   </property>
 
-  <!-- Kafka Configuration -->
+  <!-- Monitor Handler Configuration -->
 
   <property>
-    <name>kafka.bind.address</name>
+    <name>monitor.handler.service.discovery.timeout.seconds</name>
+    <value>1</value>
+    <description>
+      Timeout in seconds for service discovery used in monitor handler
+      service status check
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <!-- Notification System Configuration -->
+
+  <property>
+    <name>notification.kafka.topic</name>
+    <value>notifications</value>
+    <description>
+      Kafka topic name used to publish notifications
+    </description>
+  </property>
+
+  <property>
+    <name>notification.transport.system</name>
+    <value>kafka</value>
+    <description>
+      Transport system used by the notification system; can be either 'kafka' or 'stream'
+    </description>
+  </property>
+
+  <!-- Queue Configuration -->
+
+  <property>
+    <name>data.queue.config.update.interval</name>
+    <value>5</value>
+    <description>
+      Frequency, in seconds, of updates to the queue consumer configuration used in evicting queue entries on flush and compaction
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>data.queue.dequeue.tx.percent</name>
+    <value>30</value>
+    <description>
+      Percentage of transaction time allowed to spend in dequeue; it should
+      be an integer between 1-100
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>100</maximum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>data.queue.table.presplits</name>
+    <value>16</value>
+    <description>
+      Number of splits in the queue table
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <!-- Router Configuration -->
+
+  <property>
+    <name>router.bind.address</name>
     <value>0.0.0.0</value>
     <description>
-      CDAP Kafka service bind address
+      CDAP Router service bind address
     </description>
   </property>
 
   <property>
-    <name>kafka.bind.port</name>
-    <value>9092</value>
-    <description>CDAP Kafka service bind port</description>
+    <name>router.bind.port</name>
+    <value>11015</value>
+    <description>
+      CDAP Router service bind port
+    </description>
   </property>
 
   <property>
-    <name>kafka.num.partitions</name>
+    <name>router.client.boss.threads</name>
+    <value>1</value>
+    <description>The number of boss threads in the CDAP Router service client</description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>router.client.worker.threads</name>
     <value>10</value>
-    <description>Default number of partitions for a topic</description>
+    <description>The number of worker threads in the CDAP Router service client</description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
-    <name>kafka.log.dir</name>
-    <value>/data/cdap-kafka/logs</value>
-    <description>CDAP Kafka service log storage directory</description>
+    <name>router.connection.backlog</name>
+    <value>20000</value>
+    <description>The connection backlog in the CDAP Router service</description>
   </property>
 
   <property>
-    <name>kafka.zookeeper.namespace</name>
-    <value>kafka</value>
-    <description>CDAP Kafka service ZooKeeper namespace</description>
+    <name>router.connection.idle.timeout.secs</name>
+    <value>15</value>
+    <description>
+      The number of seconds after an HTTP request completes that idle router connections are closed
+    </description>
   </property>
 
   <property>
-    <name>kafka.default.replication.factor</name>
+    <name>router.server.address</name>
+    <value>{{cdap_router_host}}</value>
+    <description>
+      CDAP Router service address to which CDAP UI connects
+    </description>
+  </property>
+
+  <property>
+    <name>router.server.boss.threads</name>
+    <value>1</value>
+    <description>The number of boss threads in the CDAP Router service</description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>router.server.port</name>
+    <value>${router.bind.port}</value>
+    <final>true</final>
+    <description>
+      CDAP Router service port to which CDAP UI connects
+    </description>
+  </property>
+
+  <property>
+    <name>router.server.worker.threads</name>
+    <value>10</value>
+    <description>The number of worker threads in the CDAP Router service</description>
+  </property>
+
+  <!-- Disable until SSL support
+  <property>
+    <name>router.ssl.bind.port</name>
+    <value>10443</value>
+    <description>
+      CDAP Router service bind port for HTTPS
+    </description>
+  </property>
+
+  <property>
+    <name>router.ssl.server.port</name>
+    <value>${router.ssl.bind.port}</value>
+    <final>true</final>
+  </property>
+  -->
+
+  <!-- Security Configuration -->
+
+  <property>
+    <name>cdap.master.kerberos.keytab</name>
+    <value></value>
+    <description>
+      The full path to the Kerberos keytab file containing the CDAP Master service's
+      credentials
+    </description>
+  </property>
+
+  <property>
+    <name>cdap.master.kerberos.principal</name>
+    <value></value>
+    <description>
+      Example: "CDAP_PRINCIPAL/_HOST@EXAMPLE.COM". The Kerberos primary user
+      that should be used to login to the CDAP Master service. Substitute
+      the Kerberos primary (user) for CDAP_PRINCIPAL, and your domain for
+      EXAMPLE.COM. The string "_HOST" will be substituted with the local
+      hostname.
+    </description>
+  </property>
+
+  <property>
+    <name>kerberos.auth.enabled</name>
+    <value>false</value>
+    <description>
+      Determines if Kerberos authentication is enabled
+    </description>
+    <display-name>Kerberos Enabled</display-name>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>kerberos.auth.relogin.interval.seconds</name>
+    <value>300</value>
+    <description>
+      Relogin interval for Kerberos keytab
+    </description>
+  </property>
+
+  <!-- Stream Configuration -->
+
+  <property>
+    <name>stream.async.queue.size</name>
+    <value>100</value>
+    <description>
+      Queue size per async worker thread for queuing up async write requests
+    </description>
+  </property>
+
+  <property>
+    <name>stream.async.worker.threads</name>
+    <value>${stream.worker.threads}</value>
+    <description>
+      Number of async worker threads for handling async write requests
+    </description>
+  </property>
+
+  <property>
+    <name>stream.base.dir</name>
+    <value>/streams</value>
+    <description>The directory root for all stream files, relative to the HDFS namespace</description>
+  </property>
+
+  <property>
+    <name>stream.batch.buffer.threshold</name>
+    <value>1048576</value>
+    <description>Bytes retained in-memory before writing to a new stream file</description>
+  </property>
+
+  <property>
+    <name>stream.consumer.table.presplits</name>
+    <value>16</value>
+    <description>
+      Number of splits for the stream consumer table
+    </description>
+  </property>
+
+  <property>
+    <name>stream.container.instance.id</name>
+    <value>0</value>
+    <description>
+      Instance ID for the stream service container; the actual value will be
+      set at runtime by the system automatically
+    </description>
+  </property>
+
+  <property>
+    <name>stream.container.instances</name>
     <value>1</value>
     <description>
-      CDAP Kafka service replication factor; used to replicate Kafka messages across multiple
-      machines to prevent data loss in the event of a hardware failure. The recommended
-      setting is to run at least two CDAP Kafka servers. If you are running two CDAP Kafka
-      servers, set this value to 2; otherwise, set it to the number of CDAP Kafka servers.
+      Number of YARN container instances for the stream handler
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>stream.container.memory.mb</name>
+    <value>512</value>
+    <description>
+      Amount of memory in megabytes for the YARN container that runs the
+      stream handler
+    </description>
+    <display-name>Stream YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>0</minimum>
+      <maximum>268435456</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>stream.container.num.cores</name>
+    <value>2</value>
+    <description>
+      Number of virtual core for the YARN container that runs the stream handler
+    </description>
+    <display-name>Stream YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>stream.event.ttl</name>
+    <value>9223372036854775807</value>
+    <description>
+      Default time to live in milliseconds (Long.MAX_VALUE) for stream events
+    </description>
+  </property>
+
+  <property>
+    <name>stream.file.cleanup.period</name>
+    <value>300000</value>
+    <description>
+      Default time interval in milliseconds for running the stream file cleanup process
+    </description>
+  </property>
+
+  <property>
+    <name>stream.file.prefix</name>
+    <value>file</value>
+    <description>
+      Prefix of file name for stream file
+    </description>
+  </property>
+
+  <property>
+    <name>stream.index.interval</name>
+    <value>10000</value>
+    <description>
+      Default time interval in milliseconds for emitting new index entry in stream file
+    </description>
+  </property>
+
+  <property>
+    <name>stream.instance.file.prefix</name>
+    <value>${stream.file.prefix}.${stream.container.instance.id}</value>
+    <description>
+      Prefix of file name for stream file per writer instance
+    </description>
+    <final>true</final>
+  </property>
+
+  <property>
+    <name>stream.notification.threshold</name>
+    <value>1024</value>
+    <description>
+      Size of data, in megabytes, to be ingested by a stream before a
+      notification is published
+    </description>
+  </property>
+
+  <property>
+    <name>stream.partition.duration</name>
+    <value>3600000</value>
+    <description>
+      The default duration of a stream partition in milliseconds
+    </description>
+  </property>
+
+  <property>
+    <name>stream.size.schedule.polling.delay</name>
+    <value>600</value>
+    <description>Delay, in seconds, to poll a stream in a StreamSizeSchedule if no notification is received</description>
+  </property>
+
+  <property>
+    <name>stream.worker.threads</name>
+    <value>${http.service.worker.threads}</value>
+    <description>
+      Default number of IO worker threads for the stream HTTP service
     </description>
   </property>
 
@@ -1369,142 +1669,83 @@
   -->
 
   <property>
-    <name>router.server.boss.threads</name>
-    <value>1</value>
-    <description>The number of boss threads in the CDAP Router service</description>
-  </property>
-
-  <property>
-    <name>router.server.worker.threads</name>
-    <value>10</value>
-    <description>The number of worker threads in the CDAP Router service</description>
-  </property>
-
-  <property>
-    <name>router.server.address</name>
-    <value>{{cdap_router_host}}</value>
-    <description>
-      CDAP Router service address to which CDAP UI connects
-    </description>
-  </property>
-
-  <!-- Explore Service Configuration -->
-
-  <property>
-    <name>explore.enabled</name>
-    <value>true</value>
-    <description>
-      Determines if the CDAP Explore Service (ad-hoc SQL queries) is enabled
-    </description>
-    <display-name>Explore Enabled</display-name>
-    <value-attributes>
-      <type>boolean</type>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>explore.writes.enabled</name>
-    <value>true</value>
-    <description>
-      Determines if writing to a table through the CDAP Explore Service (ad-
-      hoc SQL queries) is enabled
-    </description>
-  </property>
-
-  <property>
-    <name>explore.start.on.demand</name>
-    <value>false</value>
-    <description>
-      Determines the start-up of the CDAP Explore Service (ad-hoc SQL
-      queries); if false, the explore service starts up when CDAP is
-      started; if true, the CDAP Explore Service will start upon the first query
-      it receives
-    </description>
-  </property>
-
-  <property>
-    <name>explore.executor.container.num.cores</name>
-    <value>1</value>
-    <description>
-      Number of virtual cores for each explore executor instance
-    </description>
-    <display-name>Explore Executor YARN CPU Cores</display-name>
-    <value-attributes>
-      <type>int</type>
-      <minimum>1</minimum>
-      <maximum>4</maximum>
-      <increment-step>1</increment-step>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>explore.executor.container.memory.mb</name>
-    <value>1024</value>
-    <description>
-      Size of Memory in megabytes for each explore executor instance
-    </description>
-    <display-name>Explore Executor YARN Memory</display-name>
-    <value-attributes>
-      <type>int</type>
-      <minimum>0</minimum>
-      <maximum>268435456</maximum>
-      <unit>MB</unit>
-      <increment-step>256</increment-step>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>explore.active.operation.timeout.secs</name>
-    <value>86400</value>
-    <description>
-      Timeout value in seconds for an SQL operation whose result was not
-      fetched completely
-    </description>
-  </property>
-
-  <property>
-    <name>explore.inactive.operation.timeout.secs</name>
-    <value>3600</value>
-    <description>
-      Timeout value in seconds for an SQL operation which does not have any
-      more results to be fetched
-    </description>
-  </property>
-
-  <property>
-    <name>explore.cleanup.job.schedule.secs</name>
-    <value>60</value>
-    <description>
-      Time in seconds to schedule clean-up job to timeout operations
-    </description>
-  </property>
-
-  <!-- Notification System Settings -->
-
-  <property>
-    <name>notification.kafka.topic</name>
-    <value>notifications</value>
-    <description>
-      Kafka topic name used to publish notifications
-    </description>
-  </property>
-
-  <property>
-    <name>notification.transport.system</name>
-    <value>kafka</value>
-    <description>
-      Transport system used by the notification system; can be either 'kafka' or 'stream'
-    </description>
-  </property>
-
-  <property>
     <name>http.client.connection.timeout.ms</name>
     <value>60000</value>
     <description>
       Timeout in milliseconds for internal HTTP requests
+    </description>
+  </property>
+
+  <!-- Not sure about anything below here, so commenting them out
+
+  <property>
+    <name>stream.flume.port</name>
+    <value>10004</value>
+  </property>
+
+  <property>
+    <name>stream.flume.threads</name>
+    <value>100</value>
+  </property>
+
+  <property>
+    <name>data.queue.table.name</name>
+    <value>queues</value>
+    <description>Specifies the name of the table for queues</description>
+  </property>
+
+  <property>
+    <name>metadata.program.run.history.keepdays</name>
+    <value>30</value>
+    <description>Specifies the number of days to keep program run run-history in metadata</description>
+  </property>
+
+  -->
+
+  <!-- Kafka settings below will be removed with removal of CDAP_KAFKA service in that PR -->
+
+  <!-- Kafka Configuration -->
+
+  <property>
+    <name>kafka.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      CDAP Kafka service bind address
+    </description>
+  </property>
+
+  <property>
+    <name>kafka.bind.port</name>
+    <value>9092</value>
+    <description>CDAP Kafka service bind port</description>
+  </property>
+
+  <property>
+    <name>kafka.num.partitions</name>
+    <value>10</value>
+    <description>Default number of partitions for a topic</description>
+  </property>
+
+  <property>
+    <name>kafka.log.dir</name>
+    <value>/data/cdap-kafka/logs</value>
+    <description>CDAP Kafka service log storage directory</description>
+  </property>
+
+  <property>
+    <name>kafka.zookeeper.namespace</name>
+    <value>kafka</value>
+    <description>CDAP Kafka service ZooKeeper namespace</description>
+  </property>
+
+  <property>
+    <name>kafka.default.replication.factor</name>
+    <value>1</value>
+    <description>
+      CDAP Kafka service replication factor; used to replicate Kafka messages across multiple
+      machines to prevent data loss in the event of a hardware failure. The recommended
+      setting is to run at least two CDAP Kafka servers. If you are running two CDAP Kafka
+      servers, set this value to 2; otherwise, set it to the number of CDAP Kafka servers.
     </description>
   </property>
 
