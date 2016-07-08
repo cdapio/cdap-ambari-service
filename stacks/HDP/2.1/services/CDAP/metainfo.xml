@@ -34,7 +34,9 @@
           </dependencies>
         </component>
       </components>
-
+      <configuration-dependencies>
+        <config-type>tez-site</config-type>
+      </configuration-dependencies>
     </service>
   </services>
 </metainfo>
