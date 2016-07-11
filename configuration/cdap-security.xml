@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Copyright © 2016 Cask Data, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+-->
+
+<configuration supports_final="true">
+
+  <!-- Router SSL -->
+
+  <property>
+    <name>router.ssl.keystore.path</name>
+    <value></value>
+    <description>
+      Keystore file location, either absolute or relative; the file should be owned and readable only by the CDAP user
+    </description>
+  </property>
+
+  <property>
+    <name>router.ssl.keystore.password</name>
+    <value></value>
+    <property-type>PASSWORD</property-type>
+    <description>
+      Keystore password
+    </description>
+    <value-attributes>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>router.ssl.keystore.keypassword</name>
+    <value></value>
+    <property-type>PASSWORD</property-type>
+    <description>
+      Keystore key password
+    </description>
+    <value-attributes>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>router.ssl.keystore.type</name>
+    <value>JKS</value>
+    <description>
+      Keystore file type
+    </description>
+  </property>
+
+  <!-- UI SSL -->
+
+  <property>
+    <name>dashboard.ssl.cert</name>
+    <value></value>
+    <description>
+      SSL cert file location, either absolute or relative; the file should be owned and readable only by the CDAP user
+    </description>
+  </property>
+
+  <property>
+    <name>dashboard.ssl.key</name>
+    <value></value>
+    <description>
+      SSL key file location, either absolute or relative; the file should be owned and readable only by the CDAP user
+    </description>
+  </property>
+
+</configuration>

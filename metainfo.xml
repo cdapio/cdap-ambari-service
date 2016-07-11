@@ -288,10 +288,11 @@
 
       <!-- names for config files (under configuration dir) -->
       <configuration-dependencies>
-        <config-type>cdap-site</config-type>
         <config-type>cdap-env</config-type>
+        <config-type>cdap-security</config-type>
+        <config-type>cdap-site</config-type>
       </configuration-dependencies>
-      <restartRequiredAfterChange>false</restartRequiredAfterChange>
+      <restartRequiredAfterChange>true</restartRequiredAfterChange>
     </service>
   </services>
 </metainfo>

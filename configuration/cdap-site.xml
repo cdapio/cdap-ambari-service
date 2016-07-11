@@ -965,6 +965,22 @@
     </value-attributes>
   </property>
 
+  <!-- Security configuration -->
+
+  <property>
+    <name>ssl.enabled</name>
+    <value>false</value>
+    <description>
+      Determines if SSL is enabled for CDAP HTTP endpoints
+    </description>
+    <display-name>SSL Enabled</display-name>
+    <final>true</final>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
   <property>
     <name>master.startup.service.timeout.seconds</name>
     <value>600</value>
@@ -1397,7 +1413,6 @@
     <description>The number of worker threads in the CDAP Router service</description>
   </property>
 
-  <!-- Disable until SSL support
   <property>
     <name>router.ssl.bind.port</name>
     <value>10443</value>
@@ -1410,8 +1425,10 @@
     <name>router.ssl.server.port</name>
     <value>${router.ssl.bind.port}</value>
     <final>true</final>
+    <description>
+      CDAP Router service port to which CDAP UI connects when using SSL
+    </description>
   </property>
-  -->
 
   <!-- Security Configuration -->
 
@@ -1650,7 +1667,6 @@
     </description>
   </property>
 
-  <!-- Disable until SSL support
   <property>
     <name>dashboard.ssl.bind.port</name>
     <value>9443</value>
@@ -1666,7 +1682,6 @@
       True to disable SSL certificate check from the CDAP UI
     </description>
   </property>
-  -->
 
   <property>
     <name>http.client.connection.timeout.ms</name>
