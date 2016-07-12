@@ -1,17 +1,8 @@
 #!/usr/bin/env bash
 
-SUPPORTED_HDP_VERSIONS=${SUPPORTED_HDP_VERSIONS:-2.0.6}
 PACKAGE_VERSION=${PACKAGE_VERSION:-3.5.0-SNAPSHOT}
 PACKAGE_ITERATION=${PACKAGE_ITERATION:-1}
 PACKAGE_FORMATS=${PACKAGE_FORMATS:-deb rpm}
-
-rm -rf var
-mkdir -p var/lib/ambari-server/resources/stacks/HDP
-for i in ${SUPPORTED_HDP_VERSIONS} ; do
-  __target=var/lib/ambari-server/resources/stacks/HDP/${i}/services/CDAP
-  mkdir -p ${__target}
-  cp -a *.json *.xml configuration package themes ${__target} 2>/dev/null
-done
 
 LICENSE="Copyright © 2015-2016 Cask Data, Inc. Licensed under the Apache License, Version 2.0."
 RPM_FPM_ARGS="-t rpm --rpm-os linux"
@@ -20,6 +11,20 @@ DEB_FPM_ARGS="-t deb"
 if [[ ${PACKAGE_VERSION} =~ "-SNAPSHOT" ]] ; then
   PACKAGE_VERSION=${PACKAGE_VERSION/-SNAPSHOT/.$(date +%s)}
 fi
+
+clean() { rm -rf var cdap-ambari-service*.{rpm,deb}; };
+setup() { mkdir -p var/lib/ambari-server/resources/common-services/CDAP/${PACKAGE_VERSION}; };
+
+install() {
+  cp -a *.json *.xml configuration package quicklinks themes \
+    var/lib/ambari-server/resources/common-services/CDAP/${PACKAGE_VERSION} 2>/dev/null
+  cp -a stacks var/lib/ambari-server/resources 2>/dev/null
+  sed -i'' -e "s/3.5.0-SNAPSHOT/${PACKAGE_VERSION}/g" \
+    var/lib/ambari-server/resources/stacks/*/*/services/CDAP/metainfo.xml \
+    var/lib/ambari-server/resources/common-services/CDAP/${PACKAGE_VERSION}/metainfo.xml
+}
+
+clean && setup && install
 
 __failed=0
 for p in ${PACKAGE_FORMATS} ; do
