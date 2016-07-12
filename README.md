@@ -1,6 +1,6 @@
 # Ambari CDAP Services
 
-This is currently a work in progress and does not support all features of CDAP. New features
+This is currently a work-in-progress and does not support all CDAP features. New features
 are added to the `develop` branch and are released along with new CDAP major/minor versions
 using a release branch.
 
@@ -10,11 +10,11 @@ of Ambari in use.
 
 ## Installation
 
-This software is meant to be installed using the native package management tools in Linux. After
+This software is intended to be installed using the native package management tools in Linux. After
 building the packages, install the appropriate package on your Ambari server and restart Ambari
 to make CDAP an available service.
 
-### Building from source
+### Building from Source
 
 Simply checkout the repository and run `./build.sh` to build the RPM and DEB packages. This
 will check out the CDAP service using the latest release of CDAP. Specific major/minor releases
