@@ -1,5 +1,5 @@
 # coding=utf8
-# Copyright © 2015 Cask Data, Inc.
+# Copyright © 2015-2016 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -23,7 +23,6 @@ cdap_user = config['configurations']['cdap-env']['cdap_user']
 pid_dir = config['configurations']['cdap-env']['cdap_pid_dir']
 
 cdap_auth_pid_file = pid_dir + '/auth-server-' + cdap_user + '.pid'
-cdap_kafka_pid_file = pid_dir + '/kafka-server-' + cdap_user + '.pid'
 cdap_master_pid_file = pid_dir + '/master-' + cdap_user + '.pid'
 cdap_router_pid_file = pid_dir + '/router-' + cdap_user + '.pid'
 cdap_ui_pid_file = pid_dir + '/ui-' + cdap_user + '.pid'
