@@ -128,4 +128,9 @@ if len(router_hosts) > 1:
 else:
     cdap_router_host = router_hosts[0]
 
-# TODO: cdap_auth_server_hosts cdap_ui_hosts
+# Return first host, if more than one
+ui_hosts = config['clusterHostInfo']['cdap_ui_hosts']
+ui_hosts.sort()
+cdap_ui_host = ui_hosts[0]
+
+# TODO: cdap_auth_server_hosts
