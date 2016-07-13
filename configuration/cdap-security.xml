@@ -26,6 +26,10 @@
     <description>
       Keystore file location, either absolute or relative; the file should be owned and readable only by the CDAP user
     </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -36,6 +40,7 @@
       Keystore password
     </description>
     <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
       <overridable>false</overridable>
     </value-attributes>
   </property>
@@ -48,6 +53,7 @@
       Keystore key password
     </description>
     <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
       <overridable>false</overridable>
     </value-attributes>
   </property>
@@ -68,6 +74,10 @@
     <description>
       SSL cert file location, either absolute or relative; the file should be owned and readable only by the CDAP user
     </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -76,6 +86,10 @@
     <description>
       SSL key file location, either absolute or relative; the file should be owned and readable only by the CDAP user
     </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
 </configuration>
