@@ -25,8 +25,8 @@
         "source": {
           "type": "WEB",
           "uri": {
-            "http": "{{hostname}}:{{cdap-site/router.bind.port}}",
-            "https": "{{hostname}}:{{cdap-site/router.ssl.bind.port}}",
+            "http": "{{hostname}}:{{cdap-site/router.bind.port}}/status",
+            "https": "{{hostname}}:{{cdap-site/router.ssl.bind.port}}/status",
             "https_property": "{{cdap-site/ssl.enabled}}",
             "https_property_value": "true",
             "default_port": 11015,
@@ -59,8 +59,8 @@
         "source": {
           "type": "WEB",
           "uri": {
-            "http": "{{hostname}}:{{cdap-site/dashboard.bind.port}}",
-            "https": "{{hostname}}:{{cdap-site/dashboard.ssl.bind.port}}",
+            "http": "{{hostname}}:{{cdap-site/dashboard.bind.port}}/status",
+            "https": "{{hostname}}:{{cdap-site/dashboard.ssl.bind.port}}/status",
             "https_property": "{{cdap-site/ssl.enabled}}",
             "https_property_value": "true",
             "default_port": 9999,
