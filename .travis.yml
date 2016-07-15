@@ -20,4 +20,6 @@ python:
   - 2.7
 sudo: false
 install: 'pip install pep8'
-script: 'pep8 .'
+script:
+  - pep8 .
+  - xmllint $(find . -name "*.xml")
