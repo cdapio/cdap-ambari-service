@@ -1342,6 +1342,18 @@
   </property>
 
   <property>
+    <name>router.bypass.auth.regex</name>
+    <value></value>
+    <description>Regular expression to match URLs that are exempt from authentication</description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.enabled</name>
+      </property>
+    </depends-on>
+  </property>
+
+  <property>
     <name>router.client.boss.threads</name>
     <value>1</value>
     <description>The number of boss threads in the CDAP Router service client</description>
@@ -1475,6 +1487,470 @@
     <value>300</value>
     <description>
       Relogin interval for Kerberos keytab
+    </description>
+  </property>
+
+  <property>
+    <name>security.auth.server.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      CDAP Authentication service bind address
+    </description>
+  </property>
+
+  <property>
+    <name>security.auth.server.bind.port</name>
+    <value>10009</value>
+    <description>
+      CDAP Authentication service bind port
+    </description>
+  </property>
+
+  <property>
+    <name>security.auth.server.ssl.bind.port</name>
+    <value>10010</value>
+    <description>
+      CDAP Authentication service bind port for HTTPS
+    </description>
+  </property>
+
+  <property>
+    <name>security.authentication.basic.realmfile</name>
+    <value></value>
+    <description>
+      Username / password file to use when basic authentication is configured
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handlerClassName</name>
+    <value></value>
+    <description>
+      Name of the authentication implementation to use to validate user credentials
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.enabled</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.debug</name>
+    <value>false</value>
+    <description>
+      Enable Authentication Handler debug messages
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <display-name>Enable CDAP Authentication Handler debug messages</display-name>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <!-- LDAP handler properties -->
+
+  <property>
+    <name>security.authentication.handler.hostname</name>
+    <value></value>
+    <description>
+      Hostname for external authentication service, such as LDAP
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.port</name>
+    <value></value>
+    <description>
+      Port for external authentication service, such as LDAP
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.userBaseDn</name>
+    <value></value>
+    <description>
+      Distinguished Name of the root for user account entries in the LDAP directory (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.userRdnAttribute</name>
+    <value></value>
+    <description>
+      LDAP Object attribute for username when searching by role DN (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.userObjectClass</name>
+    <value></value>
+    <description>
+      Object class used to store user entries (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.bindDn</name>
+    <value></value>
+    <description>
+      The Distinguished Name used to bind to the LDAP server and search the directory (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.bindPassword</name>
+    <value></value>
+    <description>
+      The password used to bind to the LDAP server (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.userIdAttribute</name>
+    <value></value>
+    <description>
+      Object attribute containing the username (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.userPasswordAttribute</name>
+    <value></value>
+    <description>
+      Object attribute containing the user password (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.roleBaseDn</name>
+    <value></value>
+    <description>
+      Distinguished Name of the root of the LDAP tree to search for group memberships (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.roleNameAttribute</name>
+    <value></value>
+    <description>
+      Object attribute specifying the group name (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.roleMemberAttribute</name>
+    <value></value>
+    <description>
+      Object attribute specifying the group members (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.roleObjectClass</name>
+    <value></value>
+    <description>
+      Object class used to store group entries (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.useLdaps</name>
+    <value>false</value>
+    <description>
+      Enable LDAP over SSL (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.ldapsVerifyCertificate</name>
+    <value>true</value>
+    <description>
+      Enable verification of the SSL certificate used by the LDAP server (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+  </property>
+
+  <property>
+    <name>security.authentication.loginmodule.className</name>
+    <value></value>
+    <description>
+      JAAS LoginModule implementation to use when
+      co.cask.security.server.JAASAuthenticationHandler is configured for
+      security.authentication.handlerClassName
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authorization.enabled</name>
+    <value>false</value>
+    <description>
+      When set to true, all operations in CDAP are authorized using the authorizer implementation found at the
+      property security.authorization.extension.jar.path.
+    </description>
+    <display-name>CDAP Authorization Extension Enabled</display-name>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.extension.jar.path</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.enabled</name>
+      </property>
+    </depends-on>
+  </property>
+
+  <property>
+    <name>security.authorization.extension.jar.path</name>
+    <value></value>
+    <description>
+      If an external authorization system is used for authorizing operations on CDAP entities, this property sets
+      the path to the bundled JAR file containing the extension code. This jar is only used when
+      authorization is enabled by setting security.authorization.enabled to true.
+    </description>
+  </property>
+
+  <property>
+    <name>security.enabled</name>
+    <value>false</value>
+    <description>
+      Determines if authentication is enabled for CDAP; if true, all
+      requests to CDAP must provide a valid access token
+    </description>
+    <display-name>CDAP Authentication Enabled</display-name>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>kerberos.auth.enabled</name>
+      </property>
+    </depends-on>
+  </property>
+
+  <property>
+    <name>security.realm</name>
+    <value>cdap</value>
+    <description>
+      Authentication realm used for scoping security; this value should be
+      unique for each installation of CDAP
+    </description>
+  </property>
+
+  <property>
+    <name>security.server.maxthreads</name>
+    <value>100</value>
+    <description>
+      Maximum number of threads that the CDAP Authentication service should
+      use for handling HTTP requests
+    </description>
+  </property>
+
+  <property>
+    <name>security.server.token.expiration.ms</name>
+    <value>86400000</value>
+    <description>
+      AccessToken expiration time in milliseconds (defaults to 24 hours)
+    </description>
+  </property>
+
+  <property>
+    <name>security.token.digest.algorithm</name>
+    <value>HmacSHA256</value>
+    <description>
+      Algorithm used for generating MAC of access tokens
+    </description>
+  </property>
+
+  <property>
+    <name>security.token.digest.key.expiration.ms</name>
+    <value>3600000</value>
+    <description>
+      Time duration (in milliseconds) after which an active secret key used
+      for signing tokens should be retired
+    </description>
+  </property>
+
+  <property>
+    <name>security.token.digest.keylength</name>
+    <value>128</value>
+    <description>
+      Key length used in generating the secret keys for generating MAC of
+      access tokens
+    </description>
+  </property>
+
+  <property>
+    <name>security.token.distributed.parent.znode</name>
+    <value>/${root.namespace}/security/auth</value>
+    <description>
+      Parent node in ZooKeeper used for secret key distribution in
+      distributed mode
     </description>
   </property>
 

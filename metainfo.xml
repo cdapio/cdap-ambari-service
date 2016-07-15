@@ -168,6 +168,7 @@
         </component>
 
         <component>
+          <!-- CDAP Router -->
           <name>CDAP_ROUTER</name>
           <displayName>CDAP Router</displayName>
           <category>MASTER</category>
@@ -217,6 +218,7 @@
         </component>
 
         <component>
+          <!-- CDAP UI -->
           <name>CDAP_UI</name>
           <displayName>CDAP UI</displayName>
           <category>MASTER</category>
@@ -230,6 +232,53 @@
           <configuration-dependencies>
             <config-type>cdap-site</config-type>
           </configuration-dependencies>
+        </component>
+
+        <component>
+          <!-- CDAP Auth Server -->
+          <name>CDAP_AUTH_SERVER</name>
+          <displayName>CDAP Auth Server</displayName>
+          <category>MASTER</category>
+          <cardinality>0+</cardinality>
+          <commandScript>
+            <script>scripts/auth.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>600</timeout>
+          </commandScript>
+          <configFiles>
+            <configFile>
+              <type>xml</type>
+              <fileName>cdap-security.xml</fileName>
+              <dictionaryName>cdap-security</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>xml</type>
+              <fileName>cdap-site.xml</fileName>
+              <dictionaryName>cdap-site</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>env</type>
+              <fileName>cdap-env.sh</fileName>
+              <dictionaryName>cdap-env</dictionaryName>
+            </configFile>
+          </configFiles>
+          <dependencies>
+            <dependency>
+              <name>ZOOKEEPER/ZOOKEEPER_SERVER</name>
+              <scope>cluster</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+                <co-locate>CDAP/CDAP_MASTER</co-locate>
+              </auto-deploy>
+            </dependency>
+            <dependency>
+              <name>ZOOKEEPER/ZOOKEEPER_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+          </dependencies>
         </component>
 
       </components>

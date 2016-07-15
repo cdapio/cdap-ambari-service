@@ -81,6 +81,40 @@
           }
         }
       }
+    ],
+    "CDAP_AUTH_SERVER": [
+      {
+        "name": "cdap_auth_server_process",
+        "label": "CDAP Auth Server Process",
+        "description": "This alert is triggered if the CDAP Auth Server processes cannot be confirmed to be up and listening on the network for the configured critical threshold, given in seconds.",
+        "interval": 1,
+        "scope": "ANY",
+        "enabled": true,
+        "source": {
+          "type": "WEB",
+          "uri": {
+            "http": "{{hostname}}:{{cdap-site/security.auth.server.bind.port}}/status",
+            "https": "{{hostname}}:{{cdap-site/security.auth.server.ssl.bind.port}}/status",
+            "https_property": "{{cdap-site/ssl.enabled}}",
+            "https_property_value": "true",
+            "default_port": 10009,
+            "connection_timeout": 5.0
+          },
+          "reporting": {
+            "ok": {
+              "text": "HTTP {0} response in {2:.3f}s"
+            },
+            "warning": {
+              "text": "HTTP {0} response from {1} in {2:.3f}s ({3})",
+              "value": 1.5
+            },
+            "critical": {
+              "text": "Connection failed to {1} ({3})",
+              "value": 5.0
+            }
+          }
+        }
+      }
     ]
   }
 }
