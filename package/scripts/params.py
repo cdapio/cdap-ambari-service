@@ -105,7 +105,7 @@ for i, val in enumerate(zk_hosts):
         zookeeper_hosts += ','
 cdap_zookeeper_quorum = zookeeper_hosts + '/' + root_namespace
 
-kafka_bind_port = str(default('/configurations/kafka-broker/port', None))
+kafka_bind_port = str(default('/configurations/kafka-broker/port', 6667))
 kafka_hosts = config['clusterHostInfo']['kafka_broker_hosts']
 kafka_hosts.sort()
 tmp_kafka_hosts = ''
