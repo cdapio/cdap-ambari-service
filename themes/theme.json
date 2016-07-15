@@ -25,6 +25,7 @@
                   "subsections": [
                     {
                       "name": "subsection-yarn-services-cpu",
+                      "display-name": "Container CPU cores",
                       "row-index": "0",
                       "column-index": "0",
                       "row-span": "1",
@@ -32,6 +33,7 @@
                     },
                     {
                       "name": "subsection-yarn-services-mem",
+                      "display-name": "Container Memory",
                       "row-index": "0",
                       "column-index": "1",
                       "row-span": "1",
@@ -70,6 +72,7 @@
                   "subsections": [
                     {
                       "name": "subsection-java-services-col1",
+                      "display-name": "Heap Sizes",
                       "row-index": "0",
                       "column-index": "0",
                       "row-span": "1",
