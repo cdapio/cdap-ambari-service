@@ -423,7 +423,7 @@
     <display-name>Transaction Client YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
-      <minimum>0</minimum>
+      <minimum>256</minimum>
       <maximum>268435456</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
@@ -574,7 +574,7 @@
     <display-name>Dataset Executor YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
-      <minimum>0</minimum>
+      <minimum>256</minimum>
       <maximum>268435456</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
@@ -683,7 +683,7 @@
     <display-name>Explore Executor YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
-      <minimum>0</minimum>
+      <minimum>256</minimum>
       <maximum>268435456</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
@@ -835,7 +835,7 @@
     <description>Memory in megabytes allocated for log saver instances to run in YARN</description>
     <value-attributes>
       <type>int</type>
-      <minimum>0</minimum>
+      <minimum>256</minimum>
       <maximum>268435456</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
@@ -941,7 +941,7 @@
     <display-name>CDAP Master YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
-      <minimum>0</minimum>
+      <minimum>256</minimum>
       <maximum>268435456</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
@@ -1138,7 +1138,7 @@
     <display-name>Metrics Service YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
-      <minimum>0</minimum>
+      <minimum>256</minimum>
       <maximum>268435456</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
@@ -1193,7 +1193,7 @@
     <display-name>Metrics Processor YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
-      <minimum>0</minimum>
+      <minimum>256</minimum>
       <maximum>268435456</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
@@ -2024,7 +2024,7 @@
     <display-name>Stream YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
-      <minimum>0</minimum>
+      <minimum>256</minimum>
       <maximum>268435456</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>

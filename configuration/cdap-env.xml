@@ -72,7 +72,7 @@
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
-      <maximum>268435456</maximum>
+      <maximum>8192</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
       <overridable>false</overridable>
@@ -87,7 +87,7 @@
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
-      <maximum>268435456</maximum>
+      <maximum>8192</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
       <overridable>false</overridable>

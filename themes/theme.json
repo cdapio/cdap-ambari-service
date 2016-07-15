@@ -61,15 +61,11 @@
       "configuration-layout": "default",
       "configs": [
         {
-          "config": "cdap-site/root.namespace",
-          "subsection-name": "subsection-master-col1"
-        },
-        {
           "config": "cdap-env/cdap_master_heapsize",
           "subsection-name": "subsection-master-col1"
         },
         {
-          "config": "cdap-site/router.webapp.enabled",
+          "config": "cdap-env/cdap_router_heapsize",
           "subsection-name": "subsection-router-col1"
         }
       ]
@@ -77,6 +73,17 @@
     "widgets": [
       {
         "config": "cdap-env/cdap_master_heapsize",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-env/cdap_router_heapsize",
         "widget": {
           "type": "slider",
           "units": [
