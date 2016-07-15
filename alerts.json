@@ -10,7 +10,7 @@
         "enabled": true,
         "source": {
           "type": "SCRIPT",
-          "path": "CDAP/package/alerts/alert_cdap_master_status.py"
+          "path": "CDAP/3.5.0-SNAPSHOT/package/alerts/alert_cdap_master_status.py"
         }
       }
     ],

@@ -21,6 +21,7 @@ install() {
   cp -a stacks var/lib/ambari-server/resources 2>/dev/null
   sed -i'' -e "s/3.5.0-SNAPSHOT/${PACKAGE_VERSION}/g" \
     var/lib/ambari-server/resources/stacks/*/*/services/CDAP/metainfo.xml \
+    var/lib/ambari-server/resources/common-services/CDAP/${PACKAGE_VERSION}/alerts.xml \
     var/lib/ambari-server/resources/common-services/CDAP/${PACKAGE_VERSION}/metainfo.xml
 }
 
