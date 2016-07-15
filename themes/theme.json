@@ -10,21 +10,47 @@
             "name": "settings",
             "display-name": "Settings",
             "layout": {
-              "tab-columns": "2",
-              "tab-rows": "1",
+              "tab-columns": "3",
+              "tab-rows": "2",
               "sections": [
                 {
-                  "name": "section-master",
-                  "display-name": "Master",
+                  "name": "section-yarn-services",
+                  "display-name": "YARN Services",
                   "row-index": "0",
                   "column-index": "0",
+                  "row-span": "1",
+                  "column-span": "2",
+                  "section-columns": "2",
+                  "section-rows": "1",
+                  "subsections": [
+                    {
+                      "name": "subsection-yarn-services-cpu",
+                      "row-index": "0",
+                      "column-index": "0",
+                      "row-span": "1",
+                      "column-span": "1"
+                    },
+                    {
+                      "name": "subsection-yarn-services-mem",
+                      "row-index": "0",
+                      "column-index": "1",
+                      "row-span": "1",
+                      "column-span": "1"
+                    }
+                  ]
+                },
+                {
+                  "name": "section-cdap-features",
+                  "display-name": "CDAP Features",
+                  "row-index": "0",
+                  "column-index": "2",
                   "row-span": "1",
                   "column-span": "1",
                   "section-columns": "1",
                   "section-rows": "1",
                   "subsections": [
                     {
-                      "name": "subsection-master-col1",
+                      "name": "subsection-cdap-features-col1",
                       "row-index": "0",
                       "column-index": "0",
                       "row-span": "1",
@@ -33,17 +59,17 @@
                   ]
                 },
                 {
-                  "name": "section-router",
-                  "display-name": "Router",
-                  "row-index": "0",
-                  "column-index": "1",
+                  "name": "section-java-services",
+                  "display-name": "Java Services",
+                  "row-index": "1",
+                  "column-index": "0",
                   "row-span": "1",
-                  "column-span": "1",
+                  "column-span": "3",
                   "section-columns": "1",
                   "section-rows": "1",
                   "subsections": [
                     {
-                      "name": "subsection-router-col1",
+                      "name": "subsection-java-services-col1",
                       "row-index": "0",
                       "column-index": "0",
                       "row-span": "1",
@@ -61,16 +87,76 @@
       "configuration-layout": "default",
       "configs": [
         {
+          "config": "cdap-site/master.service.num.cores",
+          "subsection-name": "subsection-yarn-services-cpu"
+        },
+        {
+          "config": "cdap-site/master.service.memory.mb",
+          "subsection-name": "subsection-yarn-services-mem"
+        },
+        {
+          "config": "cdap-site/audit.enabled",
+          "subsection-name": "subsection-cdap-features-col1"
+        },
+        {
+          "config": "cdap-site/explore.enabled",
+          "subsection-name": "subsection-cdap-features-col1"
+        },
+        {
+          "config": "cdap-site/master.startup.checks.enabled",
+          "subsection-name": "subsection-cdap-features-col1"
+        },
+        {
           "config": "cdap-env/cdap_master_heapsize",
-          "subsection-name": "subsection-master-col1"
+          "subsection-name": "subsection-java-services-col1"
         },
         {
           "config": "cdap-env/cdap_router_heapsize",
-          "subsection-name": "subsection-router-col1"
+          "subsection-name": "subsection-java-services-col1"
         }
       ]
     },
     "widgets": [
+      {
+        "config": "cdap-site/master.service.num.cores",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "int"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/master.service.memory.mb",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/audit.enabled",
+        "widget": {
+          "type": "toggle"
+        }
+      },
+      {
+        "config": "cdap-site/explore.enabled",
+        "widget": {
+          "type": "toggle"
+        }
+      },
+      {
+        "config": "cdap-site/master.startup.checks.enabled",
+        "widget": {
+          "type": "toggle"
+        }
+      },
       {
         "config": "cdap-env/cdap_master_heapsize",
         "widget": {
