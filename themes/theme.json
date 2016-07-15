@@ -90,8 +90,24 @@
       "configuration-layout": "default",
       "configs": [
         {
+          "config": "cdap-site/data.tx.num.cores",
+          "subsection-name": "subsection-yarn-services-cpu"
+        },
+        {
+          "config": "cdap-site/dataset.executor.container.num.cores",
+          "subsection-name": "subsection-yarn-services-cpu"
+        },
+        {
           "config": "cdap-site/master.service.num.cores",
           "subsection-name": "subsection-yarn-services-cpu"
+        },
+        {
+          "config": "cdap-site/data.tx.memory.mb",
+          "subsection-name": "subsection-yarn-services-mem"
+        },
+        {
+          "config": "cdap-site/dataset.executor.container.memory.mb",
+          "subsection-name": "subsection-yarn-services-mem"
         },
         {
           "config": "cdap-site/master.service.memory.mb",
@@ -121,12 +137,56 @@
     },
     "widgets": [
       {
+        "config": "cdap-site/data.tx.num.cores",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "int"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/dataset.executor.container.num.cores",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "int"
+            }
+          ]
+        }
+      },
+      {
         "config": "cdap-site/master.service.num.cores",
         "widget": {
           "type": "slider",
           "units": [
             {
               "unit-name": "int"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/data.tx.memory.mb",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/dataset.executor.container.memory.mb",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
             }
           ]
         }
