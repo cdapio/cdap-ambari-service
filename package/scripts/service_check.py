@@ -1,5 +1,5 @@
 # coding=utf8
-# Copyright © 2015 Cask Data, Inc.
+# Copyright © 2015-2016 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -22,7 +22,7 @@ class CdapServiceCheck(Script):
         import params
         env.set_params(params)
 
-        status_url = "http://%s:%s/v3/system/services/status" % (params.cdap_router_host, params.cdap_router_port)
+        status_url = "http://%s:11015/v3/system/services/status" % (params.cdap_router_host)
 
         # TODO: do something useful here
 
