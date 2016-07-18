@@ -1351,6 +1351,9 @@
         <name>security.enabled</name>
       </property>
     </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
@@ -1871,6 +1874,9 @@
       the path to the bundled JAR file containing the extension code. This jar is only used when
       authorization is enabled by setting security.authorization.enabled to true.
     </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
