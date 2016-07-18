@@ -118,6 +118,10 @@
           "subsection-name": "subsection-yarn-services-cpu"
         },
         {
+          "config": "cdap-site/stream.container.num.cores",
+          "subsection-name": "subsection-yarn-services-cpu"
+        },
+        {
           "config": "cdap-site/data.tx.memory.mb",
           "subsection-name": "subsection-yarn-services-mem"
         },
@@ -143,6 +147,10 @@
         },
         {
           "config": "cdap-site/metrics.processor.memory.mb",
+          "subsection-name": "subsection-yarn-services-mem"
+        },
+        {
+          "config": "cdap-site/stream.container.memory.mb",
           "subsection-name": "subsection-yarn-services-mem"
         },
         {
@@ -254,6 +262,17 @@
         }
       },
       {
+        "config": "cdap-site/stream.container.num.cores",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "int"
+            }
+          ]
+        }
+      },
+      {
         "config": "cdap-site/data.tx.memory.mb",
         "widget": {
           "type": "slider",
@@ -321,6 +340,17 @@
       },
       {
         "config": "cdap-site/metrics.processor.memory.mb",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/stream.container.memory.mb",
         "widget": {
           "type": "slider",
           "units": [
