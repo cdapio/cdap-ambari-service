@@ -170,9 +170,9 @@ export LOG_DIR={{log_dir}}
 export PID_DIR={{pid_dir}}
 export KAFKA_JAVA_HEAPMAX="-Xmx{{cdap_kafka_heapsize}}m"
 export MASTER_JAVA_HEAPMAX="-Xmx{{cdap_master_heapsize}}m"
-export ROUTER_JAVA_HEAPMAX="-Xmx{{cdap_router_heapsize}}m"
-{% if security_enabled %}
 export AUTH_JAVA_HEAPMAX="-Xmx{{cdap_auth_heapsize}}m"
+export ROUTER_JAVA_HEAPMAX="-Xmx{{cdap_router_heapsize}}m"
+{% if kerberos_enabled %}
 export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}} -Djava.security.auth.login.config={{master_jaas_config_file}}"
 {% else %}
 export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}}"

@@ -63,7 +63,6 @@ dfs = config['configurations']['core-site']['fs.defaultFS']
 
 cdap_env_sh_template = config['configurations']['cdap-env']['content']
 
-security_enabled = config['configurations']['cluster-env']['security_enabled']
 map_cdap_site = config['configurations']['cdap-site']
 
 # Example: root.namespace
@@ -73,7 +72,10 @@ if map_cdap_site['hdfs.namespace'] == '/${root.namespace}':
 else:
     hdfs_namespace = map_cdap_site['hdfs.namespace']
 
+cdap_security_enabled = config['configurations']['cdap-site']['security.enabled']
+
 # Kerberos stuff
+kerberos_enabled = config['configurations']['cluster-env']['security_enabled']
 hdfs_user_keytab = config['configurations']['hadoop-env']['hdfs_user_keytab']
 hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
 hdfs_principal_name = config['configurations']['hadoop-env']['hdfs_principal_name']
@@ -81,7 +83,7 @@ kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executab
 cdap_principal_name = config['configurations']['cdap-env']['cdap_principal_name']
 cdap_user_keytab = config['configurations']['cdap-env']['cdap_user_keytab']
 
-if security_enabled:
+if kerberos_enabled:
     master_jaas_princ = config['configurations']['cdap-site']['cdap.master.kerberos.principal'].replace('_HOST', hostname)
     master_keytab_path = config['configurations']['cdap-site']['cdap.master.kerberos.keytab']
     client_jaas_config_file = format("{cdap_conf_dir}/cdap_client_jaas.conf")
