@@ -106,7 +106,7 @@
           </customCommands>
           <dependencies>
             <dependency>
-              <name>KAKFA/KAFKA_BROKER</name>
+              <name>CDAP/CDAP_KAFKA</name>
               <scope>cluster</scope>
               <auto-deploy>
                 <enabled>true</enabled>
@@ -218,6 +218,36 @@
         </component>
 
         <component>
+          <!-- CDAP Kafka Server-->
+          <name>CDAP_KAFKA</name>
+          <displayName>CDAP Kafka Server</displayName>
+          <category>MASTER</category>
+          <cardinality>1+</cardinality>
+          <commandScript>
+            <script>scripts/kafka.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>600</timeout>
+          </commandScript>
+          <dependencies>
+            <dependency>
+              <name>ZOOKEEPER/ZOOKEEPER_SERVER</name>
+              <scope>cluster</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+                <co-locate>CDAP/CDAP_MASTER</co-locate>
+              </auto-deploy>
+            </dependency>
+            <dependency>
+              <name>ZOOKEEPER/ZOOKEEPER_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+          </dependencies>
+        </component>
+
+        <component>
           <!-- CDAP UI -->
           <name>CDAP_UI</name>
           <displayName>CDAP UI</displayName>
@@ -318,7 +348,6 @@
         <service>YARN</service>
         <service>ZOOKEEPER</service>
         <service>HIVE</service>
-        <service>KAFKA</service>
       </requiredServices>
 
       <!-- names for config files (under configuration dir) -->

@@ -69,6 +69,32 @@
           ]
         },
         {
+          "name": "CDAP_KAFKA",
+          "identities": [
+            {
+              "name": "cdap_kafka_cdap",
+              "principal": {
+                "value": "cdap/_HOST@${realm}",
+                "type" : "service",
+                "configuration": "cdap-site/cdap.master.kerberos.principal",
+                "local_username": "cdap"
+              },
+              "keytab": {
+                "file": "${keytab_dir}/cdap.service.keytab",
+                "owner": {
+                  "name": "cdap",
+                  "access": "r"
+                },
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": ""
+                },
+                "configuration": "cdap-site/cdap.master.kerberos.keytab"
+              }
+            }
+          ]
+        },
+        {
           "name": "CDAP_AUTH_SERVER",
           "identities": [
             {
