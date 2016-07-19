@@ -166,6 +166,10 @@
           "subsection-name": "subsection-cdap-features-col1"
         },
         {
+          "config": "cdap-site/security.enabled",
+          "subsection-name": "subsection-cdap-features-col1"
+        },
+        {
           "config": "cdap-env/cdap_auth_heapsize",
           "subsection-name": "subsection-java-services-col1"
         },
@@ -368,6 +372,12 @@
       },
       {
         "config": "cdap-site/master.startup.checks.enabled",
+        "widget": {
+          "type": "toggle"
+        }
+      },
+      {
+        "config": "cdap-site/security.enabled",
         "widget": {
           "type": "toggle"
         }
