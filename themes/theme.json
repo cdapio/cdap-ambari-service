@@ -166,15 +166,15 @@
           "subsection-name": "subsection-cdap-features-col1"
         },
         {
+          "config": "cdap-env/cdap_auth_heapsize",
+          "subsection-name": "subsection-java-services-col1"
+        },
+        {
           "config": "cdap-env/cdap_kafka_heapsize",
           "subsection-name": "subsection-java-services-col1"
         },
         {
           "config": "cdap-env/cdap_master_heapsize",
-          "subsection-name": "subsection-java-services-col1"
-        },
-        {
-          "config": "cdap-env/cdap_auth_heapsize",
           "subsection-name": "subsection-java-services-col1"
         },
         {
@@ -361,12 +361,6 @@
         }
       },
       {
-        "config": "cdap-site/audit.enabled",
-        "widget": {
-          "type": "toggle"
-        }
-      },
-      {
         "config": "cdap-site/explore.enabled",
         "widget": {
           "type": "toggle"
@@ -376,6 +370,23 @@
         "config": "cdap-site/master.startup.checks.enabled",
         "widget": {
           "type": "toggle"
+        }
+      },
+      {
+        "config": "cdap-site/audit.enabled",
+        "widget": {
+          "type": "toggle"
+        }
+      },
+      {
+        "config": "cdap-env/cdap_auth_heapsize",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
+            }
+          ]
         }
       },
       {
@@ -391,17 +402,6 @@
       },
       {
         "config": "cdap-env/cdap_master_heapsize",
-        "widget": {
-          "type": "slider",
-          "units": [
-            {
-              "unit-name": "GB"
-            }
-          ]
-        }
-      },
-      {
-        "config": "cdap-env/cdap_auth_heapsize",
         "widget": {
           "type": "slider",
           "units": [
