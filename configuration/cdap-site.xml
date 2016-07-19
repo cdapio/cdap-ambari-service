@@ -462,7 +462,7 @@
     <name>data.tx.max.instances</name>
     <value>${master.service.max.instances}</value>
     <description>
-      Maximum number of transaction client instances
+      Maximum number of transaction service instances
     </description>
   </property>
 
@@ -470,9 +470,9 @@
     <name>data.tx.memory.mb</name>
     <value>512</value>
     <description>
-      Memory in megabytes of the transaction clients
+      Memory in megabytes of the transaction service
     </description>
-    <display-name>Transaction Client YARN Memory</display-name>
+    <display-name>Transaction Service YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
@@ -487,7 +487,7 @@
     <name>data.tx.num.cores</name>
     <value>2</value>
     <description>
-      Maximum number of transaction client cores
+      Maximum number of transaction service cores
     </description>
     <display-name>Transaction Client YARN CPU Cores</display-name>
     <value-attributes>
@@ -503,7 +503,7 @@
     <name>data.tx.num.instances</name>
     <value>1</value>
     <description>
-      Requested number of transaction client instances
+      Requested number of transaction service instances
     </description>
     <value-attributes>
       <type>int</type>
@@ -898,6 +898,7 @@
     <name>log.saver.run.memory.megs</name>
     <value>1024</value>
     <description>Memory in megabytes allocated for log saver instances to run in YARN</description>
+    <display-name>Log Saver YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
