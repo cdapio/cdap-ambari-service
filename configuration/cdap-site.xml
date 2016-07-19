@@ -1004,7 +1004,7 @@
     <description>
       Size of memory in megabytes for Master Service instance
     </description>
-    <display-name>CDAP Master YARN Memory</display-name>
+    <display-name>Master YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
@@ -1019,7 +1019,7 @@
     <name>master.service.num.cores</name>
     <value>2</value>
     <description>Number of cores for Master Service instance</description>
-    <display-name>CDAP Master YARN CPU Cores</display-name>
+    <display-name>Master YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
