@@ -252,6 +252,7 @@
       this option makes it possible to delete all applications and data; NO
       RECOVERY IS POSSIBLE!**
     </description>
+    <display-name>Enable unrecoverable reset (DANGEROUS)</display-name>
     <value-attributes>
       <type>boolean</type>
     </value-attributes>
