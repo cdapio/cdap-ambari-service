@@ -48,6 +48,33 @@
         }
       }
     ],
+    "CDAP_KAFKA": [
+      {
+        "name": "cdap_kafka_process",
+        "label": "CDAP Kafka Process",
+        "description": "This alert is triggered if the CDAP Kafka processes cannot be confirmed to be up and listening on the network for the configured critical threshold, given in seconds.",
+        "interval": 1,
+        "scope": "ANY",
+        "source": {
+          "type": "PORT",
+          "uri": "{{cdap-site/kafka.bind.port}}",
+          "default_port": 9092,
+          "reporting": {
+            "ok": {
+              "text": "TCP OK - {0:.3f}s response on port {1}"
+            },
+            "warning": {
+              "text": "TCP OK - {0:.3f}s response on port {1}",
+              "value": 1.5
+            },
+            "critical": {
+              "text": "Connection failed: {0} to {1}:{2}",
+              "value": 5.0
+            }
+          }
+        }
+      }
+    ],
     "CDAP_UI": [
       {
         "name": "cdap_ui_process",

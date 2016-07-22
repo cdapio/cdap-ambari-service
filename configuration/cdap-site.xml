@@ -1508,6 +1508,51 @@
     </description>
   </property>
 
+  <!-- Kafka Configuration -->
+
+  <property>
+    <name>kafka.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      CDAP Kafka service bind address
+    </description>
+  </property>
+
+  <property>
+    <name>kafka.bind.port</name>
+    <value>9092</value>
+    <description>CDAP Kafka service bind port</description>
+  </property>
+
+  <property>
+    <name>kafka.num.partitions</name>
+    <value>10</value>
+    <description>Default number of partitions for a topic</description>
+  </property>
+
+  <property>
+    <name>kafka.log.dir</name>
+    <value>/data/cdap-kafka/logs</value>
+    <description>CDAP Kafka service log storage directory</description>
+  </property>
+
+  <property>
+    <name>kafka.zookeeper.namespace</name>
+    <value>kafka</value>
+    <description>CDAP Kafka service ZooKeeper namespace</description>
+  </property>
+
+  <property>
+    <name>kafka.default.replication.factor</name>
+    <value>1</value>
+    <description>
+      CDAP Kafka service replication factor; used to replicate Kafka messages across multiple
+      machines to prevent data loss in the event of a hardware failure. The recommended
+      setting is to run at least two CDAP Kafka servers. If you are running two CDAP Kafka
+      servers, set this value to 2; otherwise, set it to the number of CDAP Kafka servers.
+    </description>
+  </property>
+
   <!-- Security Configuration -->
 
   <property>
