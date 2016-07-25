@@ -37,7 +37,7 @@
           <commandScript>
             <script>scripts/cli.py</script>
             <scriptType>PYTHON</scriptType>
-            <timeout>600</timeout>
+            <timeout>1800</timeout>
           </commandScript>
           <configFiles>
             <configFile>
@@ -61,7 +61,7 @@
           <commandScript>
             <script>scripts/master.py</script>
             <scriptType>PYTHON</scriptType>
-            <timeout>600</timeout>
+            <timeout>1800</timeout>
           </commandScript>
           <configFiles>
             <configFile>
@@ -177,7 +177,7 @@
           <commandScript>
             <script>scripts/router.py</script>
             <scriptType>PYTHON</scriptType>
-            <timeout>600</timeout>
+            <timeout>1800</timeout>
           </commandScript>
           <configFiles>
             <configFile>
@@ -226,7 +226,7 @@
           <commandScript>
             <script>scripts/kafka.py</script>
             <scriptType>PYTHON</scriptType>
-            <timeout>600</timeout>
+            <timeout>1800</timeout>
           </commandScript>
           <dependencies>
             <dependency>
@@ -257,7 +257,7 @@
           <commandScript>
             <script>scripts/ui.py</script>
             <scriptType>PYTHON</scriptType>
-            <timeout>600</timeout>
+            <timeout>1800</timeout>
           </commandScript>
           <configuration-dependencies>
             <config-type>cdap-site</config-type>
@@ -273,7 +273,7 @@
           <commandScript>
             <script>scripts/auth.py</script>
             <scriptType>PYTHON</scriptType>
-            <timeout>600</timeout>
+            <timeout>1800</timeout>
           </commandScript>
           <configFiles>
             <configFile>
