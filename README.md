@@ -21,6 +21,22 @@ will check out the CDAP service using the latest release of CDAP. Specific major
 of CDAP can be obtained by pulling the corresponding branch. For example, for CDAP 3.0, you would
 checkout the `release/3.0` branch.
 
+### Installing packages
+
+#### Debian/Ubuntu
+
+```
+sudo dpkg -i ./cdap-ambari-service*.deb
+sudo ambari-server restart
+```
+
+#### RHEL/CentOS/etc
+
+```
+sudo yum localinstall ./cdap-ambari-service*.rpm
+sudo ambari-server restart
+```
+
 ## License
 
    Copyright © 2015-2016 Cask Data, Inc.
