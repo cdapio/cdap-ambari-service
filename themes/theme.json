@@ -19,7 +19,7 @@
                   "row-index": "0",
                   "column-index": "0",
                   "row-span": "1",
-                  "column-span": "2",
+                  "column-span": "3",
                   "section-columns": "2",
                   "section-rows": "1",
                   "subsections": [
@@ -37,14 +37,14 @@
                       "row-index": "0",
                       "column-index": "1",
                       "row-span": "1",
-                      "column-span": "1"
+                      "column-span": "2"
                     }
                   ]
                 },
                 {
                   "name": "section-cdap-features",
                   "display-name": "CDAP Features",
-                  "row-index": "0",
+                  "row-index": "1",
                   "column-index": "2",
                   "row-span": "1",
                   "column-span": "1",
@@ -66,7 +66,7 @@
                   "row-index": "1",
                   "column-index": "0",
                   "row-span": "1",
-                  "column-span": "3",
+                  "column-span": "2",
                   "section-columns": "1",
                   "section-rows": "1",
                   "subsections": [
@@ -76,7 +76,7 @@
                       "row-index": "0",
                       "column-index": "0",
                       "row-span": "1",
-                      "column-span": "1"
+                      "column-span": "2"
                     }
                   ]
                 }
@@ -98,7 +98,27 @@
           "subsection-name": "subsection-yarn-services-cpu"
         },
         {
+          "config": "cdap-site/explore.executor.container.num.cores",
+          "subsection-name": "subsection-yarn-services-cpu"
+        },
+        {
+          "config": "cdap-site/log.saver.run.num.cores",
+          "subsection-name": "subsection-yarn-services-cpu"
+        },
+        {
           "config": "cdap-site/master.service.num.cores",
+          "subsection-name": "subsection-yarn-services-cpu"
+        },
+        {
+          "config": "cdap-site/metrics.num.cores",
+          "subsection-name": "subsection-yarn-services-cpu"
+        },
+        {
+          "config": "cdap-site/metrics.processor.num.cores",
+          "subsection-name": "subsection-yarn-services-cpu"
+        },
+        {
+          "config": "cdap-site/stream.container.num.cores",
           "subsection-name": "subsection-yarn-services-cpu"
         },
         {
@@ -110,7 +130,27 @@
           "subsection-name": "subsection-yarn-services-mem"
         },
         {
+          "config": "cdap-site/explore.executor.container.memory.mb",
+          "subsection-name": "subsection-yarn-services-mem"
+        },
+        {
+          "config": "cdap-site/log.saver.run.memory.megs",
+          "subsection-name": "subsection-yarn-services-mem"
+        },
+        {
           "config": "cdap-site/master.service.memory.mb",
+          "subsection-name": "subsection-yarn-services-mem"
+        },
+        {
+          "config": "cdap-site/metrics.memory.mb",
+          "subsection-name": "subsection-yarn-services-mem"
+        },
+        {
+          "config": "cdap-site/metrics.processor.memory.mb",
+          "subsection-name": "subsection-yarn-services-mem"
+        },
+        {
+          "config": "cdap-site/stream.container.memory.mb",
           "subsection-name": "subsection-yarn-services-mem"
         },
         {
@@ -124,6 +164,14 @@
         {
           "config": "cdap-site/master.startup.checks.enabled",
           "subsection-name": "subsection-cdap-features-col1"
+        },
+        {
+          "config": "cdap-site/security.enabled",
+          "subsection-name": "subsection-cdap-features-col1"
+        },
+        {
+          "config": "cdap-env/cdap_auth_heapsize",
+          "subsection-name": "subsection-java-services-col1"
         },
         {
           "config": "cdap-env/cdap_kafka_heapsize",
@@ -163,7 +211,62 @@
         }
       },
       {
+        "config": "cdap-site/explore.executor.container.num.cores",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "int"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/log.saver.run.num.cores",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "int"
+            }
+          ]
+        }
+      },
+      {
         "config": "cdap-site/master.service.num.cores",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "int"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/metrics.num.cores",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "int"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/metrics.processor.num.cores",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "int"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/stream.container.num.cores",
         "widget": {
           "type": "slider",
           "units": [
@@ -196,6 +299,28 @@
         }
       },
       {
+        "config": "cdap-site/explore.executor.container.memory.mb",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/log.saver.run.memory.megs",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
+            }
+          ]
+        }
+      },
+      {
         "config": "cdap-site/master.service.memory.mb",
         "widget": {
           "type": "slider",
@@ -207,9 +332,36 @@
         }
       },
       {
-        "config": "cdap-site/audit.enabled",
+        "config": "cdap-site/metrics.memory.mb",
         "widget": {
-          "type": "toggle"
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/metrics.processor.memory.mb",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
+            }
+          ]
+        }
+      },
+      {
+        "config": "cdap-site/stream.container.memory.mb",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
+            }
+          ]
         }
       },
       {
@@ -222,6 +374,29 @@
         "config": "cdap-site/master.startup.checks.enabled",
         "widget": {
           "type": "toggle"
+        }
+      },
+      {
+        "config": "cdap-site/security.enabled",
+        "widget": {
+          "type": "toggle"
+        }
+      },
+      {
+        "config": "cdap-site/audit.enabled",
+        "widget": {
+          "type": "toggle"
+        }
+      },
+      {
+        "config": "cdap-env/cdap_auth_heapsize",
+        "widget": {
+          "type": "slider",
+          "units": [
+            {
+              "unit-name": "GB"
+            }
+          ]
         }
       },
       {

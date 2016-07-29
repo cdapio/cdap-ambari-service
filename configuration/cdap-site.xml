@@ -252,22 +252,9 @@
       this option makes it possible to delete all applications and data; NO
       RECOVERY IS POSSIBLE!**
     </description>
+    <display-name>Enable unrecoverable reset (DANGEROUS)</display-name>
     <value-attributes>
       <type>boolean</type>
-    </value-attributes>
-    <value-attributes>
-      <type>value-list</type>
-      <entries>
-        <entry>
-          <value>true</value>
-          <label>Enabled</label>
-        </entry>
-        <entry>
-          <value>false</value>
-          <label>Disabled</label>
-        </entry>
-      </entries>
-      <selection-cardinality>1</selection-cardinality>
     </value-attributes>
   </property>
 
@@ -462,7 +449,7 @@
     <name>data.tx.max.instances</name>
     <value>${master.service.max.instances}</value>
     <description>
-      Maximum number of transaction client instances
+      Maximum number of transaction service instances
     </description>
   </property>
 
@@ -470,13 +457,13 @@
     <name>data.tx.memory.mb</name>
     <value>512</value>
     <description>
-      Memory in megabytes of the transaction clients
+      Memory in megabytes of the transaction service
     </description>
-    <display-name>Transaction Client YARN Memory</display-name>
+    <display-name>Transaction Service YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
-      <maximum>268435456</maximum>
+      <maximum>65536</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
       <overridable>false</overridable>
@@ -487,7 +474,7 @@
     <name>data.tx.num.cores</name>
     <value>2</value>
     <description>
-      Maximum number of transaction client cores
+      Maximum number of transaction service cores
     </description>
     <display-name>Transaction Client YARN CPU Cores</display-name>
     <value-attributes>
@@ -503,7 +490,7 @@
     <name>data.tx.num.instances</name>
     <value>1</value>
     <description>
-      Requested number of transaction client instances
+      Requested number of transaction service instances
     </description>
     <value-attributes>
       <type>int</type>
@@ -627,7 +614,7 @@
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
-      <maximum>268435456</maximum>
+      <maximum>65536</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
       <overridable>false</overridable>
@@ -749,7 +736,7 @@
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
-      <maximum>268435456</maximum>
+      <maximum>65536</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
       <overridable>false</overridable>
@@ -898,10 +885,11 @@
     <name>log.saver.run.memory.megs</name>
     <value>1024</value>
     <description>Memory in megabytes allocated for log saver instances to run in YARN</description>
+    <display-name>Log Saver YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
-      <maximum>268435456</maximum>
+      <maximum>65536</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
       <overridable>false</overridable>
@@ -1003,11 +991,11 @@
     <description>
       Size of memory in megabytes for Master Service instance
     </description>
-    <display-name>CDAP Master YARN Memory</display-name>
+    <display-name>Master YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
-      <maximum>268435456</maximum>
+      <maximum>65536</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
       <overridable>false</overridable>
@@ -1018,7 +1006,7 @@
     <name>master.service.num.cores</name>
     <value>2</value>
     <description>Number of cores for Master Service instance</description>
-    <display-name>CDAP Master YARN CPU Cores</display-name>
+    <display-name>Master YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
@@ -1204,7 +1192,7 @@
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
-      <maximum>268435456</maximum>
+      <maximum>65536</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
       <overridable>false</overridable>
@@ -1259,7 +1247,7 @@
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
-      <maximum>268435456</maximum>
+      <maximum>65536</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
       <overridable>false</overridable>
@@ -1999,7 +1987,20 @@
     <display-name>CDAP Authentication Enabled</display-name>
     <value-attributes>
       <type>boolean</type>
-      <overridable>false</overridable>
+    </value-attributes>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>true</value>
+          <label>Enabled</label>
+        </entry>
+        <entry>
+          <value>false</value>
+          <label>Disabled</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
     </value-attributes>
     <depends-on>
       <property>
@@ -2141,7 +2142,7 @@
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
-      <maximum>268435456</maximum>
+      <maximum>65536</maximum>
       <unit>MB</unit>
       <increment-step>256</increment-step>
       <overridable>false</overridable>

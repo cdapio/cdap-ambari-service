@@ -72,17 +72,18 @@ def cdap_config(name=None):
         content=InlineTemplate(params.cdap_env_sh_template)
     )
 
-    File(
-        format(params.client_jaas_config_file),
-        owner=params.cdap_user,
-        content=Template("cdap_client_jaas.conf.j2")
-    )
+    if params.kerberos_enabled:
+        File(
+            format(params.client_jaas_config_file),
+            owner=params.cdap_user,
+            content=Template("cdap_client_jaas.conf.j2")
+        )
 
-    File(
-        format(params.master_jaas_config_file),
-        owner=params.cdap_user,
-        content=Template("cdap_master_jaas.conf.j2")
-    )
+        File(
+            format(params.master_jaas_config_file),
+            owner=params.cdap_user,
+            content=Template("cdap_master_jaas.conf.j2")
+        )
 
     # Set dirname
     if name == 'auth':
