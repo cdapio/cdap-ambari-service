@@ -178,7 +178,8 @@ export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}} -Djava.securi
 export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}}"
 {% endif %}
 export TEZ_HOME="/usr/hdp/{{hdp_version}}/tez"
-export TEZ_CONF_DIR="/etc/tez/conf"</value>
+export TEZ_CONF_DIR="/etc/tez/conf"
+    </value>
     <display-name>Contents of cdap-env.sh</display-name>
     <value-attributes>
       <overridable>false</overridable>
