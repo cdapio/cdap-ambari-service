@@ -103,6 +103,15 @@
                 <timeout>1800</timeout>
               </commandScript>
             </customCommand>
+            <customCommand>
+              <name>queue_debugger</name>
+              <displayName>Run CDAP Queue Debugger Tool</displayName>
+              <commandScript>
+                <script>scripts/master.py</script>
+                <scriptType>PYTHON</scriptType>
+                <timeout>1800</timeout>
+              </commandScript>
+            </customCommand>
           </customCommands>
           <dependencies>
             <dependency>

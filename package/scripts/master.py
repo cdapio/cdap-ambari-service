@@ -94,6 +94,15 @@ class Master(Script):
             only_if=self.status
         )
 
+    def queue_debugger(self, env):
+        print 'Run CDAP Queue Debugger Tool'
+        debugger_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.HBaseQueueDebugger')
+        Execute(
+            debugger_cmd,
+            user=params.cdap_user,
+            only_if=self.status
+        )
+
     def remove_jackson(self, env):
         jackson_check = format('ls -1 /opt/cdap/master/lib/org.codehaus.jackson* 2>/dev/null')
         Execute(
