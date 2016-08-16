@@ -69,6 +69,7 @@ class Master(Script):
 
     def upgrade(self, env):
         print 'Run CDAP Upgrade Tool'
+        import params
         upgrade_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.UpgradeTool upgrade force')
         Execute(
             upgrade_cmd,
@@ -78,6 +79,7 @@ class Master(Script):
 
     def upgrade_hbase(self, env):
         print 'Run CDAP HBase Coprocessor Upgrade Tool'
+        import params
         upgrade_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.UpgradeTool upgrade_hbase force')
         Execute(
             upgrade_cmd,
@@ -87,6 +89,7 @@ class Master(Script):
 
     def postupgrade(self, env):
         print 'Run CDAP Post-Upgrade Tool'
+        import params
         upgrade_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.flow.FlowQueuePendingCorrector')
         Execute(
             upgrade_cmd,
@@ -96,6 +99,7 @@ class Master(Script):
 
     def queue_debugger(self, env):
         print 'Run CDAP Queue Debugger Tool'
+        import params
         debugger_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.HBaseQueueDebugger')
         Execute(
             debugger_cmd,
