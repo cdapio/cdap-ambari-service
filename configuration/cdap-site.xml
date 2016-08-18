@@ -1074,38 +1074,6 @@
     </description>
   </property>
 
-  <property>
-    <name>metadata.updates.kafka.broker.list</name>
-    <value>{{cdap_kafka_brokers}}</value>
-    <description>
-      Apache Kafka broker list to which metadata update notifications are published
-    </description>
-  </property>
-
-  <property>
-    <name>metadata.updates.kafka.topic</name>
-    <value>cdap-metadata-updates</value>
-    <description>
-      Apache Kafka topic to which metadata update notifications are published
-    </description>
-  </property>
-
-  <property>
-    <name>metadata.updates.publish.enabled</name>
-    <value>false</value>
-    <description>
-      Determines if metadata updates will be published to Kafka.
-      External systems can subscribe to the Kafka topic determined by
-      ${metadata.updates.kafka.topic} to receive notifications of metadata
-      updates.
-    </description>
-    <display-name>Publish Metadata Updates</display-name>
-    <value-attributes>
-      <type>boolean</type>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
   <!-- Metrics Configuration -->
 
   <property>
