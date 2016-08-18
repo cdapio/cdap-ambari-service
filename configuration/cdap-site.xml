@@ -336,6 +336,15 @@
   </property>
 
   <property>
+    <name>apps.scheduler.queue</name>
+    <value></value>
+    <description>Scheduler queue for CDAP programs and CDAP Explore queries</description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
     <name>scheduler.max.thread.pool.size</name>
     <value>100</value>
     <description>Size of the scheduler thread pool</description>
@@ -1016,6 +1025,15 @@
     </value-attributes>
   </property>
 
+  <property>
+    <name>master.services.scheduler.queue</name>
+    <value></value>
+    <description>Scheduler queue for CDAP Master Services</description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
   <!-- Security configuration -->
 
   <property>
@@ -1376,6 +1394,24 @@
     </value-attributes>
   </property>
 
+  <!-- Remote System Operation Configuration -->
+
+  <property>
+    <name>remote.system.op.exec.threads</name>
+    <value>${http.service.exec.threads}</value>
+    <description>
+      Number of Netty service executor threads for the remote system operation HTTP service
+    </description>
+  </property>
+
+  <property>
+    <name>remote.system.op.worker.threads</name>
+    <value>${http.service.worker.threads}</value>
+    <description>
+      Number of Netty service IO worker threads for the remote system operation HTTP service
+    </description>
+  </property>
+
   <!-- Router Configuration -->
 
   <property>
@@ -1499,39 +1535,7 @@
   <!-- Kafka Configuration -->
 
   <property>
-    <name>kafka.bind.address</name>
-    <value>0.0.0.0</value>
-    <description>
-      CDAP Kafka service bind address
-    </description>
-  </property>
-
-  <property>
-    <name>kafka.bind.port</name>
-    <value>9092</value>
-    <description>CDAP Kafka service bind port</description>
-  </property>
-
-  <property>
-    <name>kafka.num.partitions</name>
-    <value>10</value>
-    <description>Default number of partitions for a topic</description>
-  </property>
-
-  <property>
-    <name>kafka.log.dir</name>
-    <value>/data/cdap-kafka/logs</value>
-    <description>CDAP Kafka service log storage directory</description>
-  </property>
-
-  <property>
-    <name>kafka.zookeeper.namespace</name>
-    <value>kafka</value>
-    <description>CDAP Kafka service ZooKeeper namespace</description>
-  </property>
-
-  <property>
-    <name>kafka.default.replication.factor</name>
+    <name>kafka.server.default.replication.factor</name>
     <value>1</value>
     <description>
       CDAP Kafka service replication factor; used to replicate Kafka messages across multiple
@@ -1539,6 +1543,64 @@
       setting is to run at least two CDAP Kafka servers. If you are running two CDAP Kafka
       servers, set this value to 2; otherwise, set it to the number of CDAP Kafka servers.
     </description>
+  </property>
+
+  <property>
+    <name>kafka.server.host.name</name>
+    <value>0.0.0.0</value>
+    <description>
+      CDAP Kafka service bind address
+    </description>
+  </property>
+
+  <property>
+    <name>kafka.server.log.dirs</name>
+    <value>/data/cdap-kafka/logs</value>
+    <description>CDAP Kafka service log storage directory</description>
+  </property>
+
+  <property>
+    <name>kafka.server.log.flush.interval.messages</name>
+    <value>10000</value>
+    <description>
+      The interval length at which will force an fsync of data written to
+      the log
+    </description>
+  </property>
+
+  <property>
+    <name>kafka.server.log.retention.hours</name>
+    <value>24</value>
+    <description>
+      The number of hours to keep a log file before deleting it
+    </description>
+  </property>
+
+  <property>
+    <name>kafka.server.num.partitions</name>
+    <value>10</value>
+    <description>Default number of partitions for a topic</description>
+  </property>
+
+  <property>
+    <name>kafka.server.port</name>
+    <value>9092</value>
+    <description>CDAP Kafka service bind port</description>
+  </property>
+
+  <property>
+    <name>kafka.server.zookeeper.connection.timeout.ms</name>
+    <value>1000000</value>
+    <description>
+      The maximum time (in milliseconds) that the client will wait to
+      establish a connection to Zookeeper
+    </description>
+  </property>
+
+  <property>
+    <name>kafka.zookeeper.namespace</name>
+    <value>kafka</value>
+    <description>CDAP Kafka service ZooKeeper namespace</description>
   </property>
 
   <!-- Security Configuration -->
@@ -1939,6 +2001,51 @@
   </property>
 
   <property>
+    <name>security.authorization.admin.users</name>
+    <value></value>
+    <description>
+      Determines a comma-separated list of users for whom admin privileges are granted on the CDAP instance
+      during CDAP startup, so these users can create namespaces and in-effect bootstrap CDAP on an authorization
+      enabled cluster. Defaults to empty, in which case no users have access to create namespaces. In this scenario, it
+      may be impossible to bootstrap CDAP, so it is recommended that at least one user be provided as the admin user.
+    </description>
+  </property>
+
+  <property>
+    <name>security.authorization.cache.enabled</name>
+    <value>true</value>
+    <description>
+      Determines if authorization policies can be cached by programs;
+      defaults to true
+    </description>
+  </property>
+
+  <property>
+    <name>security.authorization.cache.refresh.interval.secs</name>
+    <value>50</value>
+    <description>
+      Determines the interval in seconds after which a background thread
+      will refresh cached authorization policies. Defaults to 50 seconds. It
+      is recommended to keep this value slightly lower than
+      ${security.authorization.cache.ttl.secs}, so that the cached
+      authorization policies do not expire unless they have been explicitly
+      revoked. This setting only takes effect if
+      ${security.authorization.cache.enabled} is set to true.
+    </description>
+  </property>
+
+  <property>
+    <name>security.authorization.cache.ttl.secs</name>
+    <value>60</value>
+    <description>
+      Determines the time to live in seconds for entries in the
+      authorization cache used by programs. Defaults to 60 seconds. This
+      setting only takes effect if ${security.authorization.cache.enabled}
+      is set to true.
+    </description>
+  </property>
+
+  <property>
     <name>security.authorization.enabled</name>
     <value>false</value>
     <description>
@@ -2034,6 +2141,28 @@
     <description>
       AccessToken expiration time in milliseconds (defaults to 24 hours)
     </description>
+  </property>
+
+  <property>
+    <name>security.store.provider</name>
+    <value>none</value>
+    <description>
+      Backend provider for the secure store; use 'none' if no secure store
+    </description>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>none</value>
+          <label>None</label>
+        </entry>
+        <entry>
+          <value>kms</value>
+          <label>KMS</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
+    </value-attributes>
   </property>
 
   <property>

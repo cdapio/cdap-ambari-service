@@ -109,11 +109,11 @@ for i, val in enumerate(zk_hosts):
         zookeeper_hosts += ','
 cdap_zookeeper_quorum = zookeeper_hosts + '/' + root_namespace
 
-kafka_log_dir = map_cdap_site['kafka.log.dir']
+kafka_log_dir = map_cdap_site['kafka.server.log.dirs']
 # CDAP requires Kafka 0.8, so use CDAP_KAFKA
 # kafka_bind_port = str(default('/configurations/kafka-broker/port', 6667))
 # kafka_hosts = config['clusterHostInfo']['kafka_broker_hosts']
-kafka_bind_port = str(default('/configurations/cdap-site/kafka.bind.port', 9092))
+kafka_bind_port = str(default('/configurations/cdap-site/kafka.server.port', 9092))
 kafka_hosts = config['clusterHostInfo']['cdap_kafka_hosts']
 kafka_hosts.sort()
 tmp_kafka_hosts = ''
