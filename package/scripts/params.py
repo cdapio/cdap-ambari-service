@@ -37,14 +37,14 @@ hadoop_lib_home = helpers.get_hadoop_lib()
 
 if distribution.startswith('centos') or distribution.startswith('redhat'):
     os_repo_dir = '/etc/yum.repos.d/'
-    repo_file = 'cdap-3.4.repo'
+    repo_file = 'cdap.repo'
     package_mgr = 'yum'
     key_cmd = "rpm --import %s/pubkey.gpg" % (files_dir)
     cache_cmd = 'yum makecache'
     repo_url = config['configurations']['cdap-env']['yum_repo_url']
 else:
     os_repo_dir = '/etc/apt/sources.list.d/'
-    repo_file = 'cdap-3.4.list'
+    repo_file = 'cdap.list'
     package_mgr = 'apt-get'
     key_cmd = "apt-key add %s/pubkey.gpg" % (files_dir)
     cache_cmd = 'apt-get update'
