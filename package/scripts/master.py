@@ -41,9 +41,9 @@ class Master(Script):
         import status_params
         env.set_params(params)
         self.configure(env)
-        helpers.create_hdfs_dir(params.hdfs_namespace, params.cdap_user, 755)
+        helpers.create_hdfs_dir(params.hdfs_namespace, params.cdap_user, 775)
         # Create user's HDFS home
-        helpers.create_hdfs_dir('/user/' + params.cdap_user, params.cdap_user, 755)
+        helpers.create_hdfs_dir('/user/' + params.cdap_user, params.cdap_user, 775)
         # Hack to work around CDAP-1967
         self.remove_jackson(env)
         daemon_cmd = format('/opt/cdap/master/bin/svc-master start')
@@ -69,6 +69,7 @@ class Master(Script):
 
     def upgrade(self, env):
         print 'Run CDAP Upgrade Tool'
+        import params
         upgrade_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.UpgradeTool upgrade force')
         Execute(
             upgrade_cmd,
@@ -78,6 +79,7 @@ class Master(Script):
 
     def upgrade_hbase(self, env):
         print 'Run CDAP HBase Coprocessor Upgrade Tool'
+        import params
         upgrade_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.UpgradeTool upgrade_hbase force')
         Execute(
             upgrade_cmd,
@@ -87,9 +89,20 @@ class Master(Script):
 
     def postupgrade(self, env):
         print 'Run CDAP Post-Upgrade Tool'
+        import params
         upgrade_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.flow.FlowQueuePendingCorrector')
         Execute(
             upgrade_cmd,
+            user=params.cdap_user,
+            only_if=self.status
+        )
+
+    def queue_debugger(self, env):
+        print 'Run CDAP Queue Debugger Tool'
+        import params
+        debugger_cmd = format('/opt/cdap/master/bin/svc-master run co.cask.cdap.data.tools.HBaseQueueDebugger')
+        Execute(
+            debugger_cmd,
             user=params.cdap_user,
             only_if=self.status
         )

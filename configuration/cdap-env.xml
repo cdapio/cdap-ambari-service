@@ -168,17 +168,18 @@ export CDAP_HOME=/opt/cdap
 export CDAP_CONF={{cdap_conf_dir}}
 export LOG_DIR={{log_dir}}
 export PID_DIR={{pid_dir}}
-export KAFKA_JAVA_HEAPMAX="-Xmx{{cdap_kafka_heapsize}}m"
-export MASTER_JAVA_HEAPMAX="-Xmx{{cdap_master_heapsize}}m"
-export AUTH_JAVA_HEAPMAX="-Xmx{{cdap_auth_heapsize}}m"
-export ROUTER_JAVA_HEAPMAX="-Xmx{{cdap_router_heapsize}}m"
+export AUTH_JAVA_HEAPMAX="-Xmx{{cdap_auth_heapsize}}"
+export KAFKA_JAVA_HEAPMAX="-Xmx{{cdap_kafka_heapsize}}"
+export MASTER_JAVA_HEAPMAX="-Xmx{{cdap_master_heapsize}}"
+export ROUTER_JAVA_HEAPMAX="-Xmx{{cdap_router_heapsize}}"
 {% if kerberos_enabled %}
 export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}} -Djava.security.auth.login.config={{master_jaas_config_file}}"
 {% else %}
 export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}}"
 {% endif %}
 export TEZ_HOME="/usr/hdp/{{hdp_version}}/tez"
-export TEZ_CONF_DIR="/etc/tez/conf"</value>
+export TEZ_CONF_DIR="/etc/tez/conf"
+    </value>
     <display-name>Contents of cdap-env.sh</display-name>
     <value-attributes>
       <overridable>false</overridable>
