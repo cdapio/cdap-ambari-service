@@ -37,14 +37,14 @@ hadoop_lib_home = helpers.get_hadoop_lib()
 
 if distribution.startswith('centos') or distribution.startswith('redhat'):
     os_repo_dir = '/etc/yum.repos.d/'
-    repo_file = 'cdap-3.4.repo'
+    repo_file = 'cdap.repo'
     package_mgr = 'yum'
     key_cmd = "rpm --import %s/pubkey.gpg" % (files_dir)
     cache_cmd = 'yum makecache'
     repo_url = config['configurations']['cdap-env']['yum_repo_url']
 else:
     os_repo_dir = '/etc/apt/sources.list.d/'
-    repo_file = 'cdap-3.4.list'
+    repo_file = 'cdap.list'
     package_mgr = 'apt-get'
     key_cmd = "apt-key add %s/pubkey.gpg" % (files_dir)
     cache_cmd = 'apt-get update'
@@ -53,6 +53,7 @@ else:
 cdap_user = config['configurations']['cdap-env']['cdap_user']
 log_dir = config['configurations']['cdap-env']['cdap_log_dir']
 pid_dir = config['configurations']['cdap-env']['cdap_pid_dir']
+cdap_auth_heapsize = config['configurations']['cdap-env']['cdap_auth_heapsize']
 cdap_kafka_heapsize = config['configurations']['cdap-env']['cdap_kafka_heapsize']
 cdap_master_heapsize = config['configurations']['cdap-env']['cdap_master_heapsize']
 cdap_router_heapsize = config['configurations']['cdap-env']['cdap_router_heapsize']
@@ -108,11 +109,11 @@ for i, val in enumerate(zk_hosts):
         zookeeper_hosts += ','
 cdap_zookeeper_quorum = zookeeper_hosts + '/' + root_namespace
 
-kafka_log_dir = map_cdap_site['kafka.log.dir']
+kafka_log_dir = map_cdap_site['kafka.server.log.dirs']
 # CDAP requires Kafka 0.8, so use CDAP_KAFKA
 # kafka_bind_port = str(default('/configurations/kafka-broker/port', 6667))
 # kafka_hosts = config['clusterHostInfo']['kafka_broker_hosts']
-kafka_bind_port = str(default('/configurations/cdap-site/kafka.bind.port', 9092))
+kafka_bind_port = str(default('/configurations/cdap-site/kafka.server.port', 9092))
 kafka_hosts = config['clusterHostInfo']['cdap_kafka_hosts']
 kafka_hosts.sort()
 tmp_kafka_hosts = ''
