@@ -1977,6 +1977,9 @@
       enabled cluster. Defaults to empty, in which case no users have access to create namespaces. In this scenario, it
       may be impossible to bootstrap CDAP, so it is recommended that at least one user be provided as the admin user.
     </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
