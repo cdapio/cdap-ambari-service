@@ -55,7 +55,8 @@ def cdap_config(name=None):
         params.cdap_conf_dir,
         owner=params.cdap_user,
         group=params.user_group,
-        recursive=True
+        recursive=True,
+        create_parents=True
     )
 
     XmlConfig(
