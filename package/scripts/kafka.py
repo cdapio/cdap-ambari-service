@@ -60,12 +60,9 @@ class Kafka(Script):
         env.set_params(params)
         helpers.cdap_config('kafka')
 
-        Directory(
-            params.kafka_log_dir,
-            owner=params.cdap_user,
-            group=params.user_group,
-            recursive=True,
-            create_parents=True
+        # Why don't we use Directory here? A: parameters changed between Ambari minor versions
+        Execute(
+            "mkdir -p %s && chown %s:%s %s" % (params.kafka_log_dir, params.cdap_user, params.user_group, params.kafka_log_dir)
         )
 
 if __name__ == "__main__":
