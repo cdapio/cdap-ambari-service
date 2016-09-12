@@ -129,28 +129,32 @@ def generate_quorum(hosts, port):
     return (p + ',').join(hosts) + p
 
 
-def get_hdp_version():
+def get_full_stack_version():
     command = 'hadoop version'
-    return_code, hdp_output = shell.call(command, timeout=20)
+    return_code, ver_output = shell.call(command, timeout=20)
 
     if return_code != 0:
-        raise Fail("Unable to determine the current hadoop version: %s" % (hdp_output))
+        raise Fail("Unable to determine the current hadoop version: %s" % (ver_output))
 
-    line = hdp_output.rstrip().split('\n')[0]
+    line = ver_output.rstrip().split('\n')[0]
     arr = line.split('.')
-    hdp_version = "%s.%s.%s.%s" % (arr[3], arr[4], arr[5], arr[6])
-    match = re.match('[0-9]+.[0-9]+.[0-9]+.[0-9]+-[0-9]+', hdp_version)
+    stack_version = "%s.%s.%s.%s" % (arr[3], arr[4], arr[5], arr[6])
+    match = re.match('[0-9]+.[0-9]+.[0-9]+.[0-9]+-[0-9]+', stack_version)
     if match is None:
         raise Fail('Failed to get extracted version')
-    return hdp_version
+    return stack_version
 
 
 def get_hadoop_lib():
-    v = get_hdp_version()
+    v = get_full_stack_version()
     arr = v.split('.')
     maj_min = float("%s.%s" % (arr[0], arr[1]))
     if maj_min >= 2.2:
-        hadoop_lib = "/usr/hdp/%s/hadoop/lib" % (v)
+        # TODO: don't rely on versions, as this will eventually break when HDP hits 4.0
+        if maj_min >= 4.0:
+            hadoop_lib = "/usr/iop/%s/hadoop/lib" % (v)
+        else:
+            hadoop_lib = "/usr/hdp/%s/hadoop/lib" % (v)
     else:
         hadoop_lib = '/usr/lib/hadoop/lib'
     return hadoop_lib

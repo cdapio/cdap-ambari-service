@@ -174,11 +174,11 @@ export MASTER_JAVA_HEAPMAX="-Xmx{{cdap_master_heapsize}}"
 export ROUTER_JAVA_HEAPMAX="-Xmx{{cdap_router_heapsize}}"
 export SPARK_HOME="/usr/hdp/{{hdp_version}}/spark"
 {% if kerberos_enabled %}
-export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}} -Djava.security.auth.login.config={{master_jaas_config_file}}"
+export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{full_stack_version}}} -Djava.security.auth.login.config={{master_jaas_config_file}}"
 {% else %}
-export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{hdp_version}}}"
+export OPTS="${OPTS} -Dhdp.version=${HDP_VERSION:-{{full_stack_version}}}"
 {% endif %}
-export TEZ_HOME="/usr/hdp/{{hdp_version}}/tez"
+export TEZ_HOME="/usr/{{lc_stack_name}}/{{full_stack_version}}/tez"
 export TEZ_CONF_DIR="/etc/tez/conf"</value>
     <display-name>Contents of cdap-env.sh</display-name>
     <value-attributes>

@@ -32,7 +32,10 @@ hostname = config['hostname'].lower()
 java64_home = config['hostLevelParams']['java_home']
 user_group = config['configurations']['cluster-env']['user_group']
 
-hdp_version = helpers.get_hdp_version()
+stack_name = config['hostLevelParams']['stack_name']
+lc_stack_name = stack_name.lower()
+
+full_stack_version = helpers.get_full_stack_version()
 hadoop_lib_home = helpers.get_hadoop_lib()
 
 if distribution.startswith('debian') or distribution.startswith('ubuntu'):
