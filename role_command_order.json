@@ -1,6 +1,9 @@
 {
   "_comment": "This extends the default set of dependencies with our own",
   "general_deps": {
+    "CDAP_AUTH_SERVER-START": [
+      "ZOOKEEPER_SERVER-START"
+    ],
     "CDAP_KAFKA-START": [
       "ZOOKEEPER_SERVER-START"
     ],
@@ -19,6 +22,7 @@
       "ZOOKEEPER_SERVER-START"
     ],
     "ZOOKEEPER_SERVER-STOP": [
+      "CDAP_AUTH_SERVER-STOP",
       "CDAP_KAFKA-STOP",
       "CDAP_MASTER-STOP",
       "CDAP_ROUTER-STOP"

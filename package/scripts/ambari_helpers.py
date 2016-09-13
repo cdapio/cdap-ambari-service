@@ -51,11 +51,9 @@ def cdap_config(name=None):
         mode=0755
     )
 
-    Directory(
-        params.cdap_conf_dir,
-        owner=params.cdap_user,
-        group=params.user_group,
-        recursive=True
+    # Why don't we use Directory here? A: parameters changed between Ambari minor versions
+    Execute(
+        "mkdir -p %s && chown %s:%s %s" % (params.cdap_conf_dir, params.cdap_user, params.user_group, params.cdap_conf_dir)
     )
 
     XmlConfig(

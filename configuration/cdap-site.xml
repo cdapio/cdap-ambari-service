@@ -539,8 +539,8 @@
     <value>
       co.cask.cdap.data2.transaction.snapshot.SnapshotCodecV1,
       co.cask.cdap.data2.transaction.snapshot.SnapshotCodecV2,
-      co.cask.tephra.snapshot.SnapshotCodecV3,
-      co.cask.tephra.snapshot.SnapshotCodecV4
+      org.apache.tephra.snapshot.SnapshotCodecV3,
+      org.apache.tephra.snapshot.SnapshotCodecV4
     </value>
     <description>Specifies the class names of all supported transaction state codecs</description>
   </property>
@@ -1977,6 +1977,9 @@
       enabled cluster. Defaults to empty, in which case no users have access to create namespaces. In this scenario, it
       may be impossible to bootstrap CDAP, so it is recommended that at least one user be provided as the admin user.
     </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
