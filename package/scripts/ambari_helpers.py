@@ -44,7 +44,7 @@ def add_repo(source, dest):
 
 def cdap_config(name=None):
     import params
-    print 'Setting up CDAP configuration for ' + name
+    print('Setting up CDAP configuration for ' + name)
     # We're only setup for *NIX, for now
     Directory(
         params.etc_prefix_dir,
@@ -110,6 +110,11 @@ def has_hive():
         return true
     else:
         return false
+
+
+def generate_quorum(hosts, port):
+    p = ':' + port
+    return (p + ',').join(hosts) + p
 
 
 def get_hdp_version():

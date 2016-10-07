@@ -20,7 +20,7 @@ from resource_management import *
 
 class UI(Script):
     def install(self, env):
-        print 'Install the CDAP UI'
+        print('Install the CDAP UI')
         import params
         # Add repository file
         helpers.add_repo(
@@ -34,7 +34,7 @@ class UI(Script):
         self.configure(env)
 
     def start(self, env):
-        print 'Start the CDAP UI'
+        print('Start the CDAP UI')
         import params
         import status_params
         env.set_params(params)
@@ -48,14 +48,14 @@ class UI(Script):
         )
 
     def stop(self, env):
-        print 'Stop the CDAP UI'
+        print('Stop the CDAP UI')
         Execute('service cdap-ui stop')
 
     def status(self, env):
         Execute('service cdap-ui status')
 
     def configure(self, env):
-        print 'Configure the CDAP UI'
+        print('Configure the CDAP UI')
         import params
         env.set_params(params)
         helpers.cdap_config('ui')

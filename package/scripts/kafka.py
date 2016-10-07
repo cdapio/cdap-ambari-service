@@ -1,5 +1,5 @@
 # coding=utf8
-# Copyright © 2015 Cask Data, Inc.
+# Copyright © 2015-2016 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -20,7 +20,7 @@ from resource_management import *
 
 class Kafka(Script):
     def install(self, env):
-        print 'Install the CDAP Kafka Server'
+        print('Install the CDAP Kafka Server')
         import params
         # Add repository file
         helpers.add_repo(
@@ -34,7 +34,7 @@ class Kafka(Script):
         self.configure(env)
 
     def start(self, env):
-        print 'Start the CDAP Kafka Server'
+        print('Start the CDAP Kafka Server')
         import params
         import status_params
         env.set_params(params)
@@ -48,14 +48,14 @@ class Kafka(Script):
         )
 
     def stop(self, env):
-        print 'Stop the CDAP Kafka Server'
+        print('Stop the CDAP Kafka Server')
         Execute('service cdap-kafka-server stop')
 
     def status(self, env):
         Execute('service cdap-kafka-server status')
 
     def configure(self, env):
-        print 'Configure the CDAP Kafka Server'
+        print('Configure the CDAP Kafka Server')
         import params
         env.set_params(params)
         helpers.cdap_config('kafka')

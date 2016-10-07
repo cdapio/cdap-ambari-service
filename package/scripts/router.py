@@ -1,5 +1,5 @@
 # coding=utf8
-# Copyright © 2015 Cask Data, Inc.
+# Copyright © 2015-2016 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -20,7 +20,7 @@ from resource_management import *
 
 class Router(Script):
     def install(self, env):
-        print 'Install the CDAP Router'
+        print('Install the CDAP Router')
         import params
         # Add repository file
         helpers.add_repo(
@@ -34,7 +34,7 @@ class Router(Script):
         self.configure(env)
 
     def start(self, env):
-        print 'Start the CDAP Router'
+        print('Start the CDAP Router')
         import params
         import status_params
         env.set_params(params)
@@ -48,14 +48,14 @@ class Router(Script):
         )
 
     def stop(self, env):
-        print 'Stop the CDAP Router'
+        print('Stop the CDAP Router')
         Execute('service cdap-router stop')
 
     def status(self, env):
         Execute('service cdap-router status')
 
     def configure(self, env):
-        print 'Configure the CDAP Router'
+        print('Configure the CDAP Router')
         import params
         env.set_params(params)
         helpers.cdap_config('router')

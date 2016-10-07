@@ -101,13 +101,7 @@ else:
 zk_client_port = str(default('/configurations/zoo.cfg/clientPort', None))
 zk_hosts = config['clusterHostInfo']['zookeeper_hosts']
 zk_hosts.sort()
-zookeeper_hosts = ''
-# Evaluate and setup ZooKeeper quorum string
-for i, val in enumerate(zk_hosts):
-    zookeeper_hosts += val + ':' + zk_client_port
-    if (i + 1) < len(zk_hosts):
-        zookeeper_hosts += ','
-cdap_zookeeper_quorum = zookeeper_hosts + '/' + root_namespace
+cdap_zookeeper_quorum = helpers.generate_quorum(zk_hosts, zk_client_port) + '/' + root_namespace
 
 kafka_log_dir = map_cdap_site['kafka.server.log.dirs']
 # CDAP requires Kafka 0.8, so use CDAP_KAFKA
@@ -116,12 +110,7 @@ kafka_log_dir = map_cdap_site['kafka.server.log.dirs']
 kafka_bind_port = str(default('/configurations/cdap-site/kafka.server.port', 9092))
 kafka_hosts = config['clusterHostInfo']['cdap_kafka_hosts']
 kafka_hosts.sort()
-tmp_kafka_hosts = ''
-for i, val in enumerate(kafka_hosts):
-    tmp_kafka_hosts += val + ':' + kafka_bind_port
-    if (i + 1) < len(kafka_hosts):
-        tmp_kafka_hosts += ','
-cdap_kafka_brokers = tmp_kafka_hosts
+cdap_kafka_brokers = helpers.generate_quorum(kafka_hosts, kafka_bind_port)
 
 router_hosts = config['clusterHostInfo']['cdap_router_hosts']
 router_hosts.sort()
@@ -135,5 +124,3 @@ if len(router_hosts) > 1:
 ui_hosts = config['clusterHostInfo']['cdap_ui_hosts']
 ui_hosts.sort()
 cdap_ui_host = ui_hosts[0]
-
-# TODO: cdap_auth_server_hosts
