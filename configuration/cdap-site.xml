@@ -323,7 +323,7 @@
     <value>true</value>
     <description>
       Specify whether to rewrite the yarn.client class in Spark to work
-      around the issue SPARK-13441 in CDM clusters
+      around the issue SPARK-13441 in certain clusters
     </description>
     <value-attributes>
       <type>boolean</type>
@@ -2289,8 +2289,7 @@
     <name>stream.container.instances</name>
     <value>1</value>
     <description>
-      Number of YARN container instances for the stream handler; in
-      Standalone CDAP, it is always one
+      Number of YARN container instances for the stream handler
     </description>
     <value-attributes>
       <type>int</type>
