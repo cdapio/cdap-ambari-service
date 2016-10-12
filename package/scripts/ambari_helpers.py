@@ -91,8 +91,6 @@ def cdap_config(name=None):
     else:
         dirname = name
 
-    cleanup_opts(dirname)
-
     # Copy logback.xml and logback-container.xml
     for i in 'logback.xml', 'logback-container.xml':
         no_op_test = "ls %s/%s 2>/dev/null" % (params.cdap_conf_dir, i)
@@ -142,9 +140,3 @@ def get_hadoop_lib():
     else:
         hadoop_lib = '/usr/lib/hadoop/lib'
     return hadoop_lib
-
-
-def cleanup_opts(dirname):
-    command = "sed -i 's/\"$OPTS\"/$OPTS/g' /opt/cdap/%s/bin/service" % (dirname)
-    # We ignore errors here, in case we are called before package installation
-    shell.call(command, timeout=20)

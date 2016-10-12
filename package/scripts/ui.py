@@ -39,7 +39,7 @@ class UI(Script):
         import status_params
         env.set_params(params)
         self.configure(env)
-        daemon_cmd = format('/opt/cdap/ui/bin/svc-ui start')
+        daemon_cmd = format('/opt/cdap/ui/bin/cdap ui start')
         no_op_test = format('ls {status_params.cdap_ui_pid_file} >/dev/null 2>&1 && ps -p $(<{status_params.cdap_ui_pid_file}) >/dev/null 2>&1')
         Execute(
             daemon_cmd,

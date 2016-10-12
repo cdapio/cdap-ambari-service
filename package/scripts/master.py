@@ -46,7 +46,7 @@ class Master(Script):
         helpers.create_hdfs_dir('/user/' + params.cdap_user, params.cdap_user, 775)
         # Hack to work around CDAP-1967
         self.remove_jackson(env)
-        daemon_cmd = format('/opt/cdap/master/bin/svc-master start')
+        daemon_cmd = format('/opt/cdap/master/bin/cdap master start')
         no_op_test = format('ls {status_params.cdap_master_pid_file} >/dev/null 2>&1 && ps -p $(<{status_params.cdap_master_pid_file}) >/dev/null 2>&1')
         Execute(
             daemon_cmd,
@@ -102,7 +102,7 @@ class Master(Script):
             label = classname
         print('Running: ' + label)
         import params
-        cmd = format("/opt/cdap/master/bin/svc-master run %s %s" % (classname, arguments))
+        cmd = format("/opt/cdap/master/bin/cdap run %s %s" % (classname, arguments))
         Execute(
             cmd,
             user=params.cdap_user,

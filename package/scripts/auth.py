@@ -39,7 +39,7 @@ class Auth(Script):
         import status_params
         env.set_params(params)
         self.configure(env)
-        daemon_cmd = format('/opt/cdap/security/bin/svc-auth-server start')
+        daemon_cmd = format('/opt/cdap/security/bin/cdap auth-server start')
         no_op_test = format('ls {status_params.cdap_auth_pid_file} >/dev/null 2>&1 && ps -p $(<{status_params.cdap_auth_pid_file}) >/dev/null 2>&1')
         Execute(
             daemon_cmd,
