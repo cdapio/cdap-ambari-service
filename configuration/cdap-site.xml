@@ -2480,6 +2480,176 @@
     </description>
   </property>
 
+  <!-- New for 4.0 (remove before final commit) -->
+  <property>
+      <name>app.ssl.bind.port</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>data.tx.max.timeout</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>explore.container.yarn.app.classpath.first</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>log.saver.container.memory.mb</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>log.saver.container.num.cores</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.container.instances</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.container.memory.mb</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.container.num.cores</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.hbase.max.scan.threads</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.http.server.consume.chunk.size</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.http.server.executor.threads</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.http.server.max.request.size.mb</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.http.server.worker.threads</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.local.data.dir</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.max.instances</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.message.table.hbase.splits</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.message.table.name</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.metadata.table.name</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.payload.table.hbase.splits</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.payload.table.name</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.table.expiration.seconds</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>messaging.topic.default.ttl.seconds</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>operational.stats.extensions.dir</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>operational.stats.refresh.interval.secs</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>security.auth.server.announce.address</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>ssl.external.enabled</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>ssl.internal.enabled</name>
+      <value></value>
+      <description></description>
+  </property>
+
+  <property>
+      <name>zookeeper.client.startup.timeout.millis</name>
+      <value></value>
+      <description></description>
+  </property>
+  <!-- end of new for 4.0 -->
+
   <!-- Not sure about anything below here, so commenting them out
 
   <property>
