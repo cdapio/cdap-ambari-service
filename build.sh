@@ -42,7 +42,7 @@ for p in ${PACKAGE_FORMATS} ; do
         --url "http://cask.co" \
         --category misc \
         --depends "python > 2.6" \
-        --depends "ambari-server > 2.0" \
+        --depends "ambari-server > 2.2" \
         --version ${PACKAGE_VERSION} \
         --iteration ${PACKAGE_ITERATION} \
         ${DEB_FPM_ARGS} \
@@ -61,7 +61,7 @@ for p in ${PACKAGE_FORMATS} ; do
         --url "http://cask.co" \
         --category misc \
         --depends "python > 2.6" \
-        --depends "ambari-server > 2.0" \
+        --depends "ambari-server > 2.2" \
         --version ${PACKAGE_VERSION} \
         --iteration ${PACKAGE_ITERATION} \
         ${RPM_FPM_ARGS} \
