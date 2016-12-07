@@ -3,27 +3,32 @@
   "description": "Quick Links for CDAP services",
   "configuration": {
     "protocol": {
-      "type": "https",
-      "checks": [
-        {
-          "property": "ssl.enabled",
-          "desired": "true",
-          "site": "cdap-site"
-        }
-      ]
+      "type":"HTTP_ONLY"
     },
     "links": [
       {
         "name": "cdap_ui",
         "label": "CDAP UI",
         "requires_user_name": "false",
+        "component_name": "CDAP_UI",
         "url": "%@://%@:%@",
         "port": {
           "http_property": "dashboard.server.address",
-          "http_default_port": "9999",
+          "http_default_port": "11011",
           "https_property": "dashboard.ssl.server.address",
           "https_default_port": "9443",
+          "regex": "\\w*:(\\d+)",
           "site": "cdap-site"
+        },
+        "protocol": {
+          "type": "https",
+          "checks": [
+            {
+              "property": "ssl.enabled",
+              "desired": "true",
+              "site": "cdap-site"
+            }
+          ]
         }
       }
     ]
