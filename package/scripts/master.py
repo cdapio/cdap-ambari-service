@@ -93,7 +93,7 @@ class Master(Script):
     def queue_debugger(self, env):
         self.run_class(
             env,
-            classname='co.cask.cdap.data.tools.HBaseQueueDebugger',
+            classname='co.cask.cdap.data.tools.SimpleHBaseQueueDebugger',
             label='CDAP Queue Debugger Tool'
         )
 
@@ -106,7 +106,7 @@ class Master(Script):
         Execute(
             cmd,
             user=params.cdap_user,
-            only_if=self.status
+            only_if=self.status(env)
         )
 
     def remove_jackson(self, env):
