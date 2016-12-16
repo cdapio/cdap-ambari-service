@@ -387,6 +387,15 @@
   </property>
 
   <property>
+    <name>scheduler.misfire.threshold.ms</name>
+    <value>60000</value>
+    <description>
+      The number of milliseconds by which a schedule execution can miss its
+      next-fire-time and still run
+    </description>
+  </property>
+
+  <property>
     <name>workflow.token.max.size.mb</name>
     <value>30</value>
     <description>
@@ -955,6 +964,15 @@
       This is explicitly set differently than ${master.service.memory.mb} as
       Log saver requires more memory to run than the Master service.
     </description>
+    <display-name>Log Saver YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -963,6 +981,14 @@
     <description>
       Number of virtual cores for each log saver instance in YARN
     </description>
+    <display-name>Log Saver YARN CPU Cores</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <!-- Master Configuration -->
@@ -1095,18 +1121,33 @@
 
   <property>
     <name>messaging.container.memory.mb</name>
-    <value>${master.service.memory.mb}</value>
+    <value>512</value>
     <description>
       Memory in megabytes for each messaging service instance
     </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
     <name>messaging.container.num.cores</name>
-    <value>${master.service.num.cores}</value>
+    <value>2</value>
     <description>
       Number of virtual cores for each messaging service instance
     </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -1148,6 +1189,11 @@
     <description>
       Number of IO threads used by the HTTP server in the messaging system
     </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -1216,20 +1262,6 @@
   </property>
 
   <!-- Security configuration -->
-
-  <property>
-    <name>ssl.enabled</name>
-    <value>false</value>
-    <description>
-      Determines if SSL is enabled
-    </description>
-    <display-name>SSL Enabled</display-name>
-    <final>true</final>
-    <value-attributes>
-      <type>boolean</type>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
 
   <property>
     <name>master.startup.service.timeout.seconds</name>
