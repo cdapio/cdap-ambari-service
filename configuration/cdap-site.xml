@@ -1151,14 +1151,6 @@
   </property>
 
   <property>
-    <name>messaging.local.data.dir</name>
-    <value>${local.data.dir}/messaging</value>
-    <description>
-      Local storage directory for the messaging system (used only in Standalone CDAP)
-    </description>
-  </property>
-
-  <property>
     <name>messaging.max.instances</name>
     <value>1</value>
     <description>
