@@ -19,7 +19,7 @@
   <services>
     <service>
       <name>CDAP</name>
-      <extends>common-services/CDAP/4.0.0</extends>
+      <extends>common-services/CDAP/3.6.0-SNAPSHOT</extends>
     </service>
   </services>
 </metainfo>
