@@ -203,6 +203,15 @@
   </property>
 
   <property>
+    <name>zookeeper.client.startup.timeout.millis</name>
+    <value>60000</value>
+    <description>
+      Duration in milliseconds to wait for a successful connection to a server in the
+      ZooKeeper quorum
+    </description>
+  </property>
+
+  <property>
     <name>zookeeper.quorum</name>
     <value>{{cdap_zookeeper_quorum}}</value>
     <description>
@@ -270,6 +279,25 @@
     <description>
       Semicolon-separated list of local directories scanned for system artifacts
       to add to the artifact repository
+    </description>
+  </property>
+
+  <property>
+    <name>ssl.internal.enabled</name>
+    <value>false</value>
+    <description>
+      Enable SSL between Router and App Fabric
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>app.ssl.bind.port</name>
+    <value>30443</value>
+    <description>
+      App Fabric service bind port
     </description>
   </property>
 
@@ -356,6 +384,15 @@
       <type>int</type>
       <overridable>false</overridable>
     </value-attributes>
+  </property>
+
+  <property>
+    <name>scheduler.misfire.threshold.ms</name>
+    <value>60000</value>
+    <description>
+      The number of milliseconds by which a schedule execution can miss its
+      next-fire-time and still run
+    </description>
   </property>
 
   <property>
@@ -599,6 +636,15 @@
   </property>
 
   <property>
+    <name>data.tx.max.timeout</name>
+    <value>600</value>
+    <description>
+      The limit for the allowed transaction timeout, in seconds. Attempts to
+      start a transaction with a longer timeout will fail.
+    </description>
+  </property>
+
+  <property>
     <name>dataset.data.dir</name>
     <value>data</value>
     <description>Base directory for user data on the filesystem</description>
@@ -695,6 +741,17 @@
     <description>
       Interval in seconds to schedule the clean-up of timed-out operations
     </description>
+  </property>
+
+  <property>
+    <name>explore.container.yarn.app.classpath.first</name>
+    <value>false</value>
+    <description>
+      Determines if the YARN application classpath precedes the query engine classpath
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+    </value-attributes>
   </property>
 
   <property>
@@ -900,9 +957,13 @@
   </property>
 
   <property>
-    <name>log.saver.run.memory.megs</name>
+    <name>log.saver.container.memory.mb</name>
     <value>1024</value>
-    <description>Memory in megabytes allocated for log saver instances to run in YARN</description>
+    <description>
+      Memory in megabytes for each log saver instance to run in YARN.
+      This is explicitly set differently than ${master.service.memory.mb} as
+      Log saver requires more memory to run than the Master service.
+    </description>
     <display-name>Log Saver YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
@@ -915,10 +976,10 @@
   </property>
 
   <property>
-    <name>log.saver.run.num.cores</name>
+    <name>log.saver.container.num.cores</name>
     <value>2</value>
     <description>
-      Number of cores for each log saver instance in YARN
+      Number of virtual cores for each log saver instance in YARN
     </description>
     <display-name>Log Saver YARN CPU Cores</display-name>
     <value-attributes>
@@ -1047,21 +1108,160 @@
     </value-attributes>
   </property>
 
-  <!-- Security configuration -->
+  <!-- Messaging System Configuration -->
 
   <property>
-    <name>ssl.enabled</name>
-    <value>false</value>
+    <name>messaging.container.instances</name>
+    <value>1</value>
     <description>
-      Determines if SSL is enabled
+      Number of instances for the messaging service
     </description>
-    <display-name>SSL Enabled</display-name>
     <final>true</final>
+  </property>
+
+  <property>
+    <name>messaging.container.memory.mb</name>
+    <value>512</value>
+    <description>
+      Memory in megabytes for each messaging service instance
+    </description>
     <value-attributes>
-      <type>boolean</type>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
       <overridable>false</overridable>
     </value-attributes>
   </property>
+
+  <property>
+    <name>messaging.container.num.cores</name>
+    <value>2</value>
+    <description>
+      Number of virtual cores for each messaging service instance
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <maximum>4</maximum>
+      <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>messaging.hbase.max.scan.threads</name>
+    <value>48</value>
+    <description>
+      Maximum number of threads used for scanning HBase tables
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.http.server.consume.chunk.size</name>
+    <value>60000</value>
+    <description>
+      Approximate size in bytes of each chunk streamed back to a consumer
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.http.server.executor.threads</name>
+    <value>0</value>
+    <description>
+      Number of executor threads for the HTTP server in the messaging system.
+      If set to 0, no executor threads will be used and requests will be handled directly in the IO thread.
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.http.server.max.request.size.mb</name>
+    <value>10</value>
+    <description>
+      Maximum request content size in megabytes for each request to the HTTP server in the messaging system
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.http.server.worker.threads</name>
+    <value>30</value>
+    <description>
+      Number of IO threads used by the HTTP server in the messaging system
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>messaging.max.instances</name>
+    <value>1</value>
+    <description>
+      Maximum number of instances for the messaging service
+    </description>
+    <final>true</final>
+  </property>
+
+  <property>
+    <name>messaging.message.table.hbase.splits</name>
+    <value>16</value>
+    <description>
+      Number of splits to use for the message table in HBase upon table creation
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.message.table.name</name>
+    <value>tms.message</value>
+    <description>
+      Name of the message table of the messaging system
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.metadata.table.name</name>
+    <value>tms.meta</value>
+    <description>
+      Name of the metadata table of the messaging system
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.payload.table.hbase.splits</name>
+    <value>16</value>
+    <description>
+      Number of splits to use for the payload table in HBase upon table creation
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.payload.table.name</name>
+    <value>tms.payload</value>
+    <description>
+      Name of the payload table of the messaging system
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.table.expiration.seconds</name>
+    <value>300</value>
+    <description>
+      Number of seconds after which the messaging table cache will expire
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.topic.default.ttl.seconds</name>
+    <value>604800</value>
+    <description>
+      The default time-to-live in seconds for messages in a topic
+    </description>
+  </property>
+
+  <!-- Security configuration -->
 
   <property>
     <name>master.startup.service.timeout.seconds</name>
@@ -1334,6 +1534,25 @@
     <value>kafka</value>
     <description>
       Transport system used by the notification system; can be either 'kafka' or 'stream'
+    </description>
+  </property>
+
+  <!-- Operational Statistics Configuration -->
+
+  <property>
+    <name>operational.stats.extensions.dir</name>
+    <value>/opt/cdap/master/ext/operations</value>
+    <description>
+      Semicolon-separated list of local directories on the CDAP Master
+      that are scanned for operational statistics extensions
+    </description>
+  </property>
+
+  <property>
+    <name>operational.stats.refresh.interval.secs</name>
+    <value>60</value>
+    <description>
+      Number of seconds after which operational statistics should be refreshed
     </description>
   </property>
 
@@ -1678,6 +1897,19 @@
     <description>
       Re-login interval in seconds for Kerberos keytab
     </description>
+  </property>
+
+  <property>
+    <name>security.auth.server.announce.address</name>
+    <value></value>
+    <description>
+      CDAP Authentication service announce address, in the format of host:port. This is
+      the address that clients should use to communicate with the Authentication Server.
+      Leave empty to use the default value generated by the Authentication Server.
+    </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
@@ -2236,6 +2468,17 @@
       Parent node in ZooKeeper used for secret key distribution in
       distributed mode
     </description>
+  </property>
+
+  <property>
+    <name>ssl.external.enabled</name>
+    <value>false</value>
+    <description>
+      Determines if SSL for external services is enabled
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+    </value-attributes>
   </property>
 
   <!-- Stream Configuration -->
