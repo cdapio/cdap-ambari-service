@@ -2379,12 +2379,6 @@
       </entries>
       <selection-cardinality>1</selection-cardinality>
     </value-attributes>
-    <depends-on>
-      <property>
-        <type>cdap-site</type>
-        <name>kerberos.auth.enabled</name>
-      </property>
-    </depends-on>
   </property>
 
   <property>
@@ -2663,7 +2657,7 @@
 
   <property>
     <name>dashboard.bind.port</name>
-    <value>9999</value>
+    <value>11011</value>
     <description>
       CDAP UI bind port
     </description>
