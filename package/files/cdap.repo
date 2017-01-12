@@ -1,4 +1,4 @@
-[CDAP-3.4]
+[CDAP]
 name=Cask Data Application Platform Packages
 baseurl=REPO_URL
 enabled=1
