@@ -1125,6 +1125,7 @@
     <description>
       Memory in megabytes for each messaging service instance
     </description>
+    <display-name>Messaging YARN Memory</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
@@ -1141,6 +1142,7 @@
     <description>
       Number of virtual cores for each messaging service instance
     </description>
+    <display-name>Messaging YARN CPU Cores</display-name>
     <value-attributes>
       <type>int</type>
       <minimum>1</minimum>
