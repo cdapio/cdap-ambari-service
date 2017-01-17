@@ -2381,6 +2381,12 @@
       </entries>
       <selection-cardinality>1</selection-cardinality>
     </value-attributes>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>kerberos.auth.enabled</name>
+      </property>
+    </depends-on>
   </property>
 
   <property>
