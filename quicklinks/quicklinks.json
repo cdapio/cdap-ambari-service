@@ -24,7 +24,7 @@
           "type": "https",
           "checks": [
             {
-              "property": "ssl.enabled",
+              "property": "ssl.external.enabled",
               "desired": "true",
               "site": "cdap-site"
             }
