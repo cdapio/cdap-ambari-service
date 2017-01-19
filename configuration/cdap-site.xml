@@ -2675,17 +2675,17 @@
 
   <property>
     <name>dashboard.server.address</name>
-    <value>{{cdap_ui_host}}</value>
+    <value>{{cdap_ui_host}}:${dashboard.bind.port}</value>
     <description>
-      Address for CDAP UI
+      Address and port for clients to connect to the CDAP UI
     </description>
   </property>
 
   <property>
     <name>dashboard.ssl.server.address</name>
-    <value>{{cdap_ui_host}}</value>
+    <value>{{cdap_ui_host}}:${dashboard.ssl.bind.port}</value>
     <description>
-      Address for CDAP UI over SSL
+      Address and port for clients to connect to the CDAP UI over SSL
     </description>
   </property>
 
