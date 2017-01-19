@@ -68,7 +68,7 @@
           "uri": {
             "http": "{{hostname}}:{{cdap-site/dashboard.bind.port}}",
             "https": "{{hostname}}:{{cdap-site/dashboard.ssl.bind.port}}",
-            "https_property": "{{cdap-site/ssl.enabled}}",
+            "https_property": "{{cdap-site/ssl.external.enabled}}",
             "https_property_value": "true",
             "default_port": 11011,
             "connection_timeout": 5.0
