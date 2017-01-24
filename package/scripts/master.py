@@ -44,7 +44,7 @@ class Master(Script):
         helpers.create_hdfs_dir(params.hdfs_namespace, params.cdap_hdfs_user, 775)
         # Create user's HDFS home
         helpers.create_hdfs_dir('/user/' + params.cdap_user, params.cdap_user, 775)
-        if cdap_hdfs_user != cdap_user:
+        if params.cdap_hdfs_user != params.cdap_user:
             helpers.create_hdfs_dir('/user/' + params.cdap_hdfs_user, params.cdap_hdfs_user, 775)
 
         # Hack to work around CDAP-1967
