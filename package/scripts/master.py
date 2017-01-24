@@ -1,5 +1,5 @@
 # coding=utf8
-# Copyright © 2015-2016 Cask Data, Inc.
+# Copyright © 2015-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -41,9 +41,12 @@ class Master(Script):
         import status_params
         env.set_params(params)
         self.configure(env)
-        helpers.create_hdfs_dir(params.hdfs_namespace, params.cdap_user, 775)
+        helpers.create_hdfs_dir(params.hdfs_namespace, params.cdap_hdfs_user, 775)
         # Create user's HDFS home
         helpers.create_hdfs_dir('/user/' + params.cdap_user, params.cdap_user, 775)
+        if params.cdap_hdfs_user != params.cdap_user:
+            helpers.create_hdfs_dir('/user/' + params.cdap_hdfs_user, params.cdap_hdfs_user, 775)
+
         # Hack to work around CDAP-1967
         self.remove_jackson(env)
         daemon_cmd = format('/opt/cdap/master/bin/cdap master start')
