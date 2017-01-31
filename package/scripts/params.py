@@ -1,5 +1,5 @@
 # coding=utf8
-# Copyright © 2015-2016 Cask Data, Inc.
+# Copyright © 2015-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -92,10 +92,12 @@ if kerberos_enabled:
     kinit_cmd = format("{kinit_path_local} -kt {cdap_user_keytab} {cdap_principal_name};")
     kinit_cmd_hdfs = format("{kinit_path_local} -kt {hdfs_user_keytab} {hdfs_principal_name};")
     kinit_cmd_master = format("{kinit_path_local} -kt {master_keytab_path} {master_jaas_princ};")
+    cdap_hdfs_user = cdap_user
 else:
     kinit_cmd = ""
     kinit_cmd_hdfs = ""
     kinit_cmd_master = ""
+    cdap_hdfs_user = "yarn"
 
 # Get ZooKeeper variables
 zk_client_port = str(default('/configurations/zoo.cfg/clientPort', None))
