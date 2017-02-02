@@ -173,6 +173,27 @@
                 <enabled>true</enabled>
               </auto-deploy>
             </dependency>
+            <dependency>
+              <name>HIVE/HIVE_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+            <dependency>
+              <name>TEZ/TEZ_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+            <dependency>
+              <name>SPARK/SPARK_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
           </dependencies>
         </component>
 
@@ -357,6 +378,7 @@
         <service>YARN</service>
         <service>ZOOKEEPER</service>
         <service>HIVE</service>
+        <service>SPARK</service>
       </requiredServices>
 
       <!-- names for config files (under configuration dir) -->
