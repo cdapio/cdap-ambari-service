@@ -375,10 +375,11 @@
       <requiredServices>
         <service>HBASE</service>
         <service>HDFS</service>
-        <service>YARN</service>
-        <service>ZOOKEEPER</service>
         <service>HIVE</service>
         <service>SPARK</service>
+        <service>TEZ</service>
+        <service>YARN</service>
+        <service>ZOOKEEPER</service>
       </requiredServices>
 
       <!-- names for config files (under configuration dir) -->
