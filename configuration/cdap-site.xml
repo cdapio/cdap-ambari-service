@@ -97,7 +97,7 @@
     <display-name>Master Manage HBase Coprocessors</display-name>
     <value-attributes>
       <type>boolean</type>
-      <overridable>false</overridable>
+      <overridable>true</overridable>
     </value-attributes>
  </property>
 
@@ -598,24 +598,6 @@
   </property>
 
   <property>
-    <name>data.tx.pruning.plugin.class</name>
-    <value>co.cask.data2.txprune.DefaultHBaseTransactionPruningPlugin</value>
-    <description>Class name for the default transaction pruning plugin</description>
-    <display-name>Transaction Client Pruning Plugin Class</display-name>
-  </property>
-
-  <property>
-    <name>data.tx.snapshot.codecs</name>
-    <value>
-      co.cask.cdap.data2.transaction.snapshot.SnapshotCodecV1,
-      co.cask.cdap.data2.transaction.snapshot.SnapshotCodecV2,
-      org.apache.tephra.snapshot.SnapshotCodecV3,
-      org.apache.tephra.snapshot.SnapshotCodecV4
-    </value>
-    <description>Specifies the class names of all supported transaction state codecs</description>
-  </property>
-
-  <property>
     <name>data.tx.snapshot.dir</name>
     <value>${hdfs.namespace}/tx.snapshot</value>
     <description>Directory in HDFS used to store snapshots and logs of transaction state</description>
@@ -684,24 +666,10 @@
  </property>
 
  <property>
-    <name>data.tx.prune.plugins</name>
-    <value>data.tx.pruning.plugin</value>
-    <description>List of transaction pruning plugins; for CDAP HBase tables that use transaction functionality to skip or clean invalid data</description>
-    <display-name>Transaction Client Prune Plugins</display-name>
- </property>
-
- <property>
     <name>data.tx.prune.state.table</name>
     <value>${dataset.table.prefix}_system:tephra.state</value>
     <description>Table used to store intermediate state when invalid transaction list pruning is enabled</description>
     <display-name>Transaction Client Prune State Table</display-name>
- </property>
-
- <property>
-    <name>data.tx.pruning.plugin.class</name>
-    <value>co.cask.data2.txprune.DefaultHBaseTransactionPruningPlugin</value>
-    <description>Class name for the default transaction pruning plugin</description>
-    <display-name>Transaction Client Pruning Plugin Class</display-name>
  </property>
 
   <property>
@@ -1359,7 +1327,7 @@
 
   <property>
     <name>messaging.hbase.max.scan.threads</name>
-    <value>48</value>
+    <value>96</value>
     <description>
       Maximum number of threads used for scanning HBase tables
     </description>
