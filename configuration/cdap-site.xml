@@ -89,6 +89,19 @@
   </property>
 
   <property>
+    <name>master.manage.hbase.coprocessors</name>
+    <value>true</value>
+    <description>Whether CDAP Master should manage HBase coprocessors. This should only
+      be set to false if you are managing coprocessors yourself in order to
+      support rolling HBase upgrades.</description>
+    <display-name>Master Manage HBase Coprocessors</display-name>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+ </property>
+
+  <property>
     <name>namespaces.dir</name>
     <value>namespaces</value>
     <description>The sub-directory of ${hdfs.namespace} in which namespaces are stored</description>
@@ -173,6 +186,15 @@
       Reserved non-heap memory in megabytes for Apache Twill container
     </description>
   </property>
+
+  <property>
+    <name>twill.location.cache.dir</name>
+    <value>.cache</value>
+    <description>The relative directory name on the distributed file system for Apache Twill to cache
+      generated files, to speed up launching applications. This directory is relative to
+      ${root.namespace}/twill on the file system.</description>
+    <display-name>Twill Cache Dir Location</display-name>
+ </property>
 
   <property>
     <name>twill.jvm.gc.opts</name>
@@ -576,6 +598,13 @@
   </property>
 
   <property>
+    <name>data.tx.pruning.plugin.class</name>
+    <value>co.cask.data2.txprune.DefaultHBaseTransactionPruningPlugin</value>
+    <description>Class name for the default transaction pruning plugin</description>
+    <display-name>Transaction Client Pruning Plugin Class</display-name>
+  </property>
+
+  <property>
     <name>data.tx.snapshot.codecs</name>
     <value>
       co.cask.cdap.data2.transaction.snapshot.SnapshotCodecV1,
@@ -643,6 +672,37 @@
       start a transaction with a longer timeout will fail.
     </description>
   </property>
+
+  <property>
+    <name>data.tx.prune.enable</name>
+    <value>true</value>
+    <description>Enable invalid transaction list pruning</description>
+    <display-name>Transaction Client Prune Enable</display-name>
+    <value-attributes>
+      <type>boolean</type>
+    </value-attributes>
+ </property>
+
+ <property>
+    <name>data.tx.prune.plugins</name>
+    <value>data.tx.pruning.plugin</value>
+    <description>List of transaction pruning plugins; for CDAP HBase tables that use transaction functionality to skip or clean invalid data</description>
+    <display-name>Transaction Client Prune Plugins</display-name>
+ </property>
+
+ <property>
+    <name>data.tx.prune.state.table</name>
+    <value>${dataset.table.prefix}_system:tephra.state</value>
+    <description>Table used to store intermediate state when invalid transaction list pruning is enabled</description>
+    <display-name>Transaction Client Prune State Table</display-name>
+ </property>
+
+ <property>
+    <name>data.tx.pruning.plugin.class</name>
+    <value>co.cask.data2.txprune.DefaultHBaseTransactionPruningPlugin</value>
+    <description>Class name for the default transaction pruning plugin</description>
+    <display-name>Transaction Client Pruning Plugin Class</display-name>
+ </property>
 
   <property>
     <name>dataset.data.dir</name>
@@ -797,6 +857,15 @@
   </property>
 
   <property>
+    <name>explore.http.timeout</name>
+    <value>20</value>
+    <description>The timeout in seconds for HTTP requests to the CDAP Explore service. Because requests
+     may happen within a transaction, it is recommended to keep this timeout noticeably
+     shorter than the default transaction timeout, ${data.tx.timeout}.</description>
+    <display-name>Explore Http Timeout</display-name>
+</property>
+
+  <property>
     <name>explore.executor.container.memory.mb</name>
     <value>1024</value>
     <description>
@@ -930,6 +999,132 @@
   </property>
 
   <property>
+    <name>log.pipeline.cdap.dir.permissions</name>
+    <value>700</value>
+    <description>Permissions to use for directories created by the system log appender</description>
+    <display-name>Log Pipeline CDAP Directory Permissions</display-name>
+ </property>
+
+ <property>
+    <name>log.pipeline.cdap.file.max.lifetime.ms</name>
+    <value>21600000</value>
+    <description>Maximum time in milliseconds a file is kept open by the system log appender</description>
+    <display-name>Log Pipeline CDAP File Maximum Lifetime Milliseconds</display-name>
+ </property>
+
+ <property>
+    <name>log.pipeline.cdap.file.max.size.bytes</name>
+    <value>104857600</value>
+    <description>Maximum size in bytes of a file kept open by the system log appender</description>
+    <display-name>Log Pipeline CDAP File Maximum Size Bytes</display-name>
+ </property>
+
+ <property>
+    <name>log.pipeline.cdap.file.permissions</name>
+    <value>600</value>
+    <description>Permissions to set for files created by the system log appender</description>
+    <display-name>Log Pipeline CDAP File Permissions</display-name>
+ </property>
+
+ <property>
+    <name>log.pipeline.cdap.file.sync.interval.bytes</name>
+    <value>10485760</value>
+    <description>Number of bytes for the sync interval setting of the Avro file written by the system log appender</description>
+    <display-name>Log Pipeline CDAP File Sync Interval Bytes</display-name>
+ </property>
+
+ <property>
+    <name>log.process.pipeline.auto.buffer.ratio</name>
+    <value>0.7</value>
+    <description>The ratio of total memory used for determining processing pipeline buffer size. This property is only used if ${log.process.pipeline.buffer.size} is set to zero and the value should be greater than zero and less than one.</description>
+    <display-name>Log Process Pipeline Auto Buffer Ratio</display-name>
+ </property>
+
+ <property>
+    <name>log.process.pipeline.buffer.size</name>
+    <value>0</value>
+    <description>The internal buffer size in bytes for each log processing pipeline.
+      Setting it to zero means the system will determine it dynamically based
+      on the container size as given by ${log.saver.container.memory.mb}.
+    </description>
+    <display-name>Log Process Pipeline Buffer Size</display-name>
+ </property>
+
+ <property>
+    <name>log.process.pipeline.checkpoint.interval.ms</name>
+    <value>10000</value>
+    <description>The time between log processing pipeline checkpoints in milliseconds</description>
+    <display-name>Log Process Pipeline Checkpoint Interval Milliseconds</display-name>
+    <value-attributes>
+      <type>long</type>
+      <overridable>false</overridable>
+    </value-attributes>
+ </property>
+
+ <property>
+    <name>log.process.pipeline.config.dir</name>
+    <value>/opt/cdap/master/ext/logging/config</value>
+    <description>
+      A local directory on the CDAP Master that is scanned for log processing pipeline
+      configurations. Each pipeline is defined by a file in the logback XML format, with
+      ".xml" as the file name extension.
+    </description>
+    <display-name>Log Process Pipeline Config Directory</display-name>
+ </property>
+
+ <property>
+    <name>log.process.pipeline.event.delay.ms</name>
+    <value>2000</value>
+    <description>
+      The time a log event stays in the log processing pipeline buffer before
+      writing out to log appenders in milliseconds. A longer delay will result
+      in better time ordering of log events before presenting to log appenders
+      but will consume more memory.
+    </description>
+    <display-name>Log Process Pipeline Event Delay Milliseconds</display-name>
+ </property>
+
+ <property>
+    <name>log.process.pipeline.kafka.fetch.size</name>
+    <value>1048576</value>
+    <description>The size of the buffer for fetching log events from Kafka per topic partition in bytes</description>
+    <display-name>Log Process Pipeline Kafka Fetch Size</display-name>
+ </property>
+
+ <property>
+    <name>log.process.pipeline.lib.dir</name>
+    <description>Semicolon-separated list of local directories on the CDAP Master scanned
+      for additional library JAR files to be included for log processing</description>
+    <display-name>Log Process Pipeline Library Directory</display-name>
+    <value>/opt/cdap/master/ext/logging/lib</value>
+ </property>
+
+ <property>
+    <name>log.process.pipeline.logger.cache.size</name>
+    <value>1000</value>
+    <description>The number of loggers that each log processing pipeline will cache.</description>
+    <display-name>Log Process Pipeline Logger Cache Size</display-name>
+ </property>
+
+ <property>
+    <name>log.process.pipeline.logger.cache.expiration.ms</name>
+    <value>300000</value>
+    <description>Logger cache entry expiration time in milliseconds.</description>
+    <display-name>Log Process Pipeline Logger Cache Expiration Milliseconds</display-name>
+ </property>
+
+ <property>
+    <name>log.publish.partition.key</name>
+    <value>program</value>
+    <description>Publish logs from an application or a program to the same partition. Valid values
+      are "application" or "program". If set to "application", logs from all the programs
+      of an application go to the same partition. If set to "program", logs from the same
+      program go to the same partition. Changes to this property requires restarting of
+      all CDAP applications.</description>
+    <display-name>Log Publish Partition Key</display-name>
+ </property>
+
+  <property>
     <name>log.retention.duration.days</name>
     <value>7</value>
     <description>
@@ -989,6 +1184,16 @@
       <increment-step>1</increment-step>
       <overridable>false</overridable>
     </value-attributes>
+  </property>
+
+  <!-- Market Configuration -->
+
+  <property>
+    <name>market.base.url</name>
+    <value>http://market.cask.co/v1</value>
+    <description>The base URL of the Cask Market used by the CDAP UI for the Cask Market RESTful API.
+        The default value shown is that of the public Cask Market.</description>
+    <display-name>Market Base Url</display-name>
   </property>
 
   <!-- Master Configuration -->
@@ -1248,6 +1453,17 @@
   </property>
 
   <property>
+    <name>messaging.system.topics</name>
+    <value>${audit.topic},${metrics.topic.prefix}:${metrics.messaging.topic.num},${notification.topic}</value>
+    <description>A comma-separated list of topics that are always available in the system namespace.
+        Multiple topics sharing the same prefix and distinguished by different numerical suffixes
+        can be specified with the syntax &lt;common.prefix&gt;:&lt;total.topic.number&gt;,
+        where the &lt;total.topic.number&gt; is the total number of topics sharing the &lt;common.prefix&gt;,
+        and the numerical suffixes will range from 0 to (&lt;total.topic.number&gt; - 1).</description>
+    <display-name>Messaging System Topics</display-name>
+   </property>
+
+  <property>
     <name>messaging.table.expiration.seconds</name>
     <value>300</value>
     <description>
@@ -1375,10 +1591,24 @@
   </property>
 
   <property>
+    <name>metrics.kafka.meta.table</name>
+    <value>metrics.kafka.meta</value>
+    <description>Name of the Kafka metrics meta table</description>
+    <display-name>Metrics Kafka Meta Table</display-name>
+ </property>
+
+  <property>
     <name>metrics.kafka.partition.size</name>
     <value>10</value>
     <description>Number of partitions for metrics topic</description>
   </property>
+
+  <property>
+    <name>metrics.kafka.topic.prefix</name>
+    <value>metrics</value>
+    <description>Topic prefix used to publish metrics in Kafka</description>
+    <display-name>Metrics Kafka Topic Prefix</display-name>
+ </property>
 
   <property>
     <name>metrics.max.instances</name>
@@ -1404,6 +1634,35 @@
       <overridable>false</overridable>
     </value-attributes>
   </property>
+
+  <property>
+    <name>metrics.messaging.fetcher.limit</name>
+    <value>200</value>
+    <description>
+      Maximum number of metrics messages to be fetched from the messaging fetcher at a
+      time. It is also the maximum number of metric values to be persisted in the metrics
+      store after the number of fetched messages reaches the limit.
+    </description>
+    <display-name>Metrics Messaging Fetcher Limit</display-name>
+ </property>
+
+ <property>
+    <name>metrics.messaging.meta.table</name>
+    <value>metrics.messaging.meta</value>
+    <description>Name of the messaging metrics meta table</description>
+    <display-name>Metrics Messaging Meta Table</display-name>
+ </property>
+
+ <property>
+    <name>metrics.messaging.topic.num</name>
+    <value>10</value>
+    <description>Number of topics for metrics messages. This property also sets the number of threads
+      used to fetch and process metrics in parallel from the messaging service. For a
+      value of N, topics will be created for metrics with names beginning at
+      ${metrics.topic.prefix}0, ${metrics.topic.prefix}1, up to
+      ${metrics.topic.prefix}(N-1).</description>
+    <display-name>Metrics Messaging Topic Number</display-name>
+ </property>
 
   <property>
     <name>metrics.num.cores</name>
@@ -1495,6 +1754,13 @@
     <description>
       Metrics Query service bind port
     </description>
+  </property>
+
+  <property>
+    <name>metrics.topic.prefix</name>
+    <value>metrics</value>
+    <description>Topic prefix used to publish metrics in messaging</description>
+    <display-name>Metrics Topic Prefix</display-name>
   </property>
 
   <property>
@@ -1618,6 +1884,309 @@
     <description>
       Number of Netty service IO worker threads for the remote system operation HTTP service
     </description>
+  </property>
+
+  <!-- Retry Policies Configuration -->
+  <property>
+    <name>custom.action.retry.policy.base.delay.ms</name>
+    <value>1000</value>
+    <description>The base delay between retries in milliseconds</description>
+    <display-name>Custom Action Retry Policy Base Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>custom.action.retry.policy.max.delay.ms</name>
+    <value>30000</value>
+    <description>The maximum delay between retries in milliseconds</description>
+    <display-name>Custom Action Retry Policy Maximum Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>custom.action.retry.policy.max.retries</name>
+    <value>1000</value>
+    <description>The maximum number of retries to attempt before aborting</description>
+    <display-name>Custom Action Retry Policy Maximum Retries</display-name>
+  </property>
+
+  <property>
+    <name>custom.action.retry.policy.max.time.secs</name>
+    <value>600</value>
+    <description>The maximum elapsed time in seconds before retries are aborted</description>
+    <display-name>Custom Action Retry Policy Maximum Time Seconds</display-name>
+  </property>
+
+  <property>
+    <name>custom.action.retry.policy.type</name>
+    <value>exponential.backoff</value>
+    <description>The type of retry policy for custom actions. Allowed options: "none", "fixed.delay", or "exponential.backoff".</description>
+    <display-name>Custom Action Retry Policy Type</display-name>
+  </property>
+
+  <property>
+    <name>flow.retry.policy.base.delay.ms</name>
+    <value>100</value>
+    <description>The base delay between retries in milliseconds</description>
+    <display-name>Flow Retry Policy Base Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>flow.retry.policy.max.delay.ms</name>
+    <value>1000</value>
+    <description>The maximum delay between retries in milliseconds</description>
+    <display-name>Flow Retry Policy Maximum Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>flow.retry.policy.max.retries</name>
+    <value>3</value>
+    <description>The maximum number of retries to attempt before aborting</description>
+    <display-name>Flow Retry Policy Maximum Retries</display-name>
+  </property>
+
+  <property>
+    <name>flow.retry.policy.max.time.secs</name>
+    <value>10</value>
+    <description>The maximum elapsed time in seconds before retries are aborted</description>
+    <display-name>Flow Retry Policy Maximum Time Seconds</display-name>
+  </property>
+
+  <property>
+    <name>flow.retry.policy.type</name>
+    <value>none</value>
+    <description>The type of retry policy for flows</description>
+    <display-name>Flow Retry Policy Type</display-name>
+  </property>
+
+  <property>
+    <name>mapreduce.retry.policy.base.delay.ms</name>
+    <value>1000</value>
+    <description>The base delay between retries in milliseconds</description>
+    <display-name>MapReduce Retry Policy Base Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>mapreduce.retry.policy.max.delay.ms</name>
+    <value>30000</value>
+    <description>The maximum delay between retries in milliseconds</description>
+    <display-name>MapReduce Retry Policy Maximum Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>mapreduce.retry.policy.max.retries</name>
+    <value>1000</value>
+    <description>The maximum number of retries to attempt before aborting</description>
+    <display-name>MapReduce Retry Policy Maximum Retries</display-name>
+  </property>
+
+  <property>
+    <name>mapreduce.retry.policy.max.time.secs</name>
+    <value>600</value>
+    <description>The maximum elapsed time in seconds before retries are aborted</description>
+    <display-name>MapReduce Retry Policy Maximum Time Seconds</display-name>
+  </property>
+
+  <property>
+    <name>mapreduce.retry.policy.type</name>
+    <value>exponential.backoff</value>
+    <description>The type of retry policy for MapReduce programs. Allowed options: "none",
+      "fixed.delay", or "exponential.backoff".</description>
+    <display-name>MapReduce Retry Policy Type</display-name>
+  </property>
+
+  <property>
+    <name>service.retry.policy.base.delay.ms</name>
+    <value>100</value>
+    <description>The base delay between retries in milliseconds</description>
+    <display-name>Service Retry Policy Base Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>service.retry.policy.max.delay.ms</name>
+    <value>1000</value>
+    <description>The maximum delay between retries in milliseconds</description>
+    <display-name>Service Retry Policy Maximum Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>service.retry.policy.max.retries</name>
+    <value>3</value>
+    <description>The maximum number of retries to attempt before aborting</description>
+    <display-name>Service Retry Policy Maximum Retries</display-name>
+  </property>
+
+  <property>
+    <name>service.retry.policy.max.time.secs</name>
+    <value>10</value>
+    <description>The maximum elapsed time in seconds before retries are aborted</description>
+    <display-name>Service Retry Policy Maximum Time Seconds</display-name>
+  </property>
+
+  <property>
+    <name>service.retry.policy.type</name>
+    <value>none</value>
+    <description>The type of retry policy for services</description>
+    <display-name>Service Retry Policy Type</display-name>
+  </property>
+
+  <property>
+    <name>spark.retry.policy.base.delay.ms</name>
+    <value>1000</value>
+    <description>The base delay between retries in milliseconds</description>
+    <display-name>Spark Retry Policy Base Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>spark.retry.policy.max.delay.ms</name>
+    <value>30000</value>
+    <description>The maximum delay between retries in milliseconds</description>
+    <display-name>Spark Retry Policy Maximum Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>spark.retry.policy.max.retries</name>
+    <value>1000</value>
+    <description>The maximum number of retries to attempt before aborting</description>
+    <display-name>Spark Retry Policy Maximum Retries</display-name>
+  </property>
+
+  <property>
+    <name>spark.retry.policy.max.time.secs</name>
+    <value>600</value>
+    <description>The maximum elapsed time in seconds before retries are aborted</description>
+    <display-name>Spark Retry Policy Maximum Time Seconds</display-name>
+  </property>
+
+  <property>
+    <name>spark.retry.policy.type</name>
+    <value>exponential.backoff</value>
+    <description>The type of retry policy for Spark programs. Allowed options: "none", "fixed.delay", or "exponential.backoff".</description>
+    <display-name>Spark Retry Policy Type</display-name>
+  </property>
+
+  <property>
+    <name>system.log.process.retry.policy.base.delay.ms</name>
+    <value>1000</value>
+    <description>The base delay between retries in milliseconds</description>
+    <display-name>System Log Process Retry Policy Base Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>system.log.process.retry.policy.max.retries</name>
+    <value>1500</value>
+    <description>The maximum number of retries to attempt before aborting</description>
+    <display-name>System Log Process Retry Policy Maximum Retries</display-name>
+  </property>
+
+  <property>
+    <name>system.log.process.retry.policy.max.time.secs</name>
+    <value>1500</value>
+    <description>The maximum elapsed time in seconds before retries are aborted</description>
+    <display-name>System Log Process Retry Policy Maximum Time Seconds</display-name>
+  </property>
+
+  <property>
+    <name>system.log.process.retry.policy.type</name>
+    <value>fixed.delay</value>
+    <description>The type of retry policy for log processing</description>
+    <display-name>System Log Process Retry Policy Type</display-name>
+  </property>
+
+  <property>
+    <name>system.metrics.retry.policy.base.delay.ms</name>
+    <value>1000</value>
+    <description>The base delay between retries in milliseconds</description>
+    <display-name>System Metrics Retry Policy Base Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>system.metrics.retry.policy.max.retries</name>
+    <value>600</value>
+    <description>The maximum number of retries to attempt before aborting</description>
+    <display-name>System Metrics Retry Policy Maximum Retries</display-name>
+  </property>
+
+  <property>
+    <name>system.metrics.retry.policy.max.time.secs</name>
+    <value>600</value>
+    <description>The maximum elapsed time in seconds before retries are aborted</description>
+    <display-name>System Metrics Retry Policy Maximum Time Seconds</display-name>
+  </property>
+
+  <property>
+    <name>system.metrics.retry.policy.type</name>
+    <value>fixed.delay</value>
+    <description>The type of retry policy for metrics publishing</description>
+    <display-name>System Metrics Retry Policy Type</display-name>
+  </property>
+
+  <property>
+    <name>worker.retry.policy.base.delay.ms</name>
+    <value>1000</value>
+    <description>The base delay between retries in milliseconds</description>
+    <display-name>Worker Retry Policy Base Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>worker.retry.policy.max.delay.ms</name>
+    <value>30000</value>
+    <description>The maximum delay between retries in milliseconds</description>
+    <display-name>Worker Retry Policy Maximum Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>worker.retry.policy.max.retries</name>
+    <value>1000</value>
+    <description>The maximum number of retries to attempt before aborting</description>
+    <display-name>Worker Retry Policy Maximum Retries</display-name>
+  </property>
+
+  <property>
+    <name>worker.retry.policy.max.time.secs</name>
+    <value>600</value>
+    <description>The maximum elapsed time in seconds before retries are aborted</description>
+    <display-name>Worker Retry Policy Maximum Time Seconds</display-name>
+  </property>
+
+  <property>
+    <name>worker.retry.policy.type</name>
+    <value>exponential.backoff</value>
+    <description>The type of retry policy for workers. Allowed options: "none", "fixed.delay", or "exponential.backoff".</description>
+    <display-name>Worker Retry Policy Type</display-name>
+  </property>
+
+  <property>
+    <name>workflow.retry.policy.base.delay.ms</name>
+    <value>1000</value>
+    <description>The base delay between retries in milliseconds</description>
+    <display-name>Workflow Retry Policy Base Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>workflow.retry.policy.max.delay.ms</name>
+    <value>30000</value>
+    <description>The maximum delay between retries in milliseconds</description>
+    <display-name>Workflow Retry Policy Maximum Delay Milliseconds</display-name>
+  </property>
+
+  <property>
+    <name>workflow.retry.policy.max.retries</name>
+    <value>1000</value>
+    <description>The maximum number of retries to attempt before aborting</description>
+    <display-name>Workflow Retry Policy Maximum Retries</display-name>
+  </property>
+
+  <property>
+    <name>workflow.retry.policy.max.time.secs</name>
+    <value>600</value>
+    <description>The maximum elapsed time in seconds before retries are aborted</description>
+    <display-name>Workflow Retry Policy Maximum Time Seconds</display-name>
+  </property>
+
+  <property>
+    <name>workflow.retry.policy.type</name>
+    <value>exponential.backoff</value>
+    <description>The type of retry policy for workflows. Allowed options: "none", "fixed.delay", or "exponential.backoff".</description>
+    <display-name>Workflow Retry Policy Type</display-name>
   </property>
 
   <!-- Router Configuration -->
