@@ -2052,12 +2052,15 @@
     <display-name>System Log Process Retry Policy Maximum Time Seconds</display-name>
   </property>
 
+<!-- fixed.delay is the only value that works for this property.
+      We will add it back in a later release. https://issues.cask.co/browse/CDAP-8750
   <property>
     <name>system.log.process.retry.policy.type</name>
     <value>fixed.delay</value>
     <description>The type of retry policy for log processing</description>
     <display-name>System Log Process Retry Policy Type</display-name>
   </property>
+-->
 
   <property>
     <name>system.metrics.retry.policy.base.delay.ms</name>
