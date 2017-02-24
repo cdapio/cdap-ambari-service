@@ -2083,12 +2083,15 @@
     <display-name>System Metrics Retry Policy Maximum Time Seconds</display-name>
   </property>
 
+  <!-- fixed.delay is the only value that works for this property.
+        We will add it back in a later release. https://issues.cask.co/browse/CDAP-8750
   <property>
     <name>system.metrics.retry.policy.type</name>
     <value>fixed.delay</value>
     <description>The type of retry policy for metrics publishing</description>
     <display-name>System Metrics Retry Policy Type</display-name>
   </property>
+  -->
 
   <property>
     <name>worker.retry.policy.base.delay.ms</name>
@@ -2927,6 +2930,16 @@
         <name>kerberos.auth.enabled</name>
       </property>
     </depends-on>
+  </property>
+
+  <property>
+    <name>security.keytab.path</name>
+    <value></value>
+    <description>
+      The location of kerberos keytabs used for impersonation. The location can contain ${name}
+      which will be replaced by the short user name of the principal being impersonated.
+    </description>
+    <display-name>Security Keytab Path</display-name>
   </property>
 
   <property>
