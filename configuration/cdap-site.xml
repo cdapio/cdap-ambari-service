@@ -2940,6 +2940,9 @@
       which will be replaced by the short user name of the principal being impersonated.
     </description>
     <display-name>Security Keytab Path</display-name>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
