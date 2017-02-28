@@ -1158,7 +1158,7 @@
 
   <property>
     <name>market.base.url</name>
-    <value>http://market.cask.co/v1</value>
+    <value>http://market.cask.co/v2</value>
     <description>The base URL of the Cask Market used by the CDAP UI for the Cask Market RESTful API.
         The default value shown is that of the public Cask Market.</description>
     <display-name>Market Base Url</display-name>
@@ -2940,6 +2940,9 @@
       which will be replaced by the short user name of the principal being impersonated.
     </description>
     <display-name>Security Keytab Path</display-name>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
