@@ -2080,40 +2080,6 @@
   </property>
 
   <property>
-    <name>security.authentication.handler.bindDn</name>
-    <value></value>
-    <description>
-      The Distinguished Name used to bind to the LDAP server and search the directory (LDAP only)
-    </description>
-    <depends-on>
-      <property>
-        <type>cdap-site</type>
-        <name>security.authentication.handlerClassName</name>
-      </property>
-    </depends-on>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>security.authentication.handler.bindPassword</name>
-    <value></value>
-    <description>
-      The password used to bind to the LDAP server (LDAP only)
-    </description>
-    <depends-on>
-      <property>
-        <type>cdap-site</type>
-        <name>security.authentication.handlerClassName</name>
-      </property>
-    </depends-on>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
-  </property>
-
-  <property>
     <name>security.authentication.handler.userIdAttribute</name>
     <value></value>
     <description>
