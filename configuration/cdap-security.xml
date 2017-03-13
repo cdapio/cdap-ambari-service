@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
-  Copyright © 2016 Cask Data, Inc.
+  Copyright © 2016-2017 Cask Data, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy of
@@ -17,6 +17,43 @@
 -->
 
 <configuration supports_final="true">
+
+  <!-- Auth Server LDAP Bind credentials -->
+
+  <property>
+    <name>security.authentication.handler.bindDn</name>
+    <value></value>
+    <description>
+      The Distinguished Name used to bind to the LDAP server and search the directory (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authentication.handler.bindPassword</name>
+    <value></value>
+    <property-type>PASSWORD</property-type>
+    <description>
+      The password used to bind to the LDAP server (LDAP only)
+    </description>
+    <depends-on>
+      <property>
+        <type>cdap-site</type>
+        <name>security.authentication.handlerClassName</name>
+      </property>
+    </depends-on>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
 
   <!-- Router SSL -->
 
