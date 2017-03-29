@@ -7,9 +7,14 @@ engines:
       - python
   fixme:
     enabled: true
+  pep8:
+    enabled: true
   radon:
+    enabled: true
+  shellcheck:
     enabled: true
 ratings:
   paths:
   - "**.py"
+  - "**.sh"
 exclude_paths: []
