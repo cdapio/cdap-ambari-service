@@ -146,7 +146,7 @@
               </auto-deploy>
             </dependency>
             <dependency>
-              <name>YARN/MAPREDUCE2_CLIENT</name>
+              <name>MAPREDUCE2/MAPREDUCE2_CLIENT</name>
               <scope>host</scope>
               <auto-deploy>
                 <enabled>true</enabled>
