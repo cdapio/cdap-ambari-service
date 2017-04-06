@@ -371,6 +371,12 @@
         <config-type>cdap-env</config-type>
         <config-type>cdap-security</config-type>
         <config-type>cdap-site</config-type>
+        <!-- Hadoop services we depend on -->
+        <config-type>core-site</config-type>
+        <config-type>hdfs-site</config-type>
+        <config-type>hive-site</config-type>
+        <config-type>yarn-site</config-type>
+        <config-type>hbase-site</config-type>
       </configuration-dependencies>
       <restartRequiredAfterChange>true</restartRequiredAfterChange>
     </service>
