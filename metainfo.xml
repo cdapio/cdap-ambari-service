@@ -362,6 +362,8 @@
       <!-- names for config files (under configuration dir) -->
       <configuration-dependencies>
         <config-type>cdap-env</config-type>
+        <config-type>cdap-logback</config-type>
+        <config-type>cdap-logback-container</config-type>
         <config-type>cdap-security</config-type>
         <config-type>cdap-site</config-type>
       </configuration-dependencies>
