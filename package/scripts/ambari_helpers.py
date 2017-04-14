@@ -48,7 +48,7 @@ def cdap_config(name=None):
     # We're only setup for *NIX, for now
     Directory(
         params.etc_prefix_dir,
-        mode=0755
+        mode='0755'
     )
 
     # Why don't we use Directory here? A: parameters changed between Ambari minor versions
@@ -56,28 +56,20 @@ def cdap_config(name=None):
         "mkdir -p %s && chown %s:%s %s" % (params.cdap_conf_dir, params.cdap_user, params.user_group, params.cdap_conf_dir)
     )
 
-    XmlConfig(
-        'cdap-site.xml',
-        conf_dir=params.cdap_conf_dir,
-        configurations=params.config['configurations']['cdap-site'],
-        owner=params.cdap_user,
-        group=params.user_group
-    )
+    for i in 'security', 'site':
+        XmlConfig(
+            "cdap-%s.xml" % (i),
+            conf_dir=params.cdap_conf_dir,
+            configurations=params.config['configurations']["cdap-%s" % (i)],
+            owner=params.cdap_user,
+            group=params.user_group
+        )
 
     File(
         format("{params.cdap_conf_dir}/cdap-env.sh"),
         owner=params.cdap_user,
         content=InlineTemplate(params.cdap_env_sh_template)
     )
-
-    if params.cdap_security_enabled:
-        XmlConfig(
-            'cdap-security.xml',
-            conf_dir=params.cdap_conf_dir,
-            configurations=params.config['configurations']['cdap-security'],
-            owner=params.cdap_user,
-            group=params.user_group
-        )
 
     if params.kerberos_enabled:
         File(
