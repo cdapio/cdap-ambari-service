@@ -3,7 +3,14 @@
   "description": "Quick Links for CDAP services",
   "configuration": {
     "protocol": {
-      "type":"HTTP_ONLY"
+      "type": "https",
+      "checks": [
+        {
+          "property": "ssl.external.enabled",
+          "desired": "true",
+          "site": "cdap-site"
+        }
+      ]
     },
     "links": [
       {
@@ -19,16 +26,6 @@
           "https_default_port": "9443",
           "regex": "\\w*:(\\d+)",
           "site": "cdap-site"
-        },
-        "protocol": {
-          "type": "https",
-          "checks": [
-            {
-              "property": "ssl.external.enabled",
-              "desired": "true",
-              "site": "cdap-site"
-            }
-          ]
         }
       }
     ]
