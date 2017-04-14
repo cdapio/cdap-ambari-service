@@ -2,4 +2,4 @@
 name=Cask Data Application Platform Packages
 baseurl=REPO_URL
 enabled=1
-gpgcheck=1
+gpgcheck=0
