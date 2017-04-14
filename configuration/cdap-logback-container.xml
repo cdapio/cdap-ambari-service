@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Copyright © 2015-2017 Cask Data, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+-->
+
+<configuration>
+
+  <!-- logback-container.xml -->
+  <property>
+    <name>content</name>
+    <description>This is the jinja template for logback-container.xml file</description>
+    <value>&lt;configuration&gt;
+  &lt;logger name="org.apache.commons.beanutils" level="ERROR"/&gt;
+  &lt;logger name="org.apache.zookeeper.server" level="ERROR"/&gt;
+  &lt;logger name="org.apache.zookeeper" level="ERROR"/&gt;
+  &lt;logger name="com.ning" level="WARN"/&gt;
+  &lt;logger name="org.apache.spark" level="WARN"/&gt;
+  &lt;logger name="org.spark-project" level="WARN"/&gt;
+  &lt;logger name="org.apache.hadoop" level="WARN"/&gt;
+  &lt;logger name="org.apache.hive" level="WARN"/&gt;
+  &lt;logger name="org.quartz.core" level="WARN"/&gt;
+  &lt;logger name="org.eclipse.jetty" level="WARN"/&gt;
+  &lt;logger name="io.netty.util.internal" level="WARN"/&gt;
+  &lt;logger name="org.apache.twill" level="INFO"/&gt;
+  &lt;logger name="org.apache.twill.internal.kafka.client.SimpleKafkaConsumer" level="WARN"/&gt;
+  &lt;logger name="co.cask.cdap" level="INFO"/&gt;
+
+  &lt;logger name="Explore.stdout" level="INFO"/&gt;
+  &lt;logger name="Explore.stderr" level="INFO"/&gt;
+
+  &lt;appender name="Rolling" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
+    &lt;file&gt;${CDAP_LOG_DIR}/program.log&lt;/file&gt;
+    &lt;encoder&gt;
+      &lt;pattern&gt;%d{ISO8601} - %-5p [%t:%logger{1}@%L] - %m%n&lt;/pattern&gt;
+    &lt;/encoder&gt;
+    &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;
+      &lt;fileNamePattern&gt;${CDAP_LOG_DIR}/program.%d.log&lt;/fileNamePattern&gt;
+      &lt;maxHistory&gt;14&lt;/maxHistory&gt;
+    &lt;/rollingPolicy&gt;
+  &lt;/appender&gt;
+
+  &lt;root level="INFO"&gt;
+    &lt;appender-ref ref="Rolling"/&gt;
+  &lt;/root&gt;
+
+&lt;/configuration&gt;</value>
+    <display-name>Contents of logback-container.xml</display-name>
+    <value-attributes>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+</configuration>

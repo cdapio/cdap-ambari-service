@@ -1,5 +1,5 @@
 # coding=utf8
-# Copyright © 2015-2016 Cask Data, Inc.
+# Copyright © 2015-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -71,6 +71,27 @@ def cdap_config(name=None):
         content=InlineTemplate(params.cdap_env_sh_template)
     )
 
+    File(
+        format("{params.cdap_conf_dir}/logback.xml"),
+        owner=params.cdap_user,
+        content=InlineTemplate(params.cdap_logback_xml_template)
+    )
+
+    File(
+        format("{params.cdap_conf_dir}/logback-container.xml"),
+        owner=params.cdap_user,
+        content=InlineTemplate(params.cdap_logback_container_xml_template)
+    )
+
+    if params.cdap_security_enabled:
+        XmlConfig(
+            'cdap-security.xml',
+            conf_dir=params.cdap_conf_dir,
+            configurations=params.config['configurations']['cdap-security'],
+            owner=params.cdap_user,
+            group=params.user_group
+        )
+
     if params.kerberos_enabled:
         File(
             format(params.client_jaas_config_file),
@@ -91,14 +112,6 @@ def cdap_config(name=None):
         dirname = 'gateway'
     else:
         dirname = name
-
-    # Copy logback.xml and logback-container.xml
-    for i in 'logback.xml', 'logback-container.xml':
-        no_op_test = "ls %s/%s 2>/dev/null" % (params.cdap_conf_dir, i)
-        Execute(
-            "cp -f /etc/cdap/conf.dist/%s %s" % (i, params.cdap_conf_dir),
-            not_if=no_op_test
-        )
 
     Execute("update-alternatives --install /etc/cdap/conf cdap-conf %s 50" % (params.cdap_conf_dir))
 
