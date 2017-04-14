@@ -63,6 +63,8 @@ cdap_conf_dir = "/etc/cdap/conf.ambari"
 dfs = config['configurations']['core-site']['fs.defaultFS']
 
 cdap_env_sh_template = config['configurations']['cdap-env']['content']
+cdap_logback_xml_template = config['configurations']['cdap-logback']['content']
+cdap_logback_container_xml_template = config['configurations']['cdap-logback-container']['content']
 
 map_cdap_site = config['configurations']['cdap-site']
 
@@ -74,6 +76,7 @@ else:
     hdfs_namespace = map_cdap_site['hdfs.namespace']
 
 cdap_security_enabled = config['configurations']['cdap-site']['security.enabled']
+cdap_access_logging = config['configurations']['cdap-logback']['access_logging']
 
 # Kerberos stuff
 kerberos_enabled = config['configurations']['cluster-env']['security_enabled']
