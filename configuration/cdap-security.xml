@@ -28,7 +28,6 @@
     </description>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
-      <overridable>false</overridable>
     </value-attributes>
   </property>
 
@@ -41,7 +40,6 @@
     </description>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
-      <overridable>false</overridable>
     </value-attributes>
   </property>
 
@@ -54,7 +52,6 @@
     </description>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
-      <overridable>false</overridable>
     </value-attributes>
   </property>
 
@@ -76,7 +73,6 @@
     </description>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
-      <overridable>false</overridable>
     </value-attributes>
   </property>
 
@@ -88,7 +84,6 @@
     </description>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
-      <overridable>false</overridable>
     </value-attributes>
   </property>
 
