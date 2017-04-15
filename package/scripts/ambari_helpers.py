@@ -52,9 +52,15 @@ def cdap_config(name=None):
     )
 
     # Why don't we use Directory here? A: parameters changed between Ambari minor versions
-    Execute(
-        "mkdir -p %s && chown %s:%s %s" % (params.cdap_conf_dir, params.cdap_user, params.user_group, params.cdap_conf_dir)
-    )
+    for i in params.cdap_conf_dir, params.log_dir, params.pid_dir:
+        Execute(
+            "mkdir -p %s && chown %s:%s %s" % (
+                i,
+                params.cdap_user,
+                params.user_group,
+                i
+            )
+        )
 
     for i in 'security', 'site':
         XmlConfig(
