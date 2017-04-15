@@ -52,9 +52,15 @@ def cdap_config(name=None):
     )
 
     # Why don't we use Directory here? A: parameters changed between Ambari minor versions
-    Execute(
-        "mkdir -p %s && chown %s:%s %s" % (params.cdap_conf_dir, params.cdap_user, params.user_group, params.cdap_conf_dir)
-    )
+    for i in params.cdap_conf_dir, params.log_dir, params.pid_dir:
+        Execute(
+            "mkdir -p %s && chown %s:%s %s" % (
+                i,
+                params.cdap_user,
+                params.user_group,
+                i
+            )
+        )
 
     for i in 'security', 'site':
         XmlConfig(
@@ -104,14 +110,6 @@ def cdap_config(name=None):
             owner=params.cdap_user,
             content=Template("cdap_master_jaas.conf.j2")
         )
-
-    # Set dirname
-    if name == 'auth':
-        dirname = 'security'
-    elif name == 'router':
-        dirname = 'gateway'
-    else:
-        dirname = name
 
     Execute("update-alternatives --install /etc/cdap/conf cdap-conf %s 50" % (params.cdap_conf_dir))
 
