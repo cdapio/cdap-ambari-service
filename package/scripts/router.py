@@ -49,10 +49,17 @@ class Router(Script):
 
     def stop(self, env):
         print('Stop the CDAP Router')
-        Execute('service cdap-router stop')
+        import status_params
+        daemon_cmd = format('service cdap-router stop')
+        no_op_test = format('ls {status_params.cdap_router_pid_file} >/dev/null 2>&1 && ps -p $(<{status_params.cdap_router_pid_file}) >/dev/null 2>&1')
+        Execute(
+            daemon_cmd,
+            only_if=no_op_test
+        )
 
     def status(self, env):
-        Execute('service cdap-router status')
+        import status_params
+        check_process_status(status_params.cdap_router_pid_file)
 
     def configure(self, env):
         print('Configure the CDAP Router')
