@@ -48,7 +48,7 @@ def cdap_config(name=None):
     # We're only setup for *NIX, for now
     Directory(
         params.etc_prefix_dir,
-        mode='0755'
+        mode=755
     )
 
     # Why don't we use Directory here? A: parameters changed between Ambari minor versions
