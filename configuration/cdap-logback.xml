@@ -36,7 +36,7 @@
   </property>
 
   <property>
-    <name>content</name>
+    <name>logback-content</name>
     <description>This is the jinja template for logback.xml file</description>
     <value>&lt;configuration&gt;
     &lt;logger name="org.apache.commons.beanutils" level="ERROR"/&gt;

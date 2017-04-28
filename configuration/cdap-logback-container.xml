@@ -20,7 +20,7 @@
 
   <!-- logback-container.xml -->
   <property>
-    <name>content</name>
+    <name>logback-container-content</name>
     <description>This is the jinja template for logback-container.xml file</description>
     <value>&lt;configuration&gt;
   &lt;logger name="org.apache.commons.beanutils" level="ERROR"/&gt;
