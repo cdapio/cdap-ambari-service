@@ -63,8 +63,8 @@ cdap_conf_dir = "/etc/cdap/conf.ambari"
 dfs = config['configurations']['core-site']['fs.defaultFS']
 
 cdap_env_sh_template = config['configurations']['cdap-env']['content']
-cdap_logback_xml_template = config['configurations']['cdap-logback']['content']
-cdap_logback_container_xml_template = config['configurations']['cdap-logback-container']['content']
+cdap_logback_xml_template = config['configurations']['cdap-logback']['logback-content']
+cdap_logback_container_xml_template = config['configurations']['cdap-logback-container']['logback-container-content']
 
 map_cdap_site = config['configurations']['cdap-site']
 
