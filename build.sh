@@ -12,22 +12,21 @@ if [[ ${PACKAGE_VERSION} =~ "-SNAPSHOT" ]] ; then
   PACKAGE_VERSION=${PACKAGE_VERSION/-SNAPSHOT/.$(date +%s)}
 fi
 
-clean() { rm -rf var cdap-ambari-service*.{rpm,deb}; };
-setup() { mkdir -p var/lib/ambari-server/resources/common-services/CDAP/${PACKAGE_VERSION}; };
+clean() { rm -rf build target; };
+setup() { mkdir -p build/var/lib/ambari-server/resources target; };
 
 install() {
-  cp -a *.json *.xml configuration package quicklinks themes \
-    var/lib/ambari-server/resources/common-services/CDAP/${PACKAGE_VERSION} 2>/dev/null
-  cp -a stacks var/lib/ambari-server/resources 2>/dev/null
-  sed -i'' -e "s/3.6.0-SNAPSHOT/${PACKAGE_VERSION}/g" \
-    var/lib/ambari-server/resources/stacks/*/*/services/CDAP/metainfo.xml \
-    var/lib/ambari-server/resources/common-services/CDAP/${PACKAGE_VERSION}/alerts.json \
-    var/lib/ambari-server/resources/common-services/CDAP/${PACKAGE_VERSION}/metainfo.xml
+  cp -a src/main/resources/* build/var/lib/ambari-server/resources
+  sed -i'' -e "s/REPLACE_ME/${PACKAGE_VERSION}/g" \
+    build/var/lib/ambari-server/resources/stacks/*/*/services/CDAP/metainfo.xml \
+    build/var/lib/ambari-server/resources/common-services/CDAP/*/alerts.json \
+    build/var/lib/ambari-server/resources/common-services/CDAP/*/metainfo.xml
 }
 
 clean && setup && install
 
 __failed=0
+cd target
 for p in ${PACKAGE_FORMATS} ; do
   case ${p} in
     deb)
@@ -46,6 +45,7 @@ for p in ${PACKAGE_FORMATS} ; do
         --version ${PACKAGE_VERSION} \
         --iteration ${PACKAGE_ITERATION} \
         ${DEB_FPM_ARGS} \
+        -C ../build \
         var
       __ret=$?
       ;;
@@ -65,6 +65,7 @@ for p in ${PACKAGE_FORMATS} ; do
         --version ${PACKAGE_VERSION} \
         --iteration ${PACKAGE_ITERATION} \
         ${RPM_FPM_ARGS} \
+        -C ../build \
         var
       __ret=$?
      ;;
