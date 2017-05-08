@@ -46,9 +46,6 @@
               <dictionaryName>cdap-site</dictionaryName>
             </configFile>
           </configFiles>
-          <configuration-dependencies>
-            <config-type>cdap-site</config-type>
-          </configuration-dependencies>
         </component>
 
         <component>
@@ -65,14 +62,29 @@
           </commandScript>
           <configFiles>
             <configFile>
+              <type>env</type>
+              <fileName>cdap-env.sh</fileName>
+              <dictionaryName>cdap-env</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>xml</type>
+              <fileName>cdap-security.xml</fileName>
+              <dictionaryName>cdap-security</dictionaryName>
+            </configFile>
+            <configFile>
               <type>xml</type>
               <fileName>cdap-site.xml</fileName>
               <dictionaryName>cdap-site</dictionaryName>
             </configFile>
             <configFile>
               <type>env</type>
-              <fileName>cdap-env.sh</fileName>
-              <dictionaryName>cdap-env</dictionaryName>
+              <fileName>logback.xml</fileName>
+              <dictionaryName>cdap-logback</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>env</type>
+              <fileName>logback-container.xml</fileName>
+              <dictionaryName>cdap-logback-container</dictionaryName>
             </configFile>
           </configFiles>
           <customCommands>
@@ -181,6 +193,21 @@
               </auto-deploy>
             </dependency>
           </dependencies>
+          <configuration-dependencies>
+            <!-- CDAP files used by Master -->
+            <config-type>cdap-logback-container</config-type>
+            <config-type>cdap-security</config-type>
+            <!-- Hadoop services -->
+            <config-type>core-site</config-type>
+            <config-type>hdfs-site</config-type>
+            <config-type>yarn-site</config-type>
+            <!-- HBase -->
+            <config-type>hbase-site</config-type>
+            <!-- Hive -->
+            <config-type>hive-site</config-type>
+            <!-- ZooKeeper -->
+            <config-type>zoo.cfg</config-type>
+          </configuration-dependencies>
         </component>
 
         <component>
@@ -197,14 +224,24 @@
           </commandScript>
           <configFiles>
             <configFile>
+              <type>env</type>
+              <fileName>cdap-env.sh</fileName>
+              <dictionaryName>cdap-env</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>xml</type>
+              <fileName>cdap-security.xml</fileName>
+              <dictionaryName>cdap-security</dictionaryName>
+            </configFile>
+            <configFile>
               <type>xml</type>
               <fileName>cdap-site.xml</fileName>
               <dictionaryName>cdap-site</dictionaryName>
             </configFile>
             <configFile>
               <type>env</type>
-              <fileName>cdap-env.sh</fileName>
-              <dictionaryName>cdap-env</dictionaryName>
+              <fileName>logback.xml</fileName>
+              <dictionaryName>cdap-logback</dictionaryName>
             </configFile>
           </configFiles>
           <dependencies>
@@ -231,6 +268,9 @@
               </auto-deploy>
             </dependency>
           </dependencies>
+          <configuration-dependencies>
+            <config-type>cdap-security</config-type>
+          </configuration-dependencies>
         </component>
 
         <component>
@@ -261,6 +301,23 @@
               </auto-deploy>
             </dependency>
           </dependencies>
+          <configFiles>
+            <configFile>
+              <type>env</type>
+              <fileName>cdap-env.sh</fileName>
+              <dictionaryName>cdap-env</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>xml</type>
+              <fileName>cdap-site.xml</fileName>
+              <dictionaryName>cdap-site</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>env</type>
+              <fileName>logback.xml</fileName>
+              <dictionaryName>cdap-logback</dictionaryName>
+            </configFile>
+          </configFiles>
         </component>
 
         <component>
@@ -275,8 +332,30 @@
             <scriptType>PYTHON</scriptType>
             <timeout>1800</timeout>
           </commandScript>
+          <configFiles>
+            <configFile>
+              <type>env</type>
+              <fileName>cdap-env.sh</fileName>
+              <dictionaryName>cdap-env</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>xml</type>
+              <fileName>cdap-security.xml</fileName>
+              <dictionaryName>cdap-security</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>xml</type>
+              <fileName>cdap-site.xml</fileName>
+              <dictionaryName>cdap-site</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>env</type>
+              <fileName>logback.xml</fileName>
+              <dictionaryName>cdap-logback</dictionaryName>
+            </configFile>
+          </configFiles>
           <configuration-dependencies>
-            <config-type>cdap-site</config-type>
+            <config-type>cdap-security</config-type>
           </configuration-dependencies>
         </component>
 
@@ -293,6 +372,11 @@
           </commandScript>
           <configFiles>
             <configFile>
+              <type>env</type>
+              <fileName>cdap-env.sh</fileName>
+              <dictionaryName>cdap-env</dictionaryName>
+            </configFile>
+            <configFile>
               <type>xml</type>
               <fileName>cdap-security.xml</fileName>
               <dictionaryName>cdap-security</dictionaryName>
@@ -304,8 +388,8 @@
             </configFile>
             <configFile>
               <type>env</type>
-              <fileName>cdap-env.sh</fileName>
-              <dictionaryName>cdap-env</dictionaryName>
+              <fileName>logback.xml</fileName>
+              <dictionaryName>cdap-logback</dictionaryName>
             </configFile>
           </configFiles>
           <dependencies>
@@ -325,6 +409,9 @@
               </auto-deploy>
             </dependency>
           </dependencies>
+          <configuration-dependencies>
+            <config-type>cdap-security</config-type>
+          </configuration-dependencies>
         </component>
 
       </components>
@@ -370,15 +457,7 @@
       <configuration-dependencies>
         <config-type>cdap-env</config-type>
         <config-type>cdap-logback</config-type>
-        <config-type>cdap-logback-container</config-type>
-        <config-type>cdap-security</config-type>
         <config-type>cdap-site</config-type>
-        <!-- Hadoop services we depend on -->
-        <config-type>core-site</config-type>
-        <config-type>hdfs-site</config-type>
-        <config-type>hive-site</config-type>
-        <config-type>yarn-site</config-type>
-        <config-type>hbase-site</config-type>
       </configuration-dependencies>
       <restartRequiredAfterChange>true</restartRequiredAfterChange>
     </service>
