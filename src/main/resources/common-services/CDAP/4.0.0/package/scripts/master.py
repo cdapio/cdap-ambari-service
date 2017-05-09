@@ -35,7 +35,7 @@ class Master(Script):
         helpers.package('cdap-master')
         self.configure(env)
 
-    def start(self, env):
+    def start(self, env, upgrade_type=None):
         print('Start the CDAP Master')
         import params
         import status_params
@@ -57,7 +57,7 @@ class Master(Script):
             not_if=no_op_test
         )
 
-    def stop(self, env):
+    def stop(self, env, upgrade_type=None):
         print('Stop the CDAP Master')
         import status_params
         daemon_cmd = format('service cdap-master stop')

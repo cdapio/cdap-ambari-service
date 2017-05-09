@@ -33,7 +33,7 @@ class Kafka(Script):
         helpers.package('cdap-kafka')
         self.configure(env)
 
-    def start(self, env):
+    def start(self, env, upgrade_type=None):
         print('Start the CDAP Kafka Server')
         import params
         import status_params
@@ -47,7 +47,7 @@ class Kafka(Script):
             not_if=no_op_test
         )
 
-    def stop(self, env):
+    def stop(self, env, upgrade_type=None):
         print('Stop the CDAP Kafka Server')
         import status_params
         daemon_cmd = format('service cdap-kafka-server stop')
