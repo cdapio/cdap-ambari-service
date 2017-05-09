@@ -12,7 +12,7 @@
         {
           "name": "cdap",
           "principal": {
-            "value": "cdap@${realm}",
+            "value": "${cdap-env/cdap_user}-${cluster_name|toLower()}@${realm}",
             "type" : "user",
             "configuration": "cdap-env/cdap_principal_name",
             "local_username": "cdap"
