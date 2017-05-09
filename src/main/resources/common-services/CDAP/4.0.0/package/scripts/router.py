@@ -33,7 +33,7 @@ class Router(Script):
         helpers.package('cdap-gateway')
         self.configure(env)
 
-    def start(self, env):
+    def start(self, env, upgrade_type=None):
         print('Start the CDAP Router')
         import params
         import status_params
@@ -47,7 +47,7 @@ class Router(Script):
             not_if=no_op_test
         )
 
-    def stop(self, env):
+    def stop(self, env, upgrade_type=None):
         print('Stop the CDAP Router')
         import status_params
         daemon_cmd = format('service cdap-router stop')
