@@ -115,8 +115,7 @@ class Master(Script):
         cmd = format("/opt/cdap/master/bin/cdap run %s %s" % (classname, arguments))
         Execute(
             cmd,
-            user=params.cdap_user,
-            only_if=self.status(env)
+            user=params.cdap_user
         )
 
     def remove_jackson(self, env):
