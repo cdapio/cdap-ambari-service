@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
    Copyright © 2017 Cask Data, Inc.
 
@@ -19,23 +19,22 @@
   <target>2.3.*.*</target>
   <target-stack>HDP-2.3</target-stack>
   <type>NON_ROLLING</type>
-  <!-- TODO: figure out prerequisite-checks -->
   <order>
-    <group xsi:type="cluster" name="PRE_CLUSTER" title="Pre {{direction.text.proper}}">
-      <add-after-group-entry>YARN</add-after-group-entry>
-      <execute-stage service="CDAP" component="CDAP_MASTER" title="Stop running CDAP applications">
-        <task xsi:type="manual">
-          <message>Before continuing, please stop all running CDAP applications in all CDAP namespaces.</message>
-        </task>
-      </execute-stage>
-    </group>
+
+    <group xsi:type="cluster" name="PRE_CLUSTER" title="Pre Upgrade">
+      <add-after-group-entry>YARN</add-after-group-entry>
+      <execute-stage service="CDAP" component="CDAP_MASTER" title="Stop running CDAP applications">
+        <task xsi:type="manual">
+          <message>Before continuing, stop all CDAP applications and pipelines in all namespaces.</message>
+        </task>
+      </execute-stage>
+    </group>
 
     <group xsi:type="stop" name="STOP_CDAP_SERVICE_COMPONENTS" title="Stop CDAP components">
-      <add-after-group>PRE_CLUSTER</add-after-group>
-      <skippable>true</skippable>
       <service-check>false</service-check>
+      <skippable>true</skippable>
       <supports-auto-skip-failure>false</supports-auto-skip-failure>
-
+      <add-after-group>PRE_CLUSTER</add-after-group>
       <service name="CDAP">
         <component>CDAP_UI</component>
         <component>CDAP_MASTER</component>
@@ -46,10 +45,9 @@
     </group>
 
     <group xsi:type="cluster" name="Upgrade service configs" title="Upgrade service configs">
-      <add-after-group-entry>TEZ</add-after-group-entry>
-      <!-- CDAP -->
+      <add-after-group-entry>TEZ</add-after-group-entry>
       <execute-stage service="CDAP" component="CDAP_MASTER" title="Enable external SSL if configured">
-        <task xsi:type="configure" id="cdap_master_ssl_external_enabled"/>
+        <task xsi:type="configure" id="cdap_master_ssl_external_enabled" />
       </execute-stage>
     </group>
 
@@ -64,11 +62,10 @@
     </group>
 
     <group xsi:type="restart" name="CDAP" title="CDAP">
-      <add-after-group>CDAP_UPGRADE_TOOL</add-after-group>
       <service-check>false</service-check>
       <skippable>true</skippable>
       <supports-auto-skip-failure>false</supports-auto-skip-failure>
-      <parallel-scheduler/>
+      <add-after-group>CDAP_UPGRADE_TOOL</add-after-group>
 
       <service name="CDAP">
         <component>CDAP_UI</component>
@@ -101,9 +98,9 @@
       </component>
       <component name="CDAP_MASTER">
         <pre-upgrade>
-          <task xsi:type="configure" id="cdap_master_ssl_external_enabled"/>
+          <task xsi:type="configure" id="cdap_master_ssl_external_enabled" />
         </pre-upgrade>
-        <pre-downgrade /> # do not change config on downgrade
+        <pre-downgrade /> <!-- do not change config on downgrade -->
         <upgrade>
           <task xsi:type="restart-task" />
         </upgrade>
