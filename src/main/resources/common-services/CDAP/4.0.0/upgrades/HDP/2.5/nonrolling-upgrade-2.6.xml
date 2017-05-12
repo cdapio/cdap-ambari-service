@@ -45,6 +45,7 @@
     </group>
 
     <group xsi:type="cluster" name="Upgrade service configs" title="Upgrade service configs">
+      <add-after-group>UPDATE_DESIRED_STACK_ID</add-after-group>
       <add-after-group-entry>TEZ</add-after-group-entry>
       <execute-stage service="CDAP" component="CDAP_MASTER" title="Enable external SSL if configured">
         <task xsi:type="configure" id="cdap_master_ssl_external_enabled" />
