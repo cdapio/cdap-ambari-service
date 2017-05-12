@@ -13,14 +13,19 @@ if [[ ${PACKAGE_VERSION} =~ "-SNAPSHOT" ]] ; then
 fi
 
 clean() { rm -rf build target; };
-setup() { mkdir -p build/var/lib/ambari-server/resources target; };
+setup() { mkdir -p build/var/lib/ambari-server/resources build/cdap-ambari-mpack-${PACKAGE_VERSION} target; };
 
 install() {
   cp -a src/main/resources/* build/var/lib/ambari-server/resources
+  cp -a src/main/resources/* build/cdap-ambari-mpack-${PACKAGE_VERSION}
+  rm -rf \
+    build/var/lib/ambari-server/resources/custom-services \
+    build/cdap-ambari-mpack-${PACKAGE_VERSION}/stacks
   sed -i'' -e "s/REPLACE_ME/${PACKAGE_VERSION}/g" \
     build/var/lib/ambari-server/resources/stacks/*/*/services/CDAP/metainfo.xml \
     build/var/lib/ambari-server/resources/common-services/CDAP/*/alerts.json \
-    build/var/lib/ambari-server/resources/common-services/CDAP/*/metainfo.xml
+    build/var/lib/ambari-server/resources/common-services/CDAP/*/metainfo.xml \
+    build/cdap-ambari-mpack-${PACKAGE_VERSION}/mpack.json
 }
 
 clean && setup && install

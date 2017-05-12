@@ -1,0 +1,103 @@
+{
+  "name": "cdap-ambari-mpack",
+  "type": "full-release",
+  "version": "REPLACE_ME",
+  "description": "CDAP Management Pack",
+  "prerequisites": {
+    "min-ambari-version": "2.4.2.0",
+    "min-stack-versions": [
+      {
+        "stack_name": "HDP",
+        "stack_version": "2.2"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "CDAP-service-definition",
+      "type": "service-definition",
+      "source_dir": "common-services/CDAP/4.0.0",
+      "service_name": "CDAP",
+      "service_version": "4.0.0"
+    },
+    {
+      "name": "CDAP-4.0.x",
+      "type": "stack-addon-service-definition",
+      "source_dir": "custom-services/CDAP/4.0.0",
+      "service_name": "CDAP",
+      "service_version": "4.0.x",
+      "applicable_stacks": [
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.2"
+        },
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.3"
+        },
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.4"
+        },
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.5"
+        }
+      ]
+    },
+    {
+      "name": "CDAP-4.1.x",
+      "type": "stack-addon-service-definition",
+      "source_dir": "custom-services/CDAP/4.1.0",
+      "service_name": "CDAP",
+      "service_version": "4.1.x",
+      "applicable_stacks": [
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.2"
+        },
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.3"
+        },
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.4"
+        },
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.5"
+        }
+      ]
+    },
+    {
+      "name": "CDAP-4.2.x",
+      "type": "stack-addon-service-definition",
+      "source_dir": "custom-services/CDAP/4.2.0",
+      "service_name": "CDAP",
+      "service_version": "4.2.x",
+      "applicable_stacks": [
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.2"
+        },
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.3"
+        },
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.4"
+        },
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.5"
+        },
+        {
+          "stack_name": "HDP",
+          "stack_version": "2.6"
+        }
+      ]
+    }
+  ]
+}
