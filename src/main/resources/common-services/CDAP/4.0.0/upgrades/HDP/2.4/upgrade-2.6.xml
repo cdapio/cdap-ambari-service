@@ -66,7 +66,7 @@
       <service-check>false</service-check>
       <skippable>true</skippable>
       <supports-auto-skip-failure>false</supports-auto-skip-failure>
-      <add-after-group>Upgrade service configs</add-after-group>
+      <add-after-group>CDAP_UPGRADE_TOOL</add-after-group>
 
       <service name="CDAP">
         <component>CDAP_UI</component>
