@@ -162,6 +162,10 @@
           "subsection-name": "subsection-yarn-services-mem"
         },
         {
+          "config": "cdap-logback/access_logging",
+          "subsection-name": "subsection-cdap-features-col1"
+        },
+        {
           "config": "cdap-site/audit.enabled",
           "subsection-name": "subsection-cdap-features-col1"
         },
