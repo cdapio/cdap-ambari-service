@@ -129,7 +129,8 @@ class CDAP400ServiceAdvisor(service_advisor.ServiceAdvisor):
     def getHostsWithComponent(self, serviceName, componentName, services, hosts):
         if services is not None and hosts is not None and serviceName in [service["StackServices"]["service_name"] for service in services["services"]]:
             service = [serviceEntry for serviceEntry in services["services"] if serviceEntry["StackServices"]["service_name"] == serviceName][0]
-            components = [componentEntry for componentEntry in service["components"] if componentEntry["StackServiceComponents"]["component_name"] == componentName]
+            components = [componentEntry for componentEntry in service["components"]
+                          if componentEntry["StackServiceComponents"]["component_name"] == componentName]
             if (len(components) > 0 and len(components[0]["StackServiceComponents"]["hostnames"]) > 0):
                 componentHostnames = components[0]["StackServiceComponents"]["hostnames"]
                 componentHosts = [host for host in hosts["items"] if host["Hosts"]["host_name"] in componentHostnames]
