@@ -59,10 +59,10 @@ class CDAP400ServiceAdvisor(service_advisor.ServiceAdvisor):
                 putZooCfgProperty(property, desired_value)
 
     def getZooCfgDesiredValues(self):
-        yarn_site_desired_values = {
+        zoo_cfg_desired_values = {
             "maxClientCnxns": "0"
             }
-        return yarn_site_desired_values
+        return zoo_cfg_desired_values
 
     def getServiceComponentLayoutValidations(self, services, hosts):
         return []
@@ -86,25 +86,15 @@ class CDAP400ServiceAdvisor(service_advisor.ServiceAdvisor):
 
         # calculate cdap resources
         cdapProperties = configurations["cdap-site"]["properties"]
-        cdapCpu = int((int(cdapProperties["dataset.executor.container.num.cores"]) +
-                       int(cdapProperties["messaging.container.num.cores"]) +
-                       int(cdapProperties["stream.container.num.cores"]) +
-                       int(cdapProperties["metrics.num.cores"]) +
-                       int(cdapProperties["log.saver.container.num.cores"]) +
-                       int(cdapProperties["explore.executor.container.num.cores"]) +
-                       int(cdapProperties["metrics.processor.num.cores"]) +
-                       int(cdapProperties["data.tx.num.cores"]) +
-                       int(cdapProperties["master.service.num.cores"])))
+        cdapCpu = 0
+        for property in cdapProperties:
+                if property.endswith('num.cores'):
+                        cdapCpu += int(cdapProperties[property])
 
-        cdapMem = int((int(configurations["cdap-site"]["properties"]["dataset.executor.container.memory.mb"]) +
-                       int(cdapProperties["messaging.container.memory.mb"]) +
-                       int(cdapProperties["stream.container.memory.mb"]) +
-                       int(cdapProperties["metrics.memory.mb"]) +
-                       int(cdapProperties["log.saver.container.memory.mb"]) +
-                       int(cdapProperties["explore.executor.container.memory.mb"]) +
-                       int(cdapProperties["metrics.processor.memory.mb"]) +
-                       int(cdapProperties["data.tx.memory.mb"]) +
-                       int(cdapProperties["master.service.memory.mb"])))
+        cdapMem = 0
+        for property in cdapProperties:
+                if property.endswith('memory.mb'):
+                        cdapMem += int(cdapProperties[property])
 
         # log values
         Logger.info('nodeManagerCpu: ' + str(nodeManagerCpu))
