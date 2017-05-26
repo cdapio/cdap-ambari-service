@@ -465,6 +465,12 @@
             }
           ]
         }
+      },
+      {
+        "config": "cdap-logback/access_logging",
+        "widget": {
+          "type": "toggle"
+        }
       }
     ]
   }
