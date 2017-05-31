@@ -297,7 +297,7 @@
 
   <property>
     <name>app.artifact.dir</name>
-    <value>/opt/cdap/master/artifacts</value>
+    <value>/opt/cdap/master/artifacts;/opt/cdap/master/artifacts/${app.program.spark.compat}</value>
     <description>
       Semicolon-separated list of local directories scanned for system artifacts
       to add to the artifact repository
@@ -338,6 +338,16 @@
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
     </value-attributes>
+  </property>
+
+  <property>
+    <name>app.program.spark.compat</name>
+    <value>spark1_2.10</value>
+    <description>
+      The Spark compatibility version, if Spark is available. Must be either 'spark1_2.10'
+      or 'spark2_2.11'. In distributed mode, this will be overridden by the detected Spark
+      version. In standalone mode, this can be set to the desired version of Spark.
+    </description>
   </property>
 
   <property>
@@ -418,6 +428,14 @@
   </property>
 
   <property>
+    <name>time.event.topic</name>
+    <value>timeevent</value>
+    <description>
+      Topic name for publishing time events from time scheduler to the messaging system
+    </description>
+  </property>
+
+  <property>
     <name>workflow.token.max.size.mb</name>
     <value>30</value>
     <description>
@@ -467,6 +485,13 @@
   </property>
 
   <!-- Datasets Configuration -->
+  <property>
+    <name>data.event.topic</name>
+    <value>dataevent</value>
+    <description>
+      Topic name for publishing data events to the messaging system
+    </description>
+  </property>
 
   <property>
     <name>data.tx.client.count</name>
@@ -494,6 +519,20 @@
     <name>data.tx.discovery.service.name</name>
     <value>transaction</value>
     <description>Name in discovery service for the transaction service</description>
+  </property>
+
+  <property>
+    <name>data.tx.grace.period</name>
+    <value>86400</value>
+    <description>
+      Time in seconds used to pad transaction maximum lifetime while pruning
+    </description>
+    <final>true</final>
+    <value-attributes>
+      <type>int</type>
+      <minimum>1</minimum>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -1282,6 +1321,22 @@
   </property>
 
   <!-- Messaging System Configuration -->
+
+  <property>
+    <name>messaging.cache.size.mb</name>
+    <value>30</value>
+    <description>
+      Memory in megabytes for the cache size used by the messaging service
+      for caching recently-published messages. Currently, only topics listed
+      in the ${messaging.system.topics} configuration have caching enabled.
+      Set it to 0 to disable caching.
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <unit>MB</unit>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
 
   <property>
     <name>messaging.container.instances</name>
@@ -2761,6 +2816,15 @@
   </property>
 
   <property>
+    <name>security.authorization.cache.max.entries</name>
+    <value>100000</value>
+    <description>
+      Number of entries to hold in the container authorization cache. If set to 0, no
+      caching will be performed.
+    </description>
+  </property>
+
+  <property>
     <name>security.authorization.admin.users</name>
     <value></value>
     <description>
@@ -2781,30 +2845,8 @@
   </property>
 
   <property>
-    <name>security.authorization.cache.enabled</name>
-    <value>true</value>
-    <description>
-      Determines if authorization policies can be cached by programs;
-      defaults to true
-    </description>
-  </property>
-
-  <property>
-    <name>security.authorization.cache.refresh.interval.secs</name>
-    <value>50</value>
-    <description>
-      The interval in seconds after which a background thread will refresh
-      cached authorization policies. It is recommended to keep this value
-      slightly lower than ${security.authorization.cache.ttl.secs}, so that
-      the cached authorization policies do not expire unless they have been
-      explicitly revoked. This setting only takes effect if
-      ${security.authorization.cache.enabled} is set to true.
-    </description>
-  </property>
-
-  <property>
     <name>security.authorization.cache.ttl.secs</name>
-    <value>60</value>
+    <value>300</value>
     <description>
       The time-to-live in seconds for entries in the authorization cache
       used by programs. This setting only takes effect if
@@ -2851,6 +2893,35 @@
     </description>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authorization.propagate.privileges</name>
+    <value>true</value>
+    <description>
+      Allows the propagation of privileges to descendants. If set to 'true', then having a
+      privilege on an entity will allow the user to perform actions on all the descendants
+      of that entity. For example, if set to 'true', then having READ on a namespace will
+      allow a user to READ all datasets in that namespace. If set to 'false', then users
+      will need privileges on each entity an action is performed on.
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+    </value-attributes>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>true</value>
+          <label>Enabled</label>
+        </entry>
+        <entry>
+          <value>false</value>
+          <label>Disabled</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
     </value-attributes>
   </property>
 
@@ -3144,6 +3215,14 @@
     <value>3600000</value>
     <description>
       Duration in milliseconds of a stream partition
+    </description>
+  </property>
+
+  <property>
+    <name>stream.size.event.topic</name>
+    <value>streamsizeevent</value>
+    <description>
+      Topic name for publishing time events from stream size scheduler to the messaging system
     </description>
   </property>
 
