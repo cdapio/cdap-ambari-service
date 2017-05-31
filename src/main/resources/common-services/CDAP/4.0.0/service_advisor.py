@@ -53,10 +53,9 @@ class CDAP400ServiceAdvisor(service_advisor.ServiceAdvisor):
         if "zoo.cfg" in services["configurations"]:
             zoo_cfg = services["configurations"]["zoo.cfg"]["properties"]
             putZooCfgProperty = self.putProperty(configurations, "zoo.cfg", services)
-
-        for property, desired_value in self.getZooCfgDesiredValues().iteritems():
-            if property not in zoo_cfg or zoo_cfg[property] != desired_value:
-                putZooCfgProperty(property, desired_value)
+            for property, desired_value in self.getZooCfgDesiredValues().iteritems():
+                if property not in zoo_cfg or zoo_cfg[property] != desired_value:
+                    putZooCfgProperty(property, desired_value)
 
     def getZooCfgDesiredValues(self):
         zoo_cfg_desired_values = {
@@ -68,10 +67,13 @@ class CDAP400ServiceAdvisor(service_advisor.ServiceAdvisor):
         return []
 
     def getServiceConfigurationsValidationItems(self, configurations, recommendedDefaults, services, hosts):
+        items = []
+
         # validate recommended properties in yarn-site
-        siteName = "yarn-site"
-        method = self.validateYarnSiteConfigurations
-        items = self.validateConfigurationsForSite(configurations, recommendedDefaults, services, hosts, siteName, method)
+        if "yarn-site" in services["configurations"] and "cdap-site" in services["configurations"]:
+            siteName = "yarn-site"
+            method = self.validateYarnSiteConfigurations
+            items = self.validateConfigurationsForSite(configurations, recommendedDefaults, services, hosts, siteName, method)
 
         return items
 
