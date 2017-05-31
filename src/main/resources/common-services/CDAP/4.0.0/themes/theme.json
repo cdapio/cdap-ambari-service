@@ -468,7 +468,7 @@
       },
       {
         "config": "cdap-logback/access_logging",
-          "widget": {
+        "widget": {
         "type": "toggle"
         }
       }
