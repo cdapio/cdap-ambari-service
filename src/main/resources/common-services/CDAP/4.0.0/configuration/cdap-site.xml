@@ -348,11 +348,25 @@
       or 'spark2_2.11'. In distributed mode, this will be overridden by the detected Spark
       version. In standalone mode, this can be set to the desired version of Spark.
     </description>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>spark1_2.10</value>
+          <label>spark1_2.10</label>
+        </entry>
+        <entry>
+          <value>spark2_2.11</value>
+          <label>spark2_2.11</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
+    </value-attributes>
   </property>
 
   <property>
     <name>app.program.jvm.opts</name>
-    <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version} -Dspark.yarn.am.extraJavaOptions=-Dhdp.version=${hdp.version}</value>
+    <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version}</value>
     <description>Java options for all program containers</description>
   </property>
 
@@ -485,6 +499,7 @@
   </property>
 
   <!-- Datasets Configuration -->
+
   <property>
     <name>data.event.topic</name>
     <value>dataevent</value>
@@ -529,10 +544,11 @@
     </description>
     <final>true</final>
     <value-attributes>
-      <type>int</type>
-      <minimum>1</minimum>
-      <overridable>false</overridable>
-    </value-attributes>
+     <type>int</type>
+     <unit>seconds</unit>
+     <increment-step>1</increment-step>
+     <overridable>false</overridable>
+   </value-attributes>
   </property>
 
   <property>
