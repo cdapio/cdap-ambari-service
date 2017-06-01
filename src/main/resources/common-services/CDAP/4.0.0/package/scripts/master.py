@@ -107,6 +107,13 @@ class Master(Script):
             label='CDAP Queue Debugger Tool'
         )
 
+    def jobqueue_debugger(self, env):
+        self.run_class(
+            env,
+            classname='co.cask.cdap.data.tools.JobQueueDebugger',
+            label='CDAP Job Queue Debugger Tool'
+        )
+
     def run_class(self, env, classname, label=None, arguments=''):
         if label is None:
             label = classname
