@@ -297,7 +297,7 @@
 
   <property>
     <name>app.artifact.dir</name>
-    <value>/opt/cdap/master/artifacts</value>
+    <value>/opt/cdap/master/artifacts;/opt/cdap/master/artifacts/${app.program.spark.compat}</value>
     <description>
       Semicolon-separated list of local directories scanned for system artifacts
       to add to the artifact repository
@@ -341,8 +341,32 @@
   </property>
 
   <property>
+    <name>app.program.spark.compat</name>
+    <value>spark1_2.10</value>
+    <description>
+      The Spark compatibility version, if Spark is available. Must be either 'spark1_2.10'
+      or 'spark2_2.11'. In distributed mode, this will be overridden by the detected Spark
+      version. In standalone mode, this can be set to the desired version of Spark.
+    </description>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>spark1_2.10</value>
+          <label>spark1_2.10</label>
+        </entry>
+        <entry>
+          <value>spark2_2.11</value>
+          <label>spark2_2.11</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
+    </value-attributes>
+  </property>
+
+  <property>
     <name>app.program.jvm.opts</name>
-    <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version} -Dspark.yarn.am.extraJavaOptions=-Dhdp.version=${hdp.version}</value>
+    <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version}</value>
     <description>Java options for all program containers</description>
   </property>
 
@@ -418,6 +442,14 @@
   </property>
 
   <property>
+    <name>time.event.topic</name>
+    <value>timeevent</value>
+    <description>
+      Topic name for publishing time events from time scheduler to the messaging system
+    </description>
+  </property>
+
+  <property>
     <name>workflow.token.max.size.mb</name>
     <value>30</value>
     <description>
@@ -469,6 +501,14 @@
   <!-- Datasets Configuration -->
 
   <property>
+    <name>data.event.topic</name>
+    <value>dataevent</value>
+    <description>
+      Topic name for publishing data events to the messaging system
+    </description>
+  </property>
+
+  <property>
     <name>data.tx.client.count</name>
     <value>50</value>
     <description>
@@ -494,6 +534,21 @@
     <name>data.tx.discovery.service.name</name>
     <value>transaction</value>
     <description>Name in discovery service for the transaction service</description>
+  </property>
+
+  <property>
+    <name>data.tx.grace.period</name>
+    <value>86400</value>
+    <description>
+      Time in seconds used to pad transaction maximum lifetime while pruning
+    </description>
+    <final>true</final>
+    <value-attributes>
+     <type>int</type>
+     <unit>seconds</unit>
+     <increment-step>1</increment-step>
+     <overridable>false</overridable>
+   </value-attributes>
   </property>
 
   <property>
@@ -889,6 +944,21 @@
     </value-attributes>
   </property>
 
+  <property>
+    <name>hive.version.resolution.strategy</name>
+    <value>auto.strict</value>
+    <description>
+      Determines how to behave when the Hive version on a cluster is an unsupported value.
+      The default value of "auto.strict" will require that the Hive version matches a
+      supported value; if Explore is enabled, CDAP Master will then not start if the Hive
+      version is unsupported. Set to "auto.latest" to use the latest Hive version of CDAP
+      modules available on the cluster with an unsupported Hive version. This property is
+      ignored for supported versions of Hive or if Explore has been disabled by setting
+      ${explore.enabled} to false.
+    </description>
+  </property>
+
+
   <!-- Gateway Configuration -->
 
   <property>
@@ -1167,6 +1237,18 @@
   <!-- Master Configuration -->
 
   <property>
+    <name>hbase.version.resolution.strategy</name>
+    <value>auto.strict</value>
+    <description>
+      Determines how to behave when the HBase version on a cluster is an unsupported
+      value. The default value of "auto.strict" will require that the HBase version match
+      a supported value, and CDAP Master will not start if the HBase version is
+      unsupported. Set to "auto.latest" to use the latest HBase version available on the
+      cluster with an unsupported HBase version.
+    </description>
+  </property>
+
+  <property>
     <name>http.service.boss.threads</name>
     <value>1</value>
     <description>Number of Netty service boss threads for master HTTP services</description>
@@ -1282,6 +1364,22 @@
   </property>
 
   <!-- Messaging System Configuration -->
+
+  <property>
+    <name>messaging.cache.size.mb</name>
+    <value>30</value>
+    <description>
+      Memory in megabytes for the cache size used by the messaging service
+      for caching recently-published messages. Currently, only topics listed
+      in the ${messaging.system.topics} configuration have caching enabled.
+      Set it to 0 to disable caching.
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <unit>MB</unit>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
 
   <property>
     <name>messaging.container.instances</name>
@@ -2041,15 +2139,22 @@
     <display-name>System Log Process Retry Policy Maximum Time Seconds</display-name>
   </property>
 
-<!-- fixed.delay is the only value that works for this property.
-      We will add it back in a later release. https://issues.cask.co/browse/CDAP-8750
   <property>
     <name>system.log.process.retry.policy.type</name>
     <value>fixed.delay</value>
     <description>The type of retry policy for log processing</description>
     <display-name>System Log Process Retry Policy Type</display-name>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>fixed.delay</value>
+          <label>Fixed Delay</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
+    </value-attributes>
   </property>
--->
 
   <property>
     <name>system.metrics.retry.policy.base.delay.ms</name>
@@ -2072,15 +2177,22 @@
     <display-name>System Metrics Retry Policy Maximum Time Seconds</display-name>
   </property>
 
-  <!-- fixed.delay is the only value that works for this property.
-        We will add it back in a later release. https://issues.cask.co/browse/CDAP-8750
   <property>
     <name>system.metrics.retry.policy.type</name>
     <value>fixed.delay</value>
     <description>The type of retry policy for metrics publishing</description>
     <display-name>System Metrics Retry Policy Type</display-name>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>fixed.delay</value>
+          <label>Fixed Delay</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
+    </value-attributes>
   </property>
-  -->
 
   <property>
     <name>worker.retry.policy.base.delay.ms</name>
@@ -2761,6 +2873,15 @@
   </property>
 
   <property>
+    <name>security.authorization.cache.max.entries</name>
+    <value>100000</value>
+    <description>
+      Number of entries to hold in the container authorization cache. If set to 0, no
+      caching will be performed.
+    </description>
+  </property>
+
+  <property>
     <name>security.authorization.admin.users</name>
     <value></value>
     <description>
@@ -2781,34 +2902,11 @@
   </property>
 
   <property>
-    <name>security.authorization.cache.enabled</name>
-    <value>true</value>
-    <description>
-      Determines if authorization policies can be cached by programs;
-      defaults to true
-    </description>
-  </property>
-
-  <property>
-    <name>security.authorization.cache.refresh.interval.secs</name>
-    <value>50</value>
-    <description>
-      The interval in seconds after which a background thread will refresh
-      cached authorization policies. It is recommended to keep this value
-      slightly lower than ${security.authorization.cache.ttl.secs}, so that
-      the cached authorization policies do not expire unless they have been
-      explicitly revoked. This setting only takes effect if
-      ${security.authorization.cache.enabled} is set to true.
-    </description>
-  </property>
-
-  <property>
     <name>security.authorization.cache.ttl.secs</name>
-    <value>60</value>
+    <value>300</value>
     <description>
       The time-to-live in seconds for entries in the authorization cache
-      used by programs. This setting only takes effect if
-      ${security.authorization.cache.enabled} is set to true.
+      used by programs and system services outside of CDAP Master.
     </description>
   </property>
 
@@ -2851,6 +2949,35 @@
     </description>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authorization.propagate.privileges</name>
+    <value>true</value>
+    <description>
+      Allows the propagation of privileges to descendants. If set to 'true', then having a
+      privilege on an entity will allow the user to perform actions on all the descendants
+      of that entity. For example, if set to 'true', then having READ on a namespace will
+      allow a user to READ all datasets in that namespace. If set to 'false', then users
+      will need privileges on each entity an action is performed on.
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+    </value-attributes>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>true</value>
+          <label>Enabled</label>
+        </entry>
+        <entry>
+          <value>false</value>
+          <label>Disabled</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
     </value-attributes>
   </property>
 
@@ -3144,6 +3271,14 @@
     <value>3600000</value>
     <description>
       Duration in milliseconds of a stream partition
+    </description>
+  </property>
+
+  <property>
+    <name>stream.size.event.topic</name>
+    <value>streamsizeevent</value>
+    <description>
+      Topic name for publishing time events from stream size scheduler to the messaging system
     </description>
   </property>
 
