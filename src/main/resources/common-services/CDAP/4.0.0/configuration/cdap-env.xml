@@ -45,6 +45,19 @@
   </property>
 
   <property>
+    <name>yum_gpgcheck_enabled</name>
+    <value>true</value>
+    <description>
+      Enable Yum GPG signature check on repository packages
+    </description>
+    <display-name>YUM GPG Check</display-name>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
     <name>cdap_log_dir</name>
     <value>/var/log/cdap</value>
     <description>Log directory for CDAP</description>

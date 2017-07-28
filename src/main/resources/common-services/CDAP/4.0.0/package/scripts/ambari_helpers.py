@@ -42,7 +42,7 @@ def add_repo(source, dest):
     # Skip sed if CDAP repos exist, we're on a newer Ambari... yay!
     no_op_test = format('ls {dest} 2>/dev/null | grep CDAP >/dev/null 2>&1')
     Execute(
-        "sed -e 's#REPO_URL#%s#' %s > %s" % (params.repo_url, source, dest_file),
+        "sed -e 's#REPO_URL#%s#' -e 's#GPGCHECK#%s#' %s > %s" % (params.repo_url, int(params.gpgcheck_enabled), source, dest_file),
         not_if=no_op_test
     )
     Execute(params.key_cmd)
