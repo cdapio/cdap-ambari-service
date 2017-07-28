@@ -47,7 +47,7 @@ else:
     repo_file = 'cdap.repo'
     package_mgr = 'yum'
     key_cmd = "rpm --import %s/pubkey.gpg" % (files_dir)
-    cache_cmd = 'yum makecache'
+    cache_cmd = 'yum --disablerepo=* --enablerepo=CDAP makecache'
     repo_url = config['configurations']['cdap-env']['yum_repo_url']
     gpgcheck_enabled = config['configurations']['cdap-env']['yum_gpgcheck_enabled']
 
