@@ -48,7 +48,7 @@
     <name>yum_gpgcheck_enabled</name>
     <value>true</value>
     <description>
-      Enable gpg check
+      Enable Yum GPG signature check on repository packages
     </description>
     <display-name>YUM GPG Check</display-name>
     <value-attributes>
