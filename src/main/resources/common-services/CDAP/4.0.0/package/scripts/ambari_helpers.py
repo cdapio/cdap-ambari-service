@@ -16,6 +16,7 @@
 
 import os
 from resource_management import *
+from resource_management.libraries.functions.version import format_stack_version
 
 
 def create_hdfs_dir(path, owner, perms):
@@ -135,19 +136,8 @@ def generate_quorum(hosts, port):
 
 
 def get_hdp_version():
-    command = 'hadoop version'
-    return_code, hdp_output = shell.call(command, timeout=20)
-
-    if return_code != 0:
-        raise Fail("Unable to determine the current hadoop version: %s" % (hdp_output))
-
-    line = hdp_output.rstrip().split('\n')[0]
-    arr = line.split('.')
-    hdp_version = "%s.%s.%s.%s" % (arr[3], arr[4], arr[5], arr[6])
-    match = re.match('[0-9]+.[0-9]+.[0-9]+.[0-9]+-[0-9]+', hdp_version)
-    if match is None:
-        raise Fail('Failed to get extracted version')
-    return hdp_version
+    current_version = default("/hostLevelParams/current_version", None)
+    return format_stack_version(current_version)
 
 
 def get_hadoop_lib():
