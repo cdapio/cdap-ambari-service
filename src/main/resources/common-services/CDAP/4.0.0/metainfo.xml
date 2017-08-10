@@ -80,11 +80,13 @@
               <type>env</type>
               <fileName>logback.xml</fileName>
               <dictionaryName>cdap-logback</dictionaryName>
+              <optional>true</optional>
             </configFile>
             <configFile>
               <type>env</type>
               <fileName>logback-container.xml</fileName>
               <dictionaryName>cdap-logback-container</dictionaryName>
+              <optional>true</optional>
             </configFile>
           </configFiles>
           <customCommands>
@@ -251,6 +253,7 @@
               <type>env</type>
               <fileName>logback.xml</fileName>
               <dictionaryName>cdap-logback</dictionaryName>
+              <optional>true</optional>
             </configFile>
           </configFiles>
           <dependencies>
@@ -325,6 +328,7 @@
               <type>env</type>
               <fileName>logback.xml</fileName>
               <dictionaryName>cdap-logback</dictionaryName>
+              <optional>true</optional>
             </configFile>
           </configFiles>
         </component>
@@ -361,6 +365,7 @@
               <type>env</type>
               <fileName>logback.xml</fileName>
               <dictionaryName>cdap-logback</dictionaryName>
+              <optional>true</optional>
             </configFile>
           </configFiles>
           <configuration-dependencies>
@@ -399,6 +404,7 @@
               <type>env</type>
               <fileName>logback.xml</fileName>
               <dictionaryName>cdap-logback</dictionaryName>
+              <optional>true</optional>
             </configFile>
           </configFiles>
           <dependencies>
@@ -466,6 +472,7 @@
       <configuration-dependencies>
         <config-type>cdap-env</config-type>
         <config-type>cdap-logback</config-type>
+        <config-type>cdap-logback-container</config-type>
         <config-type>cdap-site</config-type>
       </configuration-dependencies>
       <restartRequiredAfterChange>true</restartRequiredAfterChange>
