@@ -136,8 +136,7 @@ def generate_quorum(hosts, port):
 
 
 def get_hdp_version():
-    current_version = default("/hostLevelParams/current_version", None)
-    return format_stack_version(current_version)
+    return default("/hostLevelParams/current_version", None)
 
 
 def get_hadoop_lib():
