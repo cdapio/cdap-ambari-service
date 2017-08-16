@@ -188,6 +188,14 @@
   </property>
 
   <property>
+    <name>twill.java.heap.memory.ratio</name>
+    <value>0.6</value>
+    <description>
+      The minimum ratio of heap to non-heap memory for Apache Twill container
+    </description>
+  </property>
+
+  <property>
     <name>twill.location.cache.dir</name>
     <value>.cache</value>
     <description>The relative directory name on the distributed file system for Apache Twill to cache
@@ -368,6 +376,18 @@
     <name>app.program.jvm.opts</name>
     <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version}</value>
     <description>Java options for all program containers</description>
+  </property>
+
+  <property>
+    <name>app.program.metrics.enabled</name>
+    <value>true</value>
+    <description>
+      Enable or disable emitting metrics from user application programs, by default set to true.
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -1527,11 +1547,47 @@
   </property>
 
   <property>
+    <name>messaging.table.hbase.split.policy</name>
+    <value>org.apache.hadoop.hbase.regionserver.DisabledRegionSplitPolicy</value>
+    <description>
+      The class name that controls the HBase table region split policy.
+      Ideally, auto-splitting should be disabled for HBase tables used by the messaging system.
+    </description>
+  </property>
+
+  <property>
     <name>messaging.topic.default.ttl.seconds</name>
     <value>604800</value>
     <description>
       The default time-to-live in seconds for messages in a topic
     </description>
+  </property>
+
+  <property>
+    <!-- Use lower heap memory ratio for the messaging service, since it uses non-heap memory for the connections -->
+    <name>messaging.twill.java.heap.memory.ratio</name>
+    <value>0.6</value>
+    <description>
+      The minimum ratio of heap to non-heap memory for the messaging service container
+    </description>
+  </property>
+
+  <property>
+    <!-- Use higher reserved memory setting for the messaging service, since it uses non-heap memory for connections -->
+    <name>messaging.twill.java.reserved.memory.mb</name>
+    <value>512</value>
+    <description>
+      Desired reserved non-heap memory in megabytes for the messaging service container.
+      The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size.
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <!-- Security configuration -->
@@ -1643,6 +1699,14 @@
     <name>metrics.exec.threads</name>
     <value>${http.service.exec.threads}</value>
     <description>Number of Netty service executor threads for metrics HTTP services</description>
+  </property>
+
+  <property>
+    <name>metrics.hbase.max.scan.threads</name>
+    <value>96</value>
+    <description>
+      Maximum number of threads used for scanning HBase tables
+    </description>
   </property>
 
   <property>
@@ -1824,6 +1888,18 @@
     <description>
       Number of Netty service worker threads for metrics HTTP services
     </description>
+  </property>
+
+  <property>
+    <name>metrics.v2.table.scan.enabled</name>
+    <value>false</value>
+    <description>
+      Enable or disable scanning v2 metrics tables. By default set to false.
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <!-- Monitor Handler Configuration -->
@@ -2949,35 +3025,6 @@
     </description>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>security.authorization.propagate.privileges</name>
-    <value>true</value>
-    <description>
-      Allows the propagation of privileges to descendants. If set to 'true', then having a
-      privilege on an entity will allow the user to perform actions on all the descendants
-      of that entity. For example, if set to 'true', then having READ on a namespace will
-      allow a user to READ all datasets in that namespace. If set to 'false', then users
-      will need privileges on each entity an action is performed on.
-    </description>
-    <value-attributes>
-      <type>boolean</type>
-    </value-attributes>
-    <value-attributes>
-      <type>value-list</type>
-      <entries>
-        <entry>
-          <value>true</value>
-          <label>Enabled</label>
-        </entry>
-        <entry>
-          <value>false</value>
-          <label>Disabled</label>
-        </entry>
-      </entries>
-      <selection-cardinality>1</selection-cardinality>
     </value-attributes>
   </property>
 
