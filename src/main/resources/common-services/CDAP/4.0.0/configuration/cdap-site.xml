@@ -188,6 +188,14 @@
   </property>
 
   <property>
+    <name>twill.java.heap.memory.ratio</name>
+    <value>0.6</value>
+    <description>
+      The minimum ratio of heap to non-heap memory for Apache Twill container
+    </description>
+  </property>
+
+  <property>
     <name>twill.location.cache.dir</name>
     <value>.cache</value>
     <description>The relative directory name on the distributed file system for Apache Twill to cache
@@ -368,6 +376,18 @@
     <name>app.program.jvm.opts</name>
     <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version}</value>
     <description>Java options for all program containers</description>
+  </property>
+
+  <property>
+    <name>app.program.metrics.enabled</name>
+    <value>true</value>
+    <description>
+      Enable or disable emitting metrics from user application programs, by default set to true.
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -1534,6 +1554,31 @@
     </description>
   </property>
 
+  <property>
+    <name>messaging.twill.java.heap.memory.ratio</name>
+    <value>0.6</value>
+    <description>
+      The minimum ratio of heap to non-heap memory for the messaging service container
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.twill.java.reserved.memory.mb</name>
+    <value>512</value>
+    <description>
+      Desired reserved non-heap memory in megabytes for the messaging service container.
+      The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size.
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
   <!-- Security configuration -->
 
   <property>
@@ -1643,6 +1688,14 @@
     <name>metrics.exec.threads</name>
     <value>${http.service.exec.threads}</value>
     <description>Number of Netty service executor threads for metrics HTTP services</description>
+  </property>
+
+  <property>
+    <name>metrics.hbase.max.scan.threads</name>
+    <value>96</value>
+    <description>
+      Maximum number of threads used for scanning HBase tables
+    </description>
   </property>
 
   <property>
@@ -1824,6 +1877,18 @@
     <description>
       Number of Netty service worker threads for metrics HTTP services
     </description>
+  </property>
+
+  <property>
+    <name>metrics.v2.table.scan.enabled</name>
+    <value>false</value>
+    <description>
+      Enable or disable scanning v2 metrics tables. By default set to false.
+    </description>
+    <value-attributes>
+      <type>boolean</type>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <!-- Monitor Handler Configuration -->
@@ -2046,6 +2111,73 @@
     <description>The type of retry policy for MapReduce programs. Allowed options: "none",
       "fixed.delay", or "exponential.backoff".</description>
     <display-name>MapReduce Retry Policy Type</display-name>
+  </property>
+
+  <property>
+    <name>program.message.retry.policy.base.delay.ms</name>
+    <value>1000</value>
+    <description>
+      The base delay between retries in milliseconds
+    </description>
+  </property>
+
+  <property>
+    <name>program.message.retry.policy.max.delay.ms</name>
+    <value>3000</value>
+    <description>
+      The maximum delay between retries in milliseconds
+    </description>
+  </property>
+
+  <property>
+    <name>program.message.retry.policy.max.retries</name>
+    <value>1000</value>
+    <description>
+      The maximum number of retries to attempt before aborting
+    </description>
+  </property>
+
+  <property>
+    <name>program.message.retry.policy.max.time.secs</name>
+    <value>600</value>
+    <description>
+      The maximum elapsed time in seconds before retries are aborted
+    </description>
+  </property>
+
+  <property>
+    <name>program.message.retry.policy.type</name>
+    <value>fixed.delay</value>
+    <description>
+      The type of retry policy for programs. Allowed options:
+      "none", "fixed.delay", or "exponential.backoff".
+    </description>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>fixed.delay</value>
+          <label>Fixed Delay</label>
+        </entry>
+        <entry>
+          <value>none</value>
+          <label>None</label>
+        </entry>
+        <entry>
+          <value>exponential.backoff</value>
+          <label>Exponential Backoff</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>program.status.event.topic</name>
+    <value>programstatusevent</value>
+    <description>
+      Topic name for publishing program status events from program runners to the messaging system
+    </description>
   </property>
 
   <property>
@@ -2882,26 +3014,6 @@
   </property>
 
   <property>
-    <name>security.authorization.admin.users</name>
-    <value></value>
-    <description>
-      A comma-separated list of users for whom admin privileges are to be
-      granted on the CDAP instance during CDAP startup, so that these users
-      can create namespaces. These users are also granted admin privileges
-      on the default namespace, so that they can manage privileges on the
-      default namespace. This provides a method to bootstrap CDAP on an
-      authorization-enabled cluster. The default is empty, in which case no
-      users have access to creating namespaces or to managing privileges on
-      the default namespace. In that scenario, authorization in CDAP has to
-      be bootstrapped externally using interfaces provided by the configured
-      authorization extension.
-    </description>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
-  </property>
-
-  <property>
     <name>security.authorization.cache.ttl.secs</name>
     <value>300</value>
     <description>
@@ -2953,31 +3065,13 @@
   </property>
 
   <property>
-    <name>security.authorization.propagate.privileges</name>
-    <value>true</value>
+    <name>security.authorization.extension.extra.classpath</name>
+    <value></value>
     <description>
-      Allows the propagation of privileges to descendants. If set to 'true', then having a
-      privilege on an entity will allow the user to perform actions on all the descendants
-      of that entity. For example, if set to 'true', then having READ on a namespace will
-      allow a user to READ all datasets in that namespace. If set to 'false', then users
-      will need privileges on each entity an action is performed on.
+      Extra Java classpath for CDAP security extension.
     </description>
     <value-attributes>
-      <type>boolean</type>
-    </value-attributes>
-    <value-attributes>
-      <type>value-list</type>
-      <entries>
-        <entry>
-          <value>true</value>
-          <label>Enabled</label>
-        </entry>
-        <entry>
-          <value>false</value>
-          <label>Disabled</label>
-        </entry>
-      </entries>
-      <selection-cardinality>1</selection-cardinality>
+      <empty-value-valid>true</empty-value-valid>
     </value-attributes>
   </property>
 
