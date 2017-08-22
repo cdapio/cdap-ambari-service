@@ -1547,15 +1547,6 @@
   </property>
 
   <property>
-    <name>messaging.table.hbase.split.policy</name>
-    <value>org.apache.hadoop.hbase.regionserver.DisabledRegionSplitPolicy</value>
-    <description>
-      The class name that controls the HBase table region split policy.
-      Ideally, auto-splitting should be disabled for HBase tables used by the messaging system.
-    </description>
-  </property>
-
-  <property>
     <name>messaging.topic.default.ttl.seconds</name>
     <value>604800</value>
     <description>
@@ -1564,7 +1555,6 @@
   </property>
 
   <property>
-    <!-- Use lower heap memory ratio for the messaging service, since it uses non-heap memory for the connections -->
     <name>messaging.twill.java.heap.memory.ratio</name>
     <value>0.6</value>
     <description>
@@ -1573,7 +1563,6 @@
   </property>
 
   <property>
-    <!-- Use higher reserved memory setting for the messaging service, since it uses non-heap memory for connections -->
     <name>messaging.twill.java.reserved.memory.mb</name>
     <value>512</value>
     <description>
@@ -2122,6 +2111,73 @@
     <description>The type of retry policy for MapReduce programs. Allowed options: "none",
       "fixed.delay", or "exponential.backoff".</description>
     <display-name>MapReduce Retry Policy Type</display-name>
+  </property>
+
+  <property>
+    <name>program.message.retry.policy.base.delay.ms</name>
+    <value>1000</value>
+    <description>
+      The base delay between retries in milliseconds
+    </description>
+  </property>
+
+  <property>
+    <name>program.message.retry.policy.max.delay.ms</name>
+    <value>3000</value>
+    <description>
+      The maximum delay between retries in milliseconds
+    </description>
+  </property>
+
+  <property>
+    <name>program.message.retry.policy.max.retries</name>
+    <value>1000</value>
+    <description>
+      The maximum number of retries to attempt before aborting
+    </description>
+  </property>
+
+  <property>
+    <name>program.message.retry.policy.max.time.secs</name>
+    <value>600</value>
+    <description>
+      The maximum elapsed time in seconds before retries are aborted
+    </description>
+  </property>
+
+  <property>
+    <name>program.message.retry.policy.type</name>
+    <value>fixed.delay</value>
+    <description>
+      The type of retry policy for programs. Allowed options:
+      "none", "fixed.delay", or "exponential.backoff".
+    </description>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>fixed.delay</value>
+          <label>Fixed Delay</label>
+        </entry>
+        <entry>
+          <value>none</value>
+          <label>None</label>
+        </entry>
+        <entry>
+          <value>exponential.backoff</value>
+          <label>Exponential Backoff</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>program.status.event.topic</name>
+    <value>programstatusevent</value>
+    <description>
+      Topic name for publishing program status events from program runners to the messaging system
+    </description>
   </property>
 
   <property>
@@ -2958,26 +3014,6 @@
   </property>
 
   <property>
-    <name>security.authorization.admin.users</name>
-    <value></value>
-    <description>
-      A comma-separated list of users for whom admin privileges are to be
-      granted on the CDAP instance during CDAP startup, so that these users
-      can create namespaces. These users are also granted admin privileges
-      on the default namespace, so that they can manage privileges on the
-      default namespace. This provides a method to bootstrap CDAP on an
-      authorization-enabled cluster. The default is empty, in which case no
-      users have access to creating namespaces or to managing privileges on
-      the default namespace. In that scenario, authorization in CDAP has to
-      be bootstrapped externally using interfaces provided by the configured
-      authorization extension.
-    </description>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
-  </property>
-
-  <property>
     <name>security.authorization.cache.ttl.secs</name>
     <value>300</value>
     <description>
@@ -3022,6 +3058,17 @@
       containing the extension code. This jar is only used when
       authorization is enabled by setting ${security.authorization.enabled}
       to true.
+    </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>security.authorization.extension.extra.classpath</name>
+    <value></value>
+    <description>
+      Extra Java classpath for CDAP security extension.
     </description>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
