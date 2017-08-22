@@ -557,21 +557,6 @@
   </property>
 
   <property>
-    <name>data.tx.grace.period</name>
-    <value>86400</value>
-    <description>
-      Time in seconds used to pad transaction maximum lifetime while pruning
-    </description>
-    <final>true</final>
-    <value-attributes>
-     <type>int</type>
-     <unit>seconds</unit>
-     <increment-step>1</increment-step>
-     <overridable>false</overridable>
-   </value-attributes>
-  </property>
-
-  <property>
     <name>data.tx.hdfs.user</name>
     <value>${hdfs.user}</value>
     <description>
@@ -1402,15 +1387,6 @@
   </property>
 
   <property>
-    <name>messaging.container.instances</name>
-    <value>1</value>
-    <description>
-      Number of instances for the messaging service
-    </description>
-    <final>true</final>
-  </property>
-
-  <property>
     <name>messaging.container.memory.mb</name>
     <value>512</value>
     <description>
@@ -1487,15 +1463,6 @@
       <minimum>1</minimum>
       <overridable>false</overridable>
     </value-attributes>
-  </property>
-
-  <property>
-    <name>messaging.max.instances</name>
-    <value>1</value>
-    <description>
-      Maximum number of instances for the messaging service
-    </description>
-    <final>true</final>
   </property>
 
   <property>
@@ -3340,15 +3307,6 @@
     <description>
       Interval in milliseconds for emitting new index entry in stream file
     </description>
-  </property>
-
-  <property>
-    <name>stream.instance.file.prefix</name>
-    <value>${stream.file.prefix}.${stream.container.instance.id}</value>
-    <description>
-      Prefix of file name for stream file per writer instance
-    </description>
-    <final>true</final>
   </property>
 
   <property>
