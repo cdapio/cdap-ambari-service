@@ -2922,7 +2922,7 @@
     <depends-on>
       <property>
         <type>cdap-site</type>
-        <name>security.authentication.extension.jar.path</name>
+        <name>security.authorization.extension.jar.path</name>
       </property>
     </depends-on>
     <value-attributes>
