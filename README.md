@@ -19,8 +19,8 @@ to make CDAP an available service.
 
 Simply checkout the repository and run `./build.sh` to build the RPM and DEB packages. This
 will check out the CDAP service using the latest release of CDAP. Specific major/minor releases
-of CDAP can be obtained by pulling the corresponding branch. For example, for CDAP 4.3, you would
-checkout the `release/4.3` branch.
+of CDAP can be obtained by pulling the corresponding branch. For example, for CDAP 5.0, you would
+checkout the `release/5.0` branch.
 
 ### Installing packages
 
