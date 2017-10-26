@@ -21,6 +21,8 @@ install() {
     build/var/lib/ambari-server/resources/stacks/*/*/services/CDAP/metainfo.xml \
     build/var/lib/ambari-server/resources/common-services/CDAP/*/alerts.json \
     build/var/lib/ambari-server/resources/common-services/CDAP/*/metainfo.xml
+  mkdir build/cdap-ambari-service
+  cp -R build/var/lib/ambari-server/resources build/cdap-ambari-service/
 }
 
 clean && setup && install
@@ -70,7 +72,10 @@ for p in ${PACKAGE_FORMATS} ; do
       __ret=$?
      ;;
      tar)
-      tar -cvzf cdap-ambari-service-mpack-${PACKAGE_VERSION}-${PACKAGE_ITERATION}.tar.gz ../src/main/resources/
+      tar \
+        -cvzf cdap-ambari-service-mpack-${PACKAGE_VERSION}-${PACKAGE_ITERATION}.tar.gz \
+        -C ../build \
+        ../build/cdap-ambari-service/resources/
      ;;
     *)
       echo "Unsupported format! ${p}"
