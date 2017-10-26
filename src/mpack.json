@@ -1,0 +1,31 @@
+{
+  "type": "full-release",
+  "name": "cdap-ambari-mpack",
+  "version": "5.0.0.0",
+  "description": "CDAP Management Pack",
+  "prerequisites": {
+    "min-ambari-version": "2.4.0.0",
+    "min-stack-versions": [
+      {
+        "stack_name": "HDP",
+        "stack_version": "2.2"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "CDAP-common-services",
+      "type": "service-definitions",
+      "source_dir": "common-services",
+      "service_name": "CDAP",
+      "service_version": "5.0.0"
+    },
+    {
+      "name": "CDAP-stack-services",
+      "type": "stack-definitions",
+      "source_dir": "stacks",
+      "service_name": "CDAP",
+      "service_version": "5.0.0"
+    }
+  ]
+}
