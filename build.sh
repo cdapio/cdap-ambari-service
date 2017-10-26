@@ -2,7 +2,7 @@
 
 PACKAGE_VERSION=${PACKAGE_VERSION:-5.0.0-SNAPSHOT}
 PACKAGE_ITERATION=${PACKAGE_ITERATION:-1}
-PACKAGE_FORMATS=${PACKAGE_FORMATS:-deb rpm}
+PACKAGE_FORMATS=${PACKAGE_FORMATS:-deb rpm tar}
 
 LICENSE="Copyright © 2015-2017 Cask Data, Inc. Licensed under the Apache License, Version 2.0."
 RPM_FPM_ARGS="-t rpm --rpm-os linux"
@@ -68,6 +68,9 @@ for p in ${PACKAGE_FORMATS} ; do
         -C ../build \
         var
       __ret=$?
+     ;;
+     tar)
+      tar -cvzf cdap-ambari-service-mpack-${PACKAGE_VERSION}-${PACKAGE_ITERATION}.tar.gz ../src/main/resources/
      ;;
     *)
       echo "Unsupported format! ${p}"
