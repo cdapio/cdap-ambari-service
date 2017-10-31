@@ -181,17 +181,17 @@
 
   <property>
     <name>twill.java.reserved.memory.mb</name>
-    <value>250</value>
+    <value>300</value>
     <description>
-      Reserved non-heap memory in megabytes for Apache Twill container
+      Desired reserved non-heap memory in megabytes for all launched Apache Twill containers. The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size. Container-specific settings also exist for CDAP system containers.
     </description>
   </property>
 
   <property>
     <name>twill.java.heap.memory.ratio</name>
-    <value>0.6</value>
+    <value>0.7</value>
     <description>
-      The minimum ratio of heap to non-heap memory for Apache Twill container
+      The minimum ratio of heap to non-heap memory for all launched Apache Twill containers. Container-specific settings also exist for CDAP system containers.
     </description>
   </property>
 
@@ -587,7 +587,7 @@
 
   <property>
     <name>data.tx.memory.mb</name>
-    <value>512</value>
+    <value>1024</value>
     <description>
       Memory in megabytes for each transaction service instance
     </description>
@@ -733,6 +733,31 @@
  </property>
 
   <property>
+    <name>data.tx.twill.java.heap.memory.ratio</name>
+    <value>0.7</value>
+    <description>
+      The minimum ratio of heap to non-heap memory for the transaction client service container
+    </description>
+  </property>
+
+  <property>
+    <name>data.tx.twill.java.reserved.memory.mb</name>
+    <value>300</value>
+    <description>
+      Desired reserved non-heap memory in megabytes for the transaction client service container.
+      The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size.
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
     <name>dataset.data.dir</name>
     <value>data</value>
     <description>Base directory for user data on the filesystem</description>
@@ -753,7 +778,7 @@
 
   <property>
     <name>dataset.executor.container.memory.mb</name>
-    <value>512</value>
+    <value>1024</value>
     <description>
       Memory in megabytes for each dataset executor instance
     </description>
@@ -790,6 +815,31 @@
     <description>
       Maximum number of dataset executor instances
     </description>
+  </property>
+
+  <property>
+    <name>dataset.executor.twill.java.heap.memory.ratio</name>
+    <value>0.7</value>
+    <description>
+      The minimum ratio of heap to non-heap memory for the dataset executor service container
+    </description>
+  </property>
+
+  <property>
+    <name>dataset.executor.twill.java.reserved.memory.mb</name>
+    <value>300</value>
+    <description>
+      Desired reserved non-heap memory in megabytes for the dataset executor service container.
+      The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size.
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -902,6 +952,31 @@
       requires more memory to run than the Master service.
     </description>
     <display-name>Explore Executor YARN Memory</display-name>
+    <value-attributes>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>explore.executor.twill.java.heap.memory.ratio</name>
+    <value>0.7</value>
+    <description>
+      The minimum ratio of heap to non-heap memory for the explore executor service container
+    </description>
+  </property>
+
+  <property>
+    <name>explore.executor.twill.java.reserved.memory.mb</name>
+    <value>300</value>
+    <description>
+      Desired reserved non-heap memory in megabytes for the explore executor service container.
+      The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size.
+    </description>
     <value-attributes>
       <type>int</type>
       <minimum>256</minimum>
@@ -1199,8 +1274,6 @@
     <value>1024</value>
     <description>
       Memory in megabytes for each log saver instance to run in YARN.
-      This is explicitly set differently than ${master.service.memory.mb} as
-      Log saver requires more memory to run than the Master service.
     </description>
     <display-name>Log Saver YARN Memory</display-name>
     <value-attributes>
@@ -1225,6 +1298,31 @@
       <minimum>1</minimum>
       <maximum>4</maximum>
       <increment-step>1</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
+    <name>log.saver.twill.java.heap.memory.ratio</name>
+    <value>0.7</value>
+    <description>
+      The minimum ratio of heap to non-heap memory for the log saver service container
+    </description>
+  </property>
+
+  <property>
+    <name>log.saver.twill.java.reserved.memory.mb</name>
+    <value>300</value>
+    <description>
+      Desired reserved non-heap memory in megabytes for the log saver service container.
+      The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size.
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
       <overridable>false</overridable>
     </value-attributes>
   </property>
@@ -1327,23 +1425,6 @@
   </property>
 
   <property>
-    <name>master.service.memory.mb</name>
-    <value>512</value>
-    <description>
-      Memory in megabytes for each master service instance
-    </description>
-    <display-name>Master YARN Memory</display-name>
-    <value-attributes>
-      <type>int</type>
-      <minimum>256</minimum>
-      <maximum>65536</maximum>
-      <unit>MB</unit>
-      <increment-step>256</increment-step>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
-  <property>
     <name>master.service.num.cores</name>
     <value>2</value>
     <description>
@@ -1388,7 +1469,7 @@
 
   <property>
     <name>messaging.container.memory.mb</name>
-    <value>512</value>
+    <value>1024</value>
     <description>
       Memory in megabytes for each messaging service instance
     </description>
@@ -1695,7 +1776,7 @@
 
   <property>
     <name>metrics.memory.mb</name>
-    <value>512</value>
+    <value>1024</value>
     <description>
       Memory in megabytes for each metrics service instance
     </description>
@@ -1778,7 +1859,7 @@
 
   <property>
     <name>metrics.processor.memory.mb</name>
-    <value>512</value>
+    <value>1024</value>
     <description>
       Memory in megabytes for each metrics processor service Apache Twill
       runnable instance
@@ -1824,6 +1905,31 @@
   </property>
 
   <property>
+    <name>metrics.processor.twill.java.heap.memory.ratio</name>
+    <value>0.7</value>
+    <description>
+      The minimum ratio of heap to non-heap memory for the metrics processor service container
+    </description>
+  </property>
+
+  <property>
+    <name>metrics.processor.twill.java.reserved.memory.mb</name>
+    <value>300</value>
+    <description>
+      Desired reserved non-heap memory in megabytes for the metrics processor service container.
+      The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size.
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
+  </property>
+
+  <property>
     <name>metrics.query.bind.port</name>
     <value>45005</value>
     <description>
@@ -1836,6 +1942,31 @@
     <value>metrics</value>
     <description>Topic prefix used to publish metrics in messaging</description>
     <display-name>Metrics Topic Prefix</display-name>
+  </property>
+
+  <property>
+    <name>metrics.twill.java.heap.memory.ratio</name>
+    <value>0.7</value>
+    <description>
+      The minimum ratio of heap to non-heap memory for the metrics service container
+    </description>
+  </property>
+
+  <property>
+    <name>metrics.twill.java.reserved.memory.mb</name>
+    <value>300</value>
+    <description>
+      Desired reserved non-heap memory in megabytes for the metrics service container.
+      The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size.
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
@@ -3244,7 +3375,7 @@
 
   <property>
     <name>stream.container.memory.mb</name>
-    <value>512</value>
+    <value>1024</value>
     <description>
       Memory in megabytes for each YARN container that runs the stream
       handler
@@ -3341,6 +3472,31 @@
       Delay in seconds to poll a stream in a StreamSizeSchedule if no
       notification is received
     </description>
+  </property>
+
+  <property>
+    <name>stream.twill.java.heap.memory.ratio</name>
+    <value>0.7</value>
+    <description>
+      The minimum ratio of heap to non-heap memory for the stream service container
+    </description>
+  </property>
+
+  <property>
+    <name>stream.twill.java.reserved.memory.mb</name>
+    <value>300</value>
+    <description>
+      Desired reserved non-heap memory in megabytes for the stream service container.
+      The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size.
+    </description>
+    <value-attributes>
+      <type>int</type>
+      <minimum>256</minimum>
+      <maximum>65536</maximum>
+      <unit>MB</unit>
+      <increment-step>256</increment-step>
+      <overridable>false</overridable>
+    </value-attributes>
   </property>
 
   <property>
