@@ -189,7 +189,7 @@
 
   <property>
     <name>twill.java.heap.memory.ratio</name>
-    <value>0.7</value>
+    <value>0.6</value>
     <description>
       The minimum ratio of heap to non-heap memory for all launched Apache Twill containers. Container-specific settings also exist for CDAP system containers.
     </description>
@@ -734,7 +734,7 @@
 
   <property>
     <name>data.tx.twill.java.heap.memory.ratio</name>
-    <value>0.7</value>
+    <value>0.6</value>
     <description>
       The minimum ratio of heap to non-heap memory for the transaction client service container
     </description>
@@ -819,7 +819,7 @@
 
   <property>
     <name>dataset.executor.twill.java.heap.memory.ratio</name>
-    <value>0.7</value>
+    <value>0.6</value>
     <description>
       The minimum ratio of heap to non-heap memory for the dataset executor service container
     </description>
@@ -964,7 +964,7 @@
 
   <property>
     <name>explore.executor.twill.java.heap.memory.ratio</name>
-    <value>0.7</value>
+    <value>0.6</value>
     <description>
       The minimum ratio of heap to non-heap memory for the explore executor service container
     </description>
@@ -1304,7 +1304,7 @@
 
   <property>
     <name>log.saver.twill.java.heap.memory.ratio</name>
-    <value>0.7</value>
+    <value>0.6</value>
     <description>
       The minimum ratio of heap to non-heap memory for the log saver service container
     </description>
@@ -1906,7 +1906,7 @@
 
   <property>
     <name>metrics.processor.twill.java.heap.memory.ratio</name>
-    <value>0.7</value>
+    <value>0.6</value>
     <description>
       The minimum ratio of heap to non-heap memory for the metrics processor service container
     </description>
@@ -1946,7 +1946,7 @@
 
   <property>
     <name>metrics.twill.java.heap.memory.ratio</name>
-    <value>0.7</value>
+    <value>0.6</value>
     <description>
       The minimum ratio of heap to non-heap memory for the metrics service container
     </description>
@@ -3476,7 +3476,7 @@
 
   <property>
     <name>stream.twill.java.heap.memory.ratio</name>
-    <value>0.7</value>
+    <value>0.6</value>
     <description>
       The minimum ratio of heap to non-heap memory for the stream service container
     </description>
