@@ -142,10 +142,6 @@
           "subsection-name": "subsection-yarn-services-mem"
         },
         {
-          "config": "cdap-site/master.service.memory.mb",
-          "subsection-name": "subsection-yarn-services-mem"
-        },
-        {
           "config": "cdap-site/messaging.container.memory.mb",
           "subsection-name": "subsection-yarn-services-mem"
         },
@@ -334,17 +330,6 @@
       },
       {
         "config": "cdap-site/log.saver.container.memory.mb",
-        "widget": {
-          "type": "slider",
-          "units": [
-            {
-              "unit-name": "GB"
-            }
-          ]
-        }
-      },
-      {
-        "config": "cdap-site/master.service.memory.mb",
         "widget": {
           "type": "slider",
           "units": [
