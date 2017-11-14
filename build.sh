@@ -75,7 +75,7 @@ for p in ${PACKAGE_FORMATS} ; do
       tar \
         -cvzf cdap-ambari-service-mpack-${PACKAGE_VERSION}-${PACKAGE_ITERATION}.tar.gz \
         -C ../build \
-        ../build/cdap-ambari-service/resources/
+        cdap-ambari-service/resources/
      ;;
     *)
       echo "Unsupported format! ${p}"
