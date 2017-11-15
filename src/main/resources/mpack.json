@@ -1,6 +1,6 @@
 {
   "type": "full-release",
-  "name": "cdap-ambari-mpack",
+  "name": "cdap-mpack",
   "version": "5.0.0.0",
   "description": "CDAP Management Pack",
   "prerequisites": {
