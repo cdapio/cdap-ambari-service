@@ -181,7 +181,7 @@
 
   <property>
     <name>twill.java.reserved.memory.mb</name>
-    <value>300</value>
+    <value>768</value>
     <description>
       Desired reserved non-heap memory in megabytes for all launched Apache Twill containers. The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size. Container-specific settings also exist for CDAP system containers.
     </description>
@@ -206,7 +206,7 @@
 
   <property>
     <name>twill.jvm.gc.opts</name>
-    <value>-verbose:gc -Xloggc:&lt;LOG_DIR&gt;/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=1M</value>
+    <value>-XX:+UseG1GC -verbose:gc -Xloggc:&lt;LOG_DIR&gt;/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=1M</value>
     <description>
       Java garbage collection options for all Apache Twill containers;
       "&lt;LOG_DIR&gt;" is the location of the log directory in the
@@ -305,7 +305,7 @@
 
   <property>
     <name>app.artifact.dir</name>
-    <value>/opt/cdap/master/artifacts;/opt/cdap/master/artifacts/${app.program.spark.compat}</value>
+    <value>/opt/cdap/master/artifacts</value>
     <description>
       Semicolon-separated list of local directories scanned for system artifacts
       to add to the artifact repository
@@ -349,32 +349,8 @@
   </property>
 
   <property>
-    <name>app.program.spark.compat</name>
-    <value>spark1_2.10</value>
-    <description>
-      The Spark compatibility version, if Spark is available. Must be either 'spark1_2.10'
-      or 'spark2_2.11'. In distributed mode, this will be overridden by the detected Spark
-      version. In standalone mode, this can be set to the desired version of Spark.
-    </description>
-    <value-attributes>
-      <type>value-list</type>
-      <entries>
-        <entry>
-          <value>spark1_2.10</value>
-          <label>spark1_2.10</label>
-        </entry>
-        <entry>
-          <value>spark2_2.11</value>
-          <label>spark2_2.11</label>
-        </entry>
-      </entries>
-      <selection-cardinality>1</selection-cardinality>
-    </value-attributes>
-  </property>
-
-  <property>
     <name>app.program.jvm.opts</name>
-    <value>-XX:MaxPermSize=128M ${twill.jvm.gc.opts} -Dhdp.version=${hdp.version}</value>
+    <value>${twill.jvm.gc.opts} -Dhdp.version=${hdp.version}</value>
     <description>Java options for all program containers</description>
   </property>
 
@@ -1671,6 +1647,32 @@
     </description>
   </property>
 
+  <property>
+    <name>metadata.messaging.topic</name>
+    <value>metadata</value>
+    <description>
+      Topic name used to publish metadata messages in the messaging system
+    </description>
+  </property>
+
+  <property>
+    <name>metadata.messaging.fetch.size</name>
+    <value>100</value>
+    <description>
+      Number of messages to fetch from messaging system for each batch
+    </description>
+  </property>
+
+  <property>
+    <name>metadata.messaging.poll.delay.millis</name>
+    <value>2000</value>
+    <description>
+      The delay in milliseconds that the lineage processor checks again for
+      new events after it detects there was no event
+    </description>
+  </property>
+
+
   <!-- Metrics Configuration -->
 
   <property>
@@ -1930,14 +1932,6 @@
   </property>
 
   <property>
-    <name>metrics.query.bind.port</name>
-    <value>45005</value>
-    <description>
-      Metrics Query service bind port
-    </description>
-  </property>
-
-  <property>
     <name>metrics.topic.prefix</name>
     <value>metrics</value>
     <description>Topic prefix used to publish metrics in messaging</description>
@@ -2005,6 +1999,106 @@
     </value-attributes>
   </property>
 
+
+  <!-- Runtime Monitor Configuration -->
+  <property>
+    <name>app.program.runtime.monitor.polltime.ms</name>
+    <value>2000</value>
+    <description>
+      Polling time in milliseconds to poll updates from a runtime
+    </description>
+  </property>
+
+  <property>
+    <name>app.program.runtime.monitor.batch.limit</name>
+    <value>1000</value>
+    <description>
+      Number of events to fetch from a runtime in each poll call
+    </description>
+  </property>
+
+  <property>
+    <name>app.program.runtime.monitor.topics.configs</name>
+    <value>audit.topic,data.event.topic,metadata.messaging.topic,metrics.topic.prefix:${metrics.messaging.topic.num},program.status.event.topic</value>
+    <description>
+      A comma-separated list of topic config to be monitored by runtime monitor
+    </description>
+    <final>true</final>
+  </property>
+
+  <property>
+    <name>app.program.runtime.monitor.graceful.shutdown.ms</name>
+    <value>5000</value>
+    <description>
+      Number of milliseconds to wait for the runtime to shutdown after a program execution completed in that runtime.
+    </description>
+  </property>
+
+  <property>
+    <name>app.program.runtime.monitor.server.port</name>
+    <value>443</value>
+    <description>
+      CDAP Runtime monitor server port
+    </description>
+  </property>
+
+  <property>
+    <name>app.program.runtime.monitor.server.consume.chunk.size</name>
+    <value>60000</value>
+    <description>
+      Approximate size in bytes of each chunk streamed back to Runtime Monitor client
+    </description>
+  </property>
+
+  <property>
+    <name>app.program.runtime.monitor.threads</name>
+    <value>20</value>
+    <description>
+      Maximum number of threads being used by runtime monitor for runtime monitoring
+    </description>
+  </property>
+
+  <property>
+    <name>system.runtime.monitor.retry.policy.base.delay.ms</name>
+    <value>100</value>
+    <description>
+      The base delay between retries in milliseconds
+    </description>
+  </property>
+
+  <property>
+    <name>system.runtime.monitor.retry.policy.max.delay.ms</name>
+    <value>1000</value>
+    <description>
+      The maximum delay between retries in milliseconds
+    </description>
+  </property>
+
+  <property>
+    <name>system.runtime.monitor.retry.policy.max.retries</name>
+    <value>2147483647</value>
+    <description>
+      The maximum number of retries to attempt before aborting
+    </description>
+  </property>
+
+  <property>
+    <name>system.runtime.monitor.retry.policy.max.time.secs</name>
+    <value>2147483647</value>
+    <description>
+      The maximum elapsed time in seconds before retries are aborted
+    </description>
+  </property>
+
+  <property>
+    <name>system.runtime.monitor.retry.policy.type</name>
+    <value>exponential.backoff</value>
+    <description>
+      The type of retry policy for log processing. Allowed options: "none",
+      "fixed.delay", or "exponential.backoff".
+    </description>
+  </property>
+
   <!-- Notification System Configuration -->
 
   <property>
@@ -2039,6 +2133,17 @@
     <value>60</value>
     <description>
       Number of seconds after which operational statistics should be refreshed
+    </description>
+  </property>
+
+  <!-- Runtime Configuration -->
+
+  <property>
+    <name>runtime.extensions.dir</name>
+    <value>/opt/cdap/master/ext/runtimeproviders</value>
+    <description>
+      Semicolon-separated list of local directories on the CDAP Master that
+      are scanned for program runtime extensions
     </description>
   </property>
 
@@ -2387,6 +2492,47 @@
   </property>
 
   <property>
+    <name>system.metadata.retry.policy.base.delay.ms</name>
+    <value>100</value>
+    <description>
+      The base delay between retries in milliseconds
+    </description>
+  </property>
+
+  <property>
+    <name>system.metadata.retry.policy.max.delay.ms</name>
+    <value>2000</value>
+    <description>
+      The maximum delay between retries in milliseconds
+    </description>
+  </property>
+
+  <property>
+    <name>system.metadata.retry.policy.max.retries</name>
+    <value>1000</value>
+    <description>
+      The maximum number of retries to attempt before aborting
+    </description>
+  </property>
+
+  <property>
+    <name>system.metadata.retry.policy.max.time.secs</name>
+    <value>120</value>
+    <description>
+      The maximum elapsed time in seconds before retries are aborted
+    </description>
+  </property>
+
+  <property>
+    <name>system.metadata.retry.policy.type</name>
+    <value>exponential.backoff</value>
+    <description>
+      The type of retry policy for workers. Allowed options: "none",
+      "fixed.delay", or "exponential.backoff".
+    </description>
+  </property>
+
+  <property>
     <name>system.metrics.retry.policy.base.delay.ms</name>
     <value>1000</value>
     <description>The base delay between retries in milliseconds</description>
@@ -2497,6 +2643,14 @@
   <!-- Router Configuration -->
 
   <property>
+    <name>router.audit.log.enabled</name>
+    <value>${security.enabled}</value>
+    <description>
+      Determine if access audit log is enabled
+    </description>
+  </property>
+
+  <property>
     <name>router.bind.address</name>
     <value>0.0.0.0</value>
     <description>
@@ -2524,28 +2678,6 @@
     </depends-on>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>router.client.boss.threads</name>
-    <value>1</value>
-    <description>The number of boss threads in the CDAP Router service client</description>
-    <value-attributes>
-      <type>int</type>
-      <minimum>1</minimum>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>router.client.worker.threads</name>
-    <value>10</value>
-    <description>The number of worker threads in the CDAP Router service client</description>
-    <value-attributes>
-      <type>int</type>
-      <minimum>1</minimum>
-      <overridable>false</overridable>
     </value-attributes>
   </property>
 
@@ -3458,14 +3590,6 @@
   </property>
 
   <property>
-    <name>stream.size.event.topic</name>
-    <value>streamsizeevent</value>
-    <description>
-      Topic name for publishing time events from stream size scheduler to the messaging system
-    </description>
-  </property>
-
-  <property>
     <name>stream.size.schedule.polling.delay</name>
     <value>600</value>
     <description>
@@ -3576,6 +3700,22 @@
     <value>60000</value>
     <description>
       Connection timeout in milliseconds for internal HTTP requests
+    </description>
+  </property>
+
+  <property>
+    <name>program.heartbeat.interval.seconds</name>
+    <value>1800</value>
+    <description>
+      Interval of heartbeat sent from program while it's running, default 30 minutes
+    </description>
+  </property>
+
+  <property>
+    <name>program.heartbeat.table.ttl.seconds</name>
+    <value>2592000</value>
+    <description>
+      TTL duration for program heartbeat table, by default 30 days
     </description>
   </property>
 
