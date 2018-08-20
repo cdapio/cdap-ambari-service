@@ -53,6 +53,7 @@
     </group>
 
     <group xsi:type="cluster" name="CDAP_UPGRADE_TOOL" title="CDAP Upgrade">
+      <skippable>true</skippable>
       <add-after-group>SPARK_CLIENTS</add-after-group>
       <execute-stage service="CDAP" component="CDAP_MASTER" title="Run Upgrade Tool">
         <task xsi:type="execute" hosts="master">
