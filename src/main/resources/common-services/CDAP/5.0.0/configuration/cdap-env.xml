@@ -20,7 +20,7 @@
 
   <property>
     <name>apt_repo_url</name>
-    <value>http://repository.cask.co/ubuntu/precise/amd64/cdap/5.0</value>
+    <value>http://repository.cask.co/ubuntu/precise/amd64/cdap/5.1</value>
     <description>
       URL to an APT repository hosting this version of CDAP. Defaults to
       the public Cask repository address
@@ -33,7 +33,7 @@
 
   <property>
     <name>yum_repo_url</name>
-    <value>http://repository.cask.co/centos/6/x86_64/cdap/5.0</value>
+    <value>http://repository.cask.co/centos/6/x86_64/cdap/5.1</value>
     <description>
       URL to a YUM repository hosting this version of CDAP. Defaults to
       the public Cask repository address
