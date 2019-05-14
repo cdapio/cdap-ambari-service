@@ -2271,6 +2271,14 @@
     </value-attributes>
   </property>
 
+  <property>
+    <name>structured.table.time.metrics.enabled</name>
+    <value>false</value>
+    <description>
+      Option to turn on the time metrics for the structured table operations.
+    </description>
+  </property>
+
   <!-- Monitor Handler Configuration -->
 
   <property>
