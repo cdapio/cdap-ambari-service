@@ -1909,8 +1909,24 @@
       discarded.
     </description>
   </property>
-  
+
   <!-- Metrics Configuration -->
+
+  <property>
+    <name>metrics.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      Metrics query HTTP service bind address
+    </description>
+  </property>
+
+  <property>
+    <name>metrics.bind.port</name>
+    <value>0</value>
+    <description>
+      Metrics query HTTP service bind port; if 0, binds to a random port
+    </description>
+  </property>
 
   <property>
     <name>metrics.boss.threads</name>
@@ -1922,6 +1938,25 @@
     <name>metrics.connection.backlog</name>
     <value>${http.service.connection.backlog}</value>
     <description>Max connection backlog of metrics HTTP service</description>
+  </property>
+
+  <property>
+    <name>metrics.minimum.resolution.seconds</name>
+    <value>1</value>
+    <description>
+      Minimum metrics resolution in seconds, this value should be less than 60 seconds, otherwise the minimum metrics
+      resolution will be 60 seconds.
+    </description>
+  </property>
+
+  <property>
+    <name>metrics.data.table.retention.minimum.resolution.seconds</name>
+    <value>7200</value>
+    <description>
+      Retention resolution in seconds of the minimum resolution table;
+      default retention period is 2 hours, this retention will not be applied if the
+      minimum resolution is greater than or equal to 60.
+    </description>
   </property>
 
   <property>
@@ -1966,6 +2001,14 @@
     <name>metrics.exec.threads</name>
     <value>${http.service.exec.threads}</value>
     <description>Number of Netty service executor threads for metrics HTTP services</description>
+  </property>
+
+  <property>
+    <name>metrics.meta.table</name>
+    <value>metrics.meta</value>
+    <description>
+      Name of the metrics meta table
+    </description>
   </property>
 
   <property>
@@ -2153,10 +2196,34 @@
   </property>
 
   <property>
+    <name>metrics.processor.status.bind.port</name>
+    <value>0</value>
+    <description>
+      Metrics processor HTTP service bind port; if 0, binds to a random port
+    </description>
+  </property>
+
+  <property>
     <name>metrics.topic.prefix</name>
     <value>metrics</value>
     <description>Topic prefix used to publish metrics in messaging</description>
     <display-name>Metrics Topic Prefix</display-name>
+  </property>
+
+  <property>
+    <name>metrics.admin.topic</name>
+    <value>metricsadmin</value>
+    <description>
+      Topic name for publishing metrics administrative events to the messaging system
+    </description>
+  </property>
+
+  <property>
+    <name>metrics.admin.poll.delay.millis</name>
+    <value>2000</value>
+    <description>
+      The delay in milliseconds to check again for new metrics administrative events after it detects there was no event
+    </description>
   </property>
 
   <property>
