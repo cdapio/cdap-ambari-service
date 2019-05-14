@@ -1697,6 +1697,22 @@
   </property>
 
   <property>
+    <name>messaging.http.server.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      Messaging HTTP server bind address
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.http.server.bind.port</name>
+    <value>0</value>
+    <description>
+      Messaging HTTP service bind port; if 0, binds to a random port
+    </description>
+  </property>
+
+  <property>
     <name>messaging.http.server.consume.chunk.size</name>
     <value>60000</value>
     <description>
