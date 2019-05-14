@@ -1108,6 +1108,22 @@
   </property>
 
   <property>
+    <name>app.program.log.appender.extensions.dir</name>
+    <value>/opt/cdap/master/ext/log/appenders</value>
+    <description>
+      Directory for log appender jars
+    </description>
+  </property>
+
+  <property>
+    <name>app.program.log.appender.provider</name>
+    <value></value>
+    <description>
+      Provider for log appender. The log appender provided by this provider will be loaded in each program container
+    </description>
+  </property>
+
+  <property>
     <name>log.cleanup.run.interval.mins</name>
     <value>1440</value>
     <description>Log cleanup interval in minutes</description>
