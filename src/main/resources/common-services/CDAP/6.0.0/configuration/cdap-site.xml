@@ -3438,7 +3438,7 @@
     <value></value>
     <description>
       JAAS LoginModule implementation to use when
-      co.cask.security.server.JAASAuthenticationHandler is configured for
+      io.cdap.cdap.security.server.JAASAuthenticationHandler is configured for
       ${security.authentication.handlerClassName}
     </description>
     <depends-on>

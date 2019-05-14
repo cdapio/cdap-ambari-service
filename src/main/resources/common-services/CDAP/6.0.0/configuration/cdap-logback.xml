@@ -67,7 +67,7 @@
     &lt;logger name="io.netty.util.internal" level="WARN"/&gt;
     &lt;logger name="org.apache.twill" level="INFO"/&gt;
     &lt;logger name="org.apache.twill.internal.kafka.client.SimpleKafkaConsumer" level="WARN"/&gt;
-    &lt;logger name="co.cask.cdap" level="INFO"/&gt;
+    &lt;logger name="io.cdap.cdap" level="INFO"/&gt;
 
     &lt;appender name="Console" class="ch.qos.logback.core.ConsoleAppender"&gt;
       &lt;encoder&gt;
