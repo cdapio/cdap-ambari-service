@@ -540,6 +540,77 @@
   </property>
 
   <property>
+    <name>data.storage.implementation</name>
+    <value>nosql</value>
+    <description>
+      The database implementation CDAP will use.
+    </description>
+  </property>
+
+  <property>
+    <name>data.storage.sql.jdbc.driver.external</name>
+    <value>true</value>
+    <description>
+      Indicates whether the JDBC driver has to be loaded from an external directory.
+      If true, then the JDBC driver directory has to be specified using
+      "data.storage.sql.jdbc.driver.directory".
+      If false, then the JDBC driver is present in the CDAP classpath.
+      This config can only be used when the storage implementation is postgresql.
+    </description>
+  </property>
+
+  <property>
+    <name>data.storage.sql.jdbc.driver.directory</name>
+    <value>/opt/cdap/master/ext/jdbc</value>
+    <description>
+      The base directory for storing JDBC driver jars.
+      Sub-directory with the name that matches with the value of "data.storage.implementation" setting
+      will be searched for the corresponding JDBC driver and
+      dependencies jars to connect to the configured sql instance.
+      The JDBC driver class to load has to be specified using "data.storage.sql.jdbc.driver.name".
+      This config can only be used when the storage implementation is postgresql.
+    </description>
+  </property>
+
+  <property>
+    <name>data.storage.sql.jdbc.driver.name</name>
+    <value></value>
+    <description>
+      The jdbc driver class name to connect to the sql instance. The jdbc url,
+      username, password, connection properties can be set using
+      cdap-security.xml.
+    </description>
+  </property>
+
+  <property>
+    <name>data.storage.sql.jdbc.connection.url</name>
+    <value></value>
+    <description>
+      The jdbc url to connect to the sql instance. No sensitive information
+      should be provided using the jdbc url. The username and password can
+      be specified in cdap-security.xml. For non-sensitive properties, it can be
+      specified by adding a property with name prefixed with "data.storage.sql.jdbc.property.",
+      followed by the sql property name.
+    </description>
+  </property>
+
+  <property>
+    <name>data.storage.sql.jdbc.connection.pool.size</name>
+    <value>800</value>
+    <description>
+      The max number of connections for the sql connection pool.
+    </description>
+  </property>
+
+  <property>
+    <name>data.tx.enabled</name>
+    <value>true</value>
+    <description>
+      Determines if the transaction service is enabled.
+    </description>
+  </property>
+
+  <property>
     <name>data.tx.client.count</name>
     <value>50</value>
     <description>
@@ -772,6 +843,14 @@
     <name>dataset.data.dir</name>
     <value>data</value>
     <description>Base directory for user data on the filesystem</description>
+  </property>
+
+  <property>
+    <name>dataset.executor.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      Dataset executor HTTP service bind address
+    </description>
   </property>
 
   <property>
