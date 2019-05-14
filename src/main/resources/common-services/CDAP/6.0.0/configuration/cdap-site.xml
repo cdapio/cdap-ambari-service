@@ -1187,6 +1187,38 @@
   </property>
 
   <property>
+    <name>log.buffer.base.dir</name>
+    <value>${local.data.dir}/logs.buffer</value>
+    <description>
+      Base directory for logs buffer
+    </description>
+  </property>
+
+  <property>
+    <name>log.buffer.max.file.size.bytes</name>
+    <value>104857600</value>
+    <description>
+      Maximum size in bytes of a log buffer file
+    </description>
+  </property>
+
+  <property>
+    <name>log.buffer.server.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      Log buffer HTTP service bind address
+    </description>
+  </property>
+
+  <property>
+    <name>log.buffer.server.bind.port</name>
+    <value>0</value>
+    <description>
+      Log buffer HTTP service bind port
+    </description>
+  </property>
+
+  <property>
     <name>app.program.log.appender.extensions.dir</name>
     <value>/opt/cdap/master/ext/log/appenders</value>
     <description>
@@ -1203,9 +1235,26 @@
   </property>
 
   <property>
+    <name>log.buffer.recovery.batch.size</name>
+    <value>5000</value>
+    <description>
+      Log buffer recovery batch size in number of log events read. This will be used to recover logs in batches from
+      log buffer upon log service restart
+    </description>
+  </property>
+
+  <property>
     <name>log.cleanup.run.interval.mins</name>
     <value>1440</value>
     <description>Log cleanup interval in minutes</description>
+  </property>
+
+  <property>
+    <name>log.pipeline.cdap.file.cleanup.batch.size</name>
+    <value>10000</value>
+    <description>
+      Batch size to clean up log metadata table
+    </description>
   </property>
 
   <property>
@@ -1220,6 +1269,14 @@
     <name>log.publish.num.partitions</name>
     <value>10</value>
     <description>Number of CDAP Kafka service partitions to publish the logs to</description>
+  </property>
+
+  <property>
+    <name>log.queue.size</name>
+    <value>512</value>
+    <description>
+      The buffer size used in Log Appender
+    </description>
   </property>
 
   <property>
@@ -1353,6 +1410,22 @@
     <value>7</value>
     <description>
       Duration in days of log file HDFS retention
+    </description>
+  </property>
+
+  <property>
+    <name>log.query.server.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      Log query HTTP service bind address
+    </description>
+  </property>
+
+  <property>
+    <name>log.query.server.bind.port</name>
+    <value>0</value>
+    <description>
+      Log query HTTP service bind port
     </description>
   </property>
 
