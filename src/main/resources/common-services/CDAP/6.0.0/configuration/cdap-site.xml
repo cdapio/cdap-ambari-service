@@ -3588,6 +3588,14 @@
   </property>
 
   <property>
+    <name>security.store.extensions.dir</name>
+    <value>/opt/cdap/master/ext/securestores</value>
+    <description>
+      Semicolon-separated list of local directories that are scanned for secure store extensions
+    </description>
+  </property>
+
+  <property>
     <name>security.store.provider</name>
     <value>none</value>
     <description>
