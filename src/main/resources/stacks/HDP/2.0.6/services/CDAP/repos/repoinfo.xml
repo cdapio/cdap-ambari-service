@@ -17,36 +17,36 @@
 <reposinfo>
   <os family="redhat6">
     <repo>
-      <baseurl>http://repository.cask.co/centos/6/x86_64/cdap/5.1</baseurl>
-      <repoid>CDAP-5.1</repoid>
+      <baseurl>http://repository.cask.co/centos/6/x86_64/cdap/6.0</baseurl>
+      <repoid>CDAP-6.0</repoid>
       <reponame>CDAP</reponame>
     </repo>
   </os>
   <os family="redhat7">
     <repo>
-      <baseurl>http://repository.cask.co/centos/6/x86_64/cdap/5.1</baseurl>
-      <repoid>CDAP-5.1</repoid>
+      <baseurl>http://repository.cask.co/centos/6/x86_64/cdap/6.0</baseurl>
+      <repoid>CDAP-6.0</repoid>
       <reponame>CDAP</reponame>
     </repo>
   </os>
   <os family="ubuntu12">
     <repo>
-      <baseurl>http://repository.cask.co/ubuntu/precise/amd64/cdap/5.1</baseurl>
-      <repoid>CDAP-5.1</repoid>
+      <baseurl>http://repository.cask.co/ubuntu/precise/amd64/cdap/6.0</baseurl>
+      <repoid>CDAP-6.0</repoid>
       <reponame>CDAP</reponame>
     </repo>
   </os>
   <os family="ubuntu14">
     <repo>
-      <baseurl>http://repository.cask.co/ubuntu/precise/amd64/cdap/5.1</baseurl>
-      <repoid>CDAP-5.1</repoid>
+      <baseurl>http://repository.cask.co/ubuntu/precise/amd64/cdap/6.0</baseurl>
+      <repoid>CDAP-6.0</repoid>
       <reponame>CDAP</reponame>
     </repo>
   </os>
   <os family="ubuntu16">
     <repo>
-      <baseurl>http://repository.cask.co/ubuntu/precise/amd64/cdap/5.1</baseurl>
-      <repoid>CDAP-5.1</repoid>
+      <baseurl>http://repository.cask.co/ubuntu/precise/amd64/cdap/6.0</baseurl>
+      <repoid>CDAP-6.0</repoid>
       <reponame>CDAP</reponame>
     </repo>
   </os>
