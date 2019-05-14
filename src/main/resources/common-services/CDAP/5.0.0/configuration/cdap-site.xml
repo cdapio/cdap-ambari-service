@@ -259,6 +259,16 @@
   </property>
 
   <!-- Global Configuration -->
+  <property>
+    <name>bootstrap.file</name>
+    <value>/opt/cdap/master/bootstrap/distributed.json</value>
+    <description>
+      File that contains bootstrap steps that should be executed on a new CDAP instance as well
+      as steps that should be executed on every restart of CDAP. Bootstrap steps include operations
+      like loading system artifacts, creating the native profile, and creating the data prep
+      application.
+    </description>
+  </property>
 
   <property>
     <name>dataset.unchecked.upgrade</name>
@@ -419,6 +429,15 @@
   </property>
 
   <property>
+    <name>scheduler.job.queue.num.partitions</name>
+    <value>16</value>
+    <description>
+      Number of partitions in the scheduler's job queue. This is the same
+      as the number of constraint checker threads started by the scheduler.
+    </description>
+  </property>
+
+  <property>
     <name>scheduler.max.thread.pool.size</name>
     <value>100</value>
     <description>Size of the scheduler thread pool</description>
@@ -456,6 +475,14 @@
       <type>int</type>
       <overridable>false</overridable>
     </value-attributes>
+  </property>
+
+  <property>
+    <name>ui.theme.file</name>
+    <value>ui/server/config/themes/default.json</value>
+    <description>
+      File containing the theme to be used in UI
+    </description>
   </property>
 
   <!-- Audit Configuration -->
@@ -2031,14 +2058,6 @@
     <value>5000</value>
     <description>
       Number of milliseconds to wait for the runtime to shutdown after a program execution completed in that runtime.
-    </description>
-  </property>
-
-  <property>
-    <name>app.program.runtime.monitor.server.port</name>
-    <value>443</value>
-    <description>
-      CDAP Runtime monitor server port
     </description>
   </property>
 
