@@ -365,6 +365,14 @@
   </property>
 
   <property>
+    <name>app.max.concurrent.runs</name>
+    <value>-1</value>
+    <description>
+      Maximum number of concurrent program runs allowed; set to -1 for unlimited
+    </description>
+  </property>
+
+  <property>
     <name>app.program.metrics.enabled</name>
     <value>true</value>
     <description>
