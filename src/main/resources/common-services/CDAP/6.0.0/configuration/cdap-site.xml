@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
-  Copyright © 2015-2017 Cask Data, Inc.
+  Copyright © 2015-2019 Cask Data, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy of
@@ -151,11 +151,20 @@
 
   <property>
     <name>master.startup.checks.packages</name>
-    <value>co.cask.cdap.master.startup</value>
+    <value>io.cdap.cdap.master.startup,io.cdap.cdap.data.startup</value>
     <description>
       Comma-separated list of packages containing checks that will be run before the CDAP Master starts up.
       If any of the checks fails, the CDAP Master will not start up.
       Checks will only be run if master.startup.checks.enabled is set to true.
+    </description>
+  </property>
+
+  <property>
+    <name>master.environment.extensions.dir</name>
+    <value>/opt/cdap/master/ext/environments</value>
+    <description>
+      Semicolon-separated list of local directories that are scanned for
+      CDAP Master environment providers.
     </description>
   </property>
 
@@ -365,6 +374,14 @@
   </property>
 
   <property>
+    <name>app.max.concurrent.runs</name>
+    <value>-1</value>
+    <description>
+      Maximum number of concurrent program runs allowed; set to -1 for unlimited
+    </description>
+  </property>
+
+  <property>
     <name>app.program.metrics.enabled</name>
     <value>true</value>
     <description>
@@ -479,7 +496,7 @@
 
   <property>
     <name>ui.theme.file</name>
-    <value>ui/server/config/themes/default.json</value>
+    <value>server/config/themes/default.json</value>
     <description>
       File containing the theme to be used in UI
     </description>
@@ -528,6 +545,77 @@
     <value>dataevent</value>
     <description>
       Topic name for publishing data events to the messaging system
+    </description>
+  </property>
+
+  <property>
+    <name>data.storage.implementation</name>
+    <value>nosql</value>
+    <description>
+      The database implementation CDAP will use.
+    </description>
+  </property>
+
+  <property>
+    <name>data.storage.sql.jdbc.driver.external</name>
+    <value>true</value>
+    <description>
+      Indicates whether the JDBC driver has to be loaded from an external directory.
+      If true, then the JDBC driver directory has to be specified using
+      "data.storage.sql.jdbc.driver.directory".
+      If false, then the JDBC driver is present in the CDAP classpath.
+      This config can only be used when the storage implementation is postgresql.
+    </description>
+  </property>
+
+  <property>
+    <name>data.storage.sql.jdbc.driver.directory</name>
+    <value>/opt/cdap/master/ext/jdbc</value>
+    <description>
+      The base directory for storing JDBC driver jars.
+      Sub-directory with the name that matches with the value of "data.storage.implementation" setting
+      will be searched for the corresponding JDBC driver and
+      dependencies jars to connect to the configured sql instance.
+      The JDBC driver class to load has to be specified using "data.storage.sql.jdbc.driver.name".
+      This config can only be used when the storage implementation is postgresql.
+    </description>
+  </property>
+
+  <property>
+    <name>data.storage.sql.jdbc.driver.name</name>
+    <value></value>
+    <description>
+      The jdbc driver class name to connect to the sql instance. The jdbc url,
+      username, password, connection properties can be set using
+      cdap-security.xml.
+    </description>
+  </property>
+
+  <property>
+    <name>data.storage.sql.jdbc.connection.url</name>
+    <value></value>
+    <description>
+      The jdbc url to connect to the sql instance. No sensitive information
+      should be provided using the jdbc url. The username and password can
+      be specified in cdap-security.xml. For non-sensitive properties, it can be
+      specified by adding a property with name prefixed with "data.storage.sql.jdbc.property.",
+      followed by the sql property name.
+    </description>
+  </property>
+
+  <property>
+    <name>data.storage.sql.jdbc.connection.pool.size</name>
+    <value>800</value>
+    <description>
+      The max number of connections for the sql connection pool.
+    </description>
+  </property>
+
+  <property>
+    <name>data.tx.enabled</name>
+    <value>true</value>
+    <description>
+      Determines if the transaction service is enabled.
     </description>
   </property>
 
@@ -764,6 +852,14 @@
     <name>dataset.data.dir</name>
     <value>data</value>
     <description>Base directory for user data on the filesystem</description>
+  </property>
+
+  <property>
+    <name>dataset.executor.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      Dataset executor HTTP service bind address
+    </description>
   </property>
 
   <property>
@@ -1100,9 +1196,74 @@
   </property>
 
   <property>
+    <name>log.buffer.base.dir</name>
+    <value>${local.data.dir}/logs.buffer</value>
+    <description>
+      Base directory for logs buffer
+    </description>
+  </property>
+
+  <property>
+    <name>log.buffer.max.file.size.bytes</name>
+    <value>104857600</value>
+    <description>
+      Maximum size in bytes of a log buffer file
+    </description>
+  </property>
+
+  <property>
+    <name>log.buffer.server.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      Log buffer HTTP service bind address
+    </description>
+  </property>
+
+  <property>
+    <name>log.buffer.server.bind.port</name>
+    <value>0</value>
+    <description>
+      Log buffer HTTP service bind port
+    </description>
+  </property>
+
+  <property>
+    <name>app.program.log.appender.extensions.dir</name>
+    <value>/opt/cdap/master/ext/log/appenders</value>
+    <description>
+      Directory for log appender jars
+    </description>
+  </property>
+
+  <property>
+    <name>app.program.log.appender.provider</name>
+    <value></value>
+    <description>
+      Provider for log appender. The log appender provided by this provider will be loaded in each program container
+    </description>
+  </property>
+
+  <property>
+    <name>log.buffer.recovery.batch.size</name>
+    <value>5000</value>
+    <description>
+      Log buffer recovery batch size in number of log events read. This will be used to recover logs in batches from
+      log buffer upon log service restart
+    </description>
+  </property>
+
+  <property>
     <name>log.cleanup.run.interval.mins</name>
     <value>1440</value>
     <description>Log cleanup interval in minutes</description>
+  </property>
+
+  <property>
+    <name>log.pipeline.cdap.file.cleanup.batch.size</name>
+    <value>10000</value>
+    <description>
+      Batch size to clean up log metadata table
+    </description>
   </property>
 
   <property>
@@ -1117,6 +1278,14 @@
     <name>log.publish.num.partitions</name>
     <value>10</value>
     <description>Number of CDAP Kafka service partitions to publish the logs to</description>
+  </property>
+
+  <property>
+    <name>log.queue.size</name>
+    <value>512</value>
+    <description>
+      The buffer size used in Log Appender
+    </description>
   </property>
 
   <property>
@@ -1250,6 +1419,22 @@
     <value>7</value>
     <description>
       Duration in days of log file HDFS retention
+    </description>
+  </property>
+
+  <property>
+    <name>log.query.server.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      Log query HTTP service bind address
+    </description>
+  </property>
+
+  <property>
+    <name>log.query.server.bind.port</name>
+    <value>0</value>
+    <description>
+      Log query HTTP service bind port
     </description>
   </property>
 
@@ -1512,6 +1697,22 @@
   </property>
 
   <property>
+    <name>messaging.http.server.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      Messaging HTTP server bind address
+    </description>
+  </property>
+
+  <property>
+    <name>messaging.http.server.bind.port</name>
+    <value>0</value>
+    <description>
+      Messaging HTTP service bind port; if 0, binds to a random port
+    </description>
+  </property>
+
+  <property>
     <name>messaging.http.server.consume.chunk.size</name>
     <value>60000</value>
     <description>
@@ -1699,8 +1900,33 @@
     </description>
   </property>
 
+  <property>
+    <name>metadata.messaging.retries.on.conflict</name>
+    <value>100</value>
+    <description>
+      The maximal number of times a metadata message will be processed if it
+      repeatedly causes a conflict exception. After this, the mesaage will be
+      discarded.
+    </description>
+  </property>
 
   <!-- Metrics Configuration -->
+
+  <property>
+    <name>metrics.bind.address</name>
+    <value>0.0.0.0</value>
+    <description>
+      Metrics query HTTP service bind address
+    </description>
+  </property>
+
+  <property>
+    <name>metrics.bind.port</name>
+    <value>0</value>
+    <description>
+      Metrics query HTTP service bind port; if 0, binds to a random port
+    </description>
+  </property>
 
   <property>
     <name>metrics.boss.threads</name>
@@ -1715,11 +1941,21 @@
   </property>
 
   <property>
-    <name>metrics.data.table.retention.resolution.1.seconds</name>
+    <name>metrics.minimum.resolution.seconds</name>
+    <value>1</value>
+    <description>
+      Minimum metrics resolution in seconds, this value should be less than 60 seconds, otherwise the minimum metrics
+      resolution will be 60 seconds.
+    </description>
+  </property>
+
+  <property>
+    <name>metrics.data.table.retention.minimum.resolution.seconds</name>
     <value>7200</value>
     <description>
-      Retention resolution in seconds of the 1-second resolution table;
-      default retention period is 2 hours
+      Retention resolution in seconds of the minimum resolution table;
+      default retention period is 2 hours, this retention will not be applied if the
+      minimum resolution is greater than or equal to 60.
     </description>
   </property>
 
@@ -1768,19 +2004,20 @@
   </property>
 
   <property>
+    <name>metrics.meta.table</name>
+    <value>metrics.meta</value>
+    <description>
+      Name of the metrics meta table
+    </description>
+  </property>
+
+  <property>
     <name>metrics.hbase.max.scan.threads</name>
     <value>96</value>
     <description>
       Maximum number of threads used for scanning HBase tables
     </description>
   </property>
-
-  <property>
-    <name>metrics.kafka.meta.table</name>
-    <value>metrics.kafka.meta</value>
-    <description>Name of the Kafka metrics meta table</description>
-    <display-name>Metrics Kafka Meta Table</display-name>
- </property>
 
   <property>
     <name>metrics.kafka.partition.size</name>
@@ -1959,10 +2196,34 @@
   </property>
 
   <property>
+    <name>metrics.processor.status.bind.port</name>
+    <value>0</value>
+    <description>
+      Metrics processor HTTP service bind port; if 0, binds to a random port
+    </description>
+  </property>
+
+  <property>
     <name>metrics.topic.prefix</name>
     <value>metrics</value>
     <description>Topic prefix used to publish metrics in messaging</description>
     <display-name>Metrics Topic Prefix</display-name>
+  </property>
+
+  <property>
+    <name>metrics.admin.topic</name>
+    <value>metricsadmin</value>
+    <description>
+      Topic name for publishing metrics administrative events to the messaging system
+    </description>
+  </property>
+
+  <property>
+    <name>metrics.admin.poll.delay.millis</name>
+    <value>2000</value>
+    <description>
+      The delay in milliseconds to check again for new metrics administrative events after it detects there was no event
+    </description>
   </property>
 
   <property>
@@ -2008,6 +2269,14 @@
       <type>boolean</type>
       <overridable>false</overridable>
     </value-attributes>
+  </property>
+
+  <property>
+    <name>structured.table.time.metrics.enabled</name>
+    <value>false</value>
+    <description>
+      Option to turn on the time metrics for the structured table operations.
+    </description>
   </property>
 
   <!-- Monitor Handler Configuration -->
@@ -2262,41 +2531,6 @@
     <value>exponential.backoff</value>
     <description>The type of retry policy for custom actions. Allowed options: "none", "fixed.delay", or "exponential.backoff".</description>
     <display-name>Custom Action Retry Policy Type</display-name>
-  </property>
-
-  <property>
-    <name>flow.retry.policy.base.delay.ms</name>
-    <value>100</value>
-    <description>The base delay between retries in milliseconds</description>
-    <display-name>Flow Retry Policy Base Delay Milliseconds</display-name>
-  </property>
-
-  <property>
-    <name>flow.retry.policy.max.delay.ms</name>
-    <value>1000</value>
-    <description>The maximum delay between retries in milliseconds</description>
-    <display-name>Flow Retry Policy Maximum Delay Milliseconds</display-name>
-  </property>
-
-  <property>
-    <name>flow.retry.policy.max.retries</name>
-    <value>3</value>
-    <description>The maximum number of retries to attempt before aborting</description>
-    <display-name>Flow Retry Policy Maximum Retries</display-name>
-  </property>
-
-  <property>
-    <name>flow.retry.policy.max.time.secs</name>
-    <value>10</value>
-    <description>The maximum elapsed time in seconds before retries are aborted</description>
-    <display-name>Flow Retry Policy Maximum Time Seconds</display-name>
-  </property>
-
-  <property>
-    <name>flow.retry.policy.type</name>
-    <value>none</value>
-    <description>The type of retry policy for flows</description>
-    <display-name>Flow Retry Policy Type</display-name>
   </property>
 
   <property>
@@ -2766,41 +3000,6 @@
     </description>
   </property>
 
-  <property>
-    <name>router.userservice.fallback.strategy</name>
-    <value>random</value>
-    <description>
-      If a RouteConfig is not found for a particular user service, this
-      property is used to set the fallback routing strategy. Allowed
-      options: "random", "smallest", "largest", or "drop". A string
-      comparison of the versions of the user service is used for "smallest"
-      or "largest". The "drop" option will not route the request to any
-      service and will return "service not found".
-    </description>
-    <value-attributes>
-      <type>value-list</type>
-      <entries>
-        <entry>
-          <value>random</value>
-          <label>Random</label>
-        </entry>
-        <entry>
-          <value>smallest</value>
-          <label>Smallest</label>
-        </entry>
-        <entry>
-          <value>largest</value>
-          <label>Largest</label>
-        </entry>
-        <entry>
-          <value>drop</value>
-          <label>Drop</label>
-        </entry>
-      </entries>
-      <selection-cardinality>1</selection-cardinality>
-    </value-attributes>
-  </property>
-
   <!-- Kafka Configuration -->
 
   <property>
@@ -3239,7 +3438,7 @@
     <value></value>
     <description>
       JAAS LoginModule implementation to use when
-      co.cask.security.server.JAASAuthenticationHandler is configured for
+      io.cdap.cdap.security.server.JAASAuthenticationHandler is configured for
       ${security.authentication.handlerClassName}
     </description>
     <depends-on>
@@ -3397,6 +3596,14 @@
   </property>
 
   <property>
+    <name>security.store.extensions.dir</name>
+    <value>/opt/cdap/master/ext/securestores</value>
+    <description>
+      Semicolon-separated list of local directories that are scanned for secure store extensions
+    </description>
+  </property>
+
+  <property>
     <name>security.store.provider</name>
     <value>none</value>
     <description>
@@ -3462,192 +3669,6 @@
     <value-attributes>
       <type>boolean</type>
     </value-attributes>
-  </property>
-
-  <!-- Stream Configuration -->
-
-  <property>
-    <name>stream.async.queue.size</name>
-    <value>100</value>
-    <description>
-      Queue size per async worker thread for queuing up async write requests
-    </description>
-  </property>
-
-  <property>
-    <name>stream.async.worker.threads</name>
-    <value>${stream.worker.threads}</value>
-    <description>
-      Number of async worker threads for handling async write requests
-    </description>
-  </property>
-
-  <property>
-    <name>stream.base.dir</name>
-    <value>/streams</value>
-    <description>The directory root for all stream files, relative to the HDFS namespace</description>
-  </property>
-
-  <property>
-    <name>stream.batch.buffer.threshold</name>
-    <value>1048576</value>
-    <description>Bytes retained in-memory before writing to a new stream file</description>
-  </property>
-
-  <property>
-    <name>stream.consumer.table.presplits</name>
-    <value>16</value>
-    <description>
-      Number of splits for the stream consumer table
-    </description>
-  </property>
-
-  <property>
-    <name>stream.container.instance.id</name>
-    <value>0</value>
-    <description>
-      Instance ID for the stream service container; the actual value will be
-      set at runtime by the system automatically
-    </description>
-  </property>
-
-  <property>
-    <name>stream.container.instances</name>
-    <value>1</value>
-    <description>
-      Number of YARN container instances for the stream handler
-    </description>
-    <value-attributes>
-      <type>int</type>
-      <minimum>1</minimum>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>stream.container.memory.mb</name>
-    <value>1024</value>
-    <description>
-      Memory in megabytes for each YARN container that runs the stream
-      handler
-    </description>
-    <display-name>Stream YARN Memory</display-name>
-    <value-attributes>
-      <type>int</type>
-      <minimum>256</minimum>
-      <maximum>65536</maximum>
-      <unit>MB</unit>
-      <increment-step>256</increment-step>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>stream.container.num.cores</name>
-    <value>2</value>
-    <description>
-      Number of virtual core for the YARN container that runs the stream handler
-    </description>
-    <display-name>Stream YARN CPU Cores</display-name>
-    <value-attributes>
-      <type>int</type>
-      <minimum>1</minimum>
-      <maximum>4</maximum>
-      <increment-step>1</increment-step>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>stream.event.ttl</name>
-    <value>9223372036854775807</value>
-    <description>
-      Default time-to-live in milliseconds (Long.MAX_VALUE) for stream
-      events
-    </description>
-  </property>
-
-  <property>
-    <name>stream.file.cleanup.period</name>
-    <value>300000</value>
-    <description>
-      Interval in milliseconds for running the stream file cleanup process
-    </description>
-  </property>
-
-  <property>
-    <name>stream.file.prefix</name>
-    <value>file</value>
-    <description>
-      Prefix of file name for stream file
-    </description>
-  </property>
-
-  <property>
-    <name>stream.index.interval</name>
-    <value>10000</value>
-    <description>
-      Interval in milliseconds for emitting new index entry in stream file
-    </description>
-  </property>
-
-  <property>
-    <name>stream.notification.threshold</name>
-    <value>1024</value>
-    <description>
-      Size of data in megabytes to be ingested by a stream before a
-      notification is published
-    </description>
-  </property>
-
-  <property>
-    <name>stream.partition.duration</name>
-    <value>3600000</value>
-    <description>
-      Duration in milliseconds of a stream partition
-    </description>
-  </property>
-
-  <property>
-    <name>stream.size.schedule.polling.delay</name>
-    <value>600</value>
-    <description>
-      Delay in seconds to poll a stream in a StreamSizeSchedule if no
-      notification is received
-    </description>
-  </property>
-
-  <property>
-    <name>stream.twill.java.heap.memory.ratio</name>
-    <value>0.6</value>
-    <description>
-      The minimum ratio of heap to non-heap memory for the stream service container
-    </description>
-  </property>
-
-  <property>
-    <name>stream.twill.java.reserved.memory.mb</name>
-    <value>300</value>
-    <description>
-      Desired reserved non-heap memory in megabytes for the stream service container.
-      The actual value is bounded by the ${twill.java.heap.memory.ratio} setting of the container memory size.
-    </description>
-    <value-attributes>
-      <type>int</type>
-      <minimum>256</minimum>
-      <maximum>65536</maximum>
-      <unit>MB</unit>
-      <increment-step>256</increment-step>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>stream.worker.threads</name>
-    <value>${http.service.worker.threads}</value>
-    <description>
-      Default number of IO worker threads for the stream HTTP service
-    </description>
   </property>
 
   <!-- UI Configuration -->
@@ -3739,16 +3760,6 @@
   </property>
 
   <!-- Not sure about anything below here, so commenting them out
-
-  <property>
-    <name>stream.flume.port</name>
-    <value>10004</value>
-  </property>
-
-  <property>
-    <name>stream.flume.threads</name>
-    <value>100</value>
-  </property>
 
   <property>
     <name>data.queue.table.name</name>
