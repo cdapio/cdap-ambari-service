@@ -36,7 +36,7 @@
   &lt;logger name="io.netty.util.internal" level="WARN"/&gt;
   &lt;logger name="org.apache.twill" level="INFO"/&gt;
   &lt;logger name="org.apache.twill.internal.kafka.client.SimpleKafkaConsumer" level="WARN"/&gt;
-  &lt;logger name="co.cask.cdap" level="INFO"/&gt;
+  &lt;logger name="io.cdap.cdap" level="INFO"/&gt;
 
   &lt;logger name="Explore.stdout" level="INFO"/&gt;
   &lt;logger name="Explore.stderr" level="INFO"/&gt;
