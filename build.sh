@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-PACKAGE_VERSION=${PACKAGE_VERSION:-6.0.0-SNAPSHOT}
+PACKAGE_VERSION=${PACKAGE_VERSION:-6.1.0-SNAPSHOT}
 PACKAGE_ITERATION=${PACKAGE_ITERATION:-1}
 PACKAGE_FORMATS=${PACKAGE_FORMATS:-deb rpm}
 
-LICENSE="Copyright © 2015-2018 Cask Data, Inc. Licensed under the Apache License, Version 2.0."
+LICENSE="Copyright © 2015-2019 Cask Data, Inc. Licensed under the Apache License, Version 2.0."
 RPM_FPM_ARGS="-t rpm --rpm-os linux"
 DEB_FPM_ARGS="-t deb"
 

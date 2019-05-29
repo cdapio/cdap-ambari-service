@@ -80,7 +80,7 @@ class Master(Script):
     def upgrade(self, env):
         self.run_class(
             env,
-            classname='co.cask.cdap.data.tools.UpgradeTool',
+            classname='io.cdap.cdap.data.tools.UpgradeTool',
             label='CDAP Upgrade Tool',
             arguments='upgrade force'
         )
@@ -88,7 +88,7 @@ class Master(Script):
     def upgrade_hbase(self, env):
         self.run_class(
             env,
-            classname='co.cask.cdap.data.tools.UpgradeTool',
+            classname='io.cdap.cdap.data.tools.UpgradeTool',
             label='CDAP HBase Coprocessor Upgrade Tool',
             arguments='upgrade_hbase force'
         )
@@ -96,21 +96,21 @@ class Master(Script):
     def postupgrade(self, env):
         self.run_class(
             env,
-            classname='co.cask.cdap.data.tools.flow.FlowQueuePendingCorrector',
+            classname='io.cdap.cdap.data.tools.flow.FlowQueuePendingCorrector',
             label='CDAP Post-Upgrade Tool'
         )
 
     def queue_debugger(self, env):
         self.run_class(
             env,
-            classname='co.cask.cdap.data.tools.SimpleHBaseQueueDebugger',
+            classname='io.cdap.cdap.data.tools.SimpleHBaseQueueDebugger',
             label='CDAP Queue Debugger Tool'
         )
 
     def jobqueue_debugger(self, env):
         self.run_class(
             env,
-            classname='co.cask.cdap.data.tools.JobQueueDebugger',
+            classname='io.cdap.cdap.data.tools.JobQueueDebugger',
             label='CDAP Job Queue Debugger Tool'
         )
 
