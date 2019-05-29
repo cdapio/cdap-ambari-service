@@ -10,7 +10,7 @@
         "enabled": true,
         "source": {
           "type": "SCRIPT",
-          "path": "CDAP/6.1.0-SNAPSHOT/package/alerts/alert_cdap_master_status.py"
+          "path": "CDAP/6.0.0/package/alerts/alert_cdap_master_status.py"
         }
       }
     ],
@@ -24,7 +24,7 @@
         "enabled": true,
         "source": {
           "type": "SCRIPT",
-          "path": "CDAP/6.1.0-SNAPSHOT/package/alerts/alert_cdap_router_status.py"
+          "path": "CDAP/6.0.0/package/alerts/alert_cdap_router_status.py"
         }
       }
     ],
@@ -97,7 +97,7 @@
         "enabled": true,
         "source": {
           "type": "SCRIPT",
-          "path": "CDAP/6.1.0-SNAPSHOT/package/alerts/alert_cdap_ui_status.py"
+          "path": "CDAP/6.0.0/package/alerts/alert_cdap_ui_status.py"
         }
       }
     ],
@@ -111,7 +111,7 @@
         "enabled": true,
         "source": {
           "type": "SCRIPT",
-          "path": "CDAP/6.1.0-SNAPSHOT/package/alerts/alert_cdap_auth_server_status.py"
+          "path": "CDAP/6.0.0/package/alerts/alert_cdap_auth_server_status.py"
         }
       }
     ]
