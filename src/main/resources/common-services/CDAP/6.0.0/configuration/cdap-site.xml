@@ -589,6 +589,9 @@
       username, password, connection properties can be set using
       cdap-security.xml.
     </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
@@ -601,6 +604,9 @@
       specified by adding a property with name prefixed with "data.storage.sql.jdbc.property.",
       followed by the sql property name.
     </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
@@ -1241,6 +1247,9 @@
     <description>
       Provider for log appender. The log appender provided by this provider will be loaded in each program container
     </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
