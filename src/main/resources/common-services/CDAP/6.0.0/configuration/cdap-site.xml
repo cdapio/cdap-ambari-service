@@ -52,6 +52,18 @@
     </description>
   </property>
 
+<property>
+    <name>network.proxy.address</name>
+    <value></value>
+    <description>
+      A SOCKS 5 proxy address for CDAP to proxy outgoing connections.
+      The address must be in the format of "host:port".
+    </description>
+     <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
+
   <property>
     <name>local.data.dir</name>
     <value>data</value>
@@ -341,13 +353,16 @@
       <type>boolean</type>
     </value-attributes>
   </property>
-
-  <property>
-    <name>app.ssl.bind.port</name>
-    <value>30443</value>
+  
+    <property>
+    <name>ssl.internal.cert.path</name>
+    <value></value>
     <description>
-      App Fabric service bind port
+      File path to certificate and private key file in PEM format to use when ssl.internal.enabled is set to true.
     </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
@@ -3009,6 +3024,17 @@
     </description>
   </property>
 
+<property>
+    <name>router.ssl.cert.path</name>
+    <value></value>
+    <description>
+      File path to certificate and private key file in PEM format to use for CDAP Router
+      when ssl.external.enabled is set to true.
+    </description>
+     <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
+  </property>
   <!-- Kafka Configuration -->
 
   <property>
